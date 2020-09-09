@@ -1,0 +1,274 @@
+.message_main{
+    display: flex;
+    background-color: white;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+.chat_scroll{
+    width: 100vw;
+    height: 83vh;
+    overflow: hidden;
+}
+.message_title{
+    display: flex;
+    background-color: #131641;
+    border-bottom:1px solid white;
+    flex-direction: column;
+    width: 100%;
+    height: 10vh;
+    align-items: center;
+    justify-content: center;
+}
+.message_scroll{
+    display: flex;
+    background-color: #131641;
+    width: 100vw;
+    flex-direction: column;
+    height: 83vh;
+    border: 1px solid yellow;
+}
+.messagerow_scroll{
+    display: flex;
+    background-color: #131641;
+    width: 100vw;
+    flex-direction: column;
+    height: 90vh;
+    border: 1px solid yellow;
+    justify-content: center;
+    align-content: center;
+}
+.message_title_name p{
+    font-family: 'Jalnan';
+    color: white;
+    font-size: 4vh;
+}
+.message_sendme_main{
+    height: auto;
+    margin-top: 2vh;
+    display: flex;
+    justify-content: flex-end;
+    
+}
+.message_sendme_div{
+    display: inline-block; 
+    word-break:break-all; 
+    margin: 5px 20px; 
+    max-width: 60%; 
+    border: 1px solid #888; 
+    padding: 10px; 
+    border-radius: 5px; 
+    background-color: #f05052; 
+    color:white; 
+    text-align: left;
+    font-family: 'Jalnan';
+    font-size: 13px;
+    
+}
+.message_sendfrom_main{
+    height: auto;
+    margin-top: 2vh;
+    display: flex;
+    justify-content: flex-start;
+   
+}
+.message_sendfrom_div{
+    display: inline-block; 
+    word-break:break-all; 
+    margin: 5px 20px; 
+    max-width: 60%; 
+    border: 1px solid #888; 
+    padding: 10px; 
+    border-radius: 5px; 
+    background-color: white; 
+    color:black; 
+    text-align: left;
+    font-family: 'Jalnan';
+    font-size: 13px;
+    
+}
+.message_input{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 8vh;
+    background-color: tomato;
+    justify-content: center;
+}
+.message_inputbox{
+    display: flex;
+    align-items: center;
+    margin-left: 6vw;
+}
+.message_inputbox textarea{
+    height: 4vh;
+    width: 60vw;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 3vh;
+    outline-style: none;
+    padding-left: 3vw;
+    border-radius: 12px;
+    border:1px solid pink
+}
+.message_button{
+    display: flex;
+    align-items: center;
+    width: 20vw;
+    height: 8vh;
+    margin-left: 3vw;
+
+}
+.messagerow_main{
+    display: flex;
+    background-color: black;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+.messagerow_title{
+    display: flex;
+    background-color: #131641;
+    border-bottom:1px solid white;
+    flex-direction: column;
+    width: 100%;
+    height: 10vh;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Jalnan';
+    color: white;
+    font-size: 4vh;
+}
+.messageroom_main{
+    display: flex;
+    flex-direction: row;
+    width: 88vw;
+    height: 12vh;
+    margin-top: 2vh;
+    background-color: white;
+    border-radius: 24px 24px 24px 0;
+    justify-content: flex-start;
+    align-items: center;
+}
+.messagered{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.messagewhite{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.messageroom_main_click{
+    display: flex;
+    flex-direction: row;
+    width: 88vw;
+    height: 12vh;
+    background-color: #f05052;
+    border-radius: 24px 24px 24px 0;
+    margin-top: 2vh;
+    justify-content: flex-start;
+    align-items: center;
+}
+.messageroom_img{
+    display: flex;
+    width: 18vw;
+    height: 18vw;
+    border-radius: 50%;
+    background-color: rgb(209, 209, 209);
+    margin-left: 3vw;
+}
+.messageroom_body{
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    height: 9vh;
+    margin-left: 4vw;
+    
+}
+.messageroom_body_name{
+    display: flex;
+    width: 50vw;
+    height: 4vh;
+    font-family: 'Jalnan';
+    color: #f05052;
+    font-size: 2.7vh;
+    align-items: center;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+.messageroom_body_name_click{
+    display: flex;
+    width: 50vw;
+    height: 4vh;
+    font-family: 'Jalnan';
+    color: white;
+    font-size: 2.7vh;
+    align-items: center;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+.messageroom_body_main{
+    display: block;
+    width: 50vw;
+    height: 5vh;
+    font-family: 'Jalnan';
+    margin-top: 1vh;
+    color: #f05052;
+    font-size: 2vh;
+    align-items: center;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    padding-right: 3vw;
+}
+.messageroom_body_main_click{
+    display: block;
+    width: 50vw;
+    height: 5vh;
+    margin-top: 1vh;
+    font-family: 'Jalnan';
+    color: white;
+    font-size: 2vh;
+    align-items: center;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    padding-right: 3vw;
+}
+.messageroom_button{
+    display: flex;
+    width: 9vw;
+    height: 10vh;
+    justify-content: flex-end;
+}
+.messageroom_button button{
+    width: 5vw;
+    height: 5vw;
+    padding:0;
+}
+.message_sendfrom_time{
+    display: flex;
+    margin-top: 1vh;
+    font-size: 10px;
+   justify-content: flex-start;
+   font-family: 'Jalnan';
+    color: white;
+    margin-left: 3vh;
+}
+.message_sendme_time{
+    display: flex;
+    margin-top: 1vh;
+    font-size: 10px;
+    margin-right: 2vw;
+    justify-content: flex-end;
+    font-family: 'Jalnan';
+    color: white;
+   
+}

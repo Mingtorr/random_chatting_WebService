@@ -1,0 +1,65 @@
+.White_login{
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width : 100vw;
+    height: 100vh;
+}
+
+
+.Container_login {
+    display : flex;
+    flex-direction: column;
+    border : 1px;
+    justify-content: space-evenly;
+    align-items: center;
+    /* border-radius: 60px; */
+    /* box-shadow: 2px 2px 2px 2px black; */
+}
+
+.Text_login {
+    margin-top : 15px;
+    font-family: 'Jalnan';
+    font-size : 15px;
+    color : #f05052 ;
+    border-bottom : 1px solid gray;
+}
+
+.Input_login {
+    border : 0px
+}
+
+.Btn_login {
+    border : 0px;
+    margin-top : 15px;
+    margin-bottom : 15px;
+    color : white;
+    border-radius : 60px;
+    font-family: 'Jalnan';
+    padding : 10px;
+    font-size : 20px;
+    background-color : #f05052;
+}
+
+.Textbox_login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Intro_login {
+    margin-top : 0px;
+    font-size: 15px;
+    color : #f05052 ;
+    font-family: 'Jalnan';
+}
+
+.Intro2_login {
+    margin-top : 0px;
+    font-size: 30px;
+    color : #f05052 ;
+    font-family: 'Jalnan';
+}

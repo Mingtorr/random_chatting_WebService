@@ -1,0 +1,19 @@
+.Font_start {
+    font-size : 30px;
+    font-family: 'Jalnan';
+    color : white;
+    background-color: green;
+    border-radius: 30px;
+    padding : 15px;
+    border : 0px;
+}
+
+.Font2_start {
+    font-size : 30px;
+    border-radius: 30px;
+    padding : 15px;
+    font-family: 'Jalnan';
+    color : white;
+    background-color: brown;
+    border : 0px;
+}

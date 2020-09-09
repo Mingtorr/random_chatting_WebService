@@ -1,0 +1,77 @@
+.White_sign {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.Container_sign {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  border: 1px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 60px;
+  box-shadow: 2px 2px 2px 2px black;
+  background-color: white;
+}
+
+.Text_sign {
+  margin-top: 15px;
+  font-family: "Jalnan";
+  font-size: 15px;
+  color: #f05052;
+  border-bottom: 1px solid gray;
+  width: 90%;
+}
+
+.Input_sign {
+  border: 0px;
+  width: 55%;
+}
+
+.Btn_sign {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: white;
+  border-radius: 60px;
+  border: 0px;
+  font-family: "Jalnan";
+  padding: 10px;
+  font-size: 20px;
+  background-color: #f05052;
+}
+
+.Textbox_sign {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+.Intro_sign {
+  margin-top: 0px;
+  font-size: 15px;
+  color: #f05052;
+  font-family: "Jalnan";
+}
+
+.Intro2_sign {
+  margin-top: 0px;
+  font-size: 30px;
+  color: #f05052;
+  font-family: "Jalnan";
+}
+
+.Double_sign {
+  background-color: #f05052;
+  font-family: "Jalnan";
+  font-size: 15px;
+  color: white;
+  border-radius: 30px;
+  border: 0px;
+}
