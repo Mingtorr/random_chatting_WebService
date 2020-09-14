@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./Login.css";
-import { json } from "body-parser";
 
 export default class Login extends Component {
   constructor(props) {
@@ -33,11 +32,10 @@ export default class Login extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         if (json.boolean === false) {
-          alert("아이디 틀렸졍");
+          alert("아이디 또는 비밀번호가 틀렸어요ㅠㅠ");
         } else {
-          alert("성공");
+          alert("로그인 성공");
           //자바스크립트 라우트
           //로그인 성공하면 localStorage에 저장하기
           window.localStorage.setItem("user", JSON.stringify(json));
@@ -45,7 +43,8 @@ export default class Login extends Component {
         }
       });
   };
-  singupBtn = () => {
+  singupBtn = (e) => {
+    e.preventDefault();
     window.location.href = "/Signup";
   };
 
@@ -106,6 +105,9 @@ export default class Login extends Component {
               type="button"
               onClick={this.singupBtn}
             />
+            <button className="Btn_login" onClick={this.singupBtn}>
+              회원가입
+            </button>
           </div>
         </form>
       </div>

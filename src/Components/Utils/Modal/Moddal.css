@@ -1,0 +1,66 @@
+.Popup_modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.Popupinner_modal {
+  position: absolute;
+  left: 25vw;
+  right: 25vw;
+  top: 35vh;
+  bottom: 35vh;
+  margin: auto;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 24px;
+}
+
+.Xbtn_modal {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.Xbtn_modal2 {
+  margin-top: 10px;
+  margin-right: 10px;
+  background-color: white;
+  color: #f05052;
+  border: 0px;
+  font-weight: 900;
+  font-family: "Jalnan";
+}
+
+.Btn_modal {
+  margin-top: 20%;
+  width: 40vw;
+  background-color: #f05052;
+  color: white;
+  height: 5vh;
+  font-size: 15px;
+  font-family: "Jalnan";
+  border: 0px;
+  border-radius: 50px;
+}
+
+.Update_modal {
+  margin-top: 20px;
+  height: 5vh;
+  width: 40vw;
+  color: white;
+  background-color: #f05052;
+  font-size: 17px;
+  font-family: "Jalnan";
+  border: 0px;
+  text-decoration: none;
+  border-radius: 50px;
+}

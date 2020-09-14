@@ -107,8 +107,13 @@ export default class Update extends Component {
             <text className="Intro2_sign">회원정보수정</text>
           </div>
           <div className="Text_sign">
-            <label for="name">아이디 </label>
-            <span>{this.state._id}</span>
+            <label className="label_id" for="name">
+              아이디{" "}
+            </label>
+            <div className="user_id_div">
+              {/* <text className="span_id">{this.state._id}</text> */}
+              {this.state._id}
+            </div>
           </div>
           <div className="Text_sign">
             <label for="pass">비밀번호 </label>

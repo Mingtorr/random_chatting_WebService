@@ -29,6 +29,16 @@
   width: 90%;
 }
 
+.lable_id {
+  float: left;
+}
+.user_id_div {
+  width: 80%;
+  display: inline-flex;
+  justify-content: center;
+  /* border: 1px solid black; */
+}
+
 .Input_sign {
   border: 0px;
   width: 55%;

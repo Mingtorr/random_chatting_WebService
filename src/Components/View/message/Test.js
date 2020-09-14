@@ -5,6 +5,8 @@ import Sendme from "./Sendme";
 import Sendfrom from "./Sendfrom";
 import queryStirng from "query-string";
 import Dropmessage from "./drop";
+import ScrollToBottom from "react-scroll-to-bottom";
+
 const socket = io("http://localhost:3001");
 
 export default class Test extends Component {
@@ -131,63 +133,59 @@ export default class Test extends Component {
     return (
       <div className="Container_test">
         <div className="Title_Test">채팅방</div>
-        <div>
-          {this.state.premsg.map((message) => {
-            if (message.message_drop === 1) {
-              return (
-                <Dropmessage
-                  message={message.message_body}
-                  time={message.message_time}
-                />
-              );
-            } else {
-              if (this.state.userid === message.message_userid) {
+        <div className="message_table">
+          <ScrollToBottom className="scrollbottom">
+            {this.state.premsg.map((message) => {
+              if (message.message_drop === 1) {
                 return (
-                  <Sendme
+                  <Dropmessage
                     message={message.message_body}
                     time={message.message_time}
                   />
                 );
               } else {
+                if (this.state.userid === message.message_userid) {
+                  return (
+                    <Sendme
+                      message={message.message_body}
+                      time={message.message_time}
+                    />
+                  );
+                } else {
+                  return (
+                    <Sendfrom
+                      message={message.message_body}
+                      time={message.message_time}
+                    />
+                  );
+                }
+              }
+            })}
+            {this.state.messages.map((message) => {
+              if (message.drop === 1) {
                 return (
-                  <Sendfrom
-                    message={message.message_body}
-                    time={message.message_time}
-                  />
+                  <Dropmessage message={message.body} time={message.time} />
                 );
-              }
-            }
-          })}
-          {this.state.messages.map((message) => {
-            if (message.drop === 1) {
-              return <Dropmessage message={message.body} time={message.time} />;
-            } else {
-              if (this.state.userid === message.userid) {
-                console.log(message);
-                return <Sendme message={message.body} time={message.time} />;
               } else {
-                console.log(message);
-                return <Sendfrom message={message.body} time={message.time} />;
+                if (this.state.userid === message.userid) {
+                  console.log(message);
+                  return <Sendme message={message.body} time={message.time} />;
+                } else {
+                  console.log(message);
+                  return (
+                    <Sendfrom message={message.body} time={message.time} />
+                  );
+                }
               }
-            }
-          })}
+            })}
+          </ScrollToBottom>
+        </div>
 
-          <div className="Input_test">
-            <input
-              value={this.state.message}
-              onChange={this.onchage}
-              style={{
-                width: "75vw",
-                height: "50px",
-                backgroundColor: "white",
-                border: "0",
-                borderRadius: "30px",
-              }}
-            />
-            <button onClick={this.onclick} className="Btn_test">
-              입력
-            </button>
-          </div>
+        <div className="Input_test">
+          <input value={this.state.message} onChange={this.onchage} />
+          <button onClick={this.onclick} className="Btn_test">
+            입력
+          </button>
         </div>
       </div>
     );

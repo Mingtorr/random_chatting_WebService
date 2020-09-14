@@ -1,20 +1,38 @@
-import React, { Component } from "react";
+import React from "react";
 import "./message_collect.css";
 import io from "socket.io-client";
-
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
 const socket = io("http://localhost:3001/");
 
 export default class Messageroom_click extends React.Component {
   constructor(props) {
     super(props);
-    this.setState = {
+    this.state = {
       name: "",
       body: "",
+      open: false,
     };
   }
   componentWillMount() {}
-
+  modalopen = (e) => {
+    e.preventDefault();
+    this.setState({
+      open: true,
+    });
+  };
+  modalclose = (e) => {
+    e.preventDefault();
+    this.setState({
+      open: false,
+    });
+  };
   onClick = (e) => {
+    e.preventDefault();
     window.location.href =
       "/message?touserid=" +
       `${this.props.name}` +
@@ -22,6 +40,7 @@ export default class Messageroom_click extends React.Component {
       `${this.props.roomname}`;
   };
   dropclick = (e) => {
+    e.preventDefault();
     const post = {
       userid: this.props.userid,
       touserid: this.props.name,
@@ -45,6 +64,29 @@ export default class Messageroom_click extends React.Component {
   render() {
     return (
       <div className="messagered">
+        <Dialog
+          open={this.state.open}
+          onClose={this.modalclose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"방을 나가시겠습니까?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              상대방이 슬퍼하질도몰라요 다시 생각해보세요 ㅠㅠ
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.dropclick} color="primary">
+              나가기
+            </Button>
+            <Button onClick={this.modalclose} color="primary" autoFocus>
+              되돌아가기
+            </Button>
+          </DialogActions>
+        </Dialog>
         <div className="messageroom_main_click" onClick={this.onClick}>
           <div className="messageroom_img"></div>
           <div className="messageroom_body">
@@ -53,7 +95,7 @@ export default class Messageroom_click extends React.Component {
           </div>
         </div>
         <div className="messageroom_button">
-          <button onClick={this.dropclick}>x</button>
+          <button onClick={this.modalopen}>x</button>
         </div>
       </div>
     );

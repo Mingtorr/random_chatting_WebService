@@ -6,8 +6,6 @@ import Login from "./Components/View/Login/Login";
 import "./App.css";
 import After from "./Components/View/After/After";
 import Update from "./Components/View/Update/Update";
-import SocketIo from "./SocketIo";
-import SocketIo2 from "./SocketIo2";
 import Message_collect from "./Components/View/messagecollect/message_collect";
 import Message from "./Components/View/message/Test";
 export default class App extends Component {
@@ -37,10 +35,13 @@ export default class App extends Component {
               <After />
             </Route>
             <Route path="/Update">
-              <Message_collect />
+              <Update />
             </Route>
-            <Route path="/Message">
+            <Route exact path="/Message">
               <Message />
+            </Route>
+            <Route path="/Message_collect">
+              <Message_collect />
             </Route>
           </Switch>
         </div>

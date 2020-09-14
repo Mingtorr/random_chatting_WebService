@@ -23,27 +23,45 @@
 .Text_sign {
   margin-top: 15px;
   font-family: "Jalnan";
-  font-size: 15px;
+  font-size: 1rem;
   color: #f05052;
   border-bottom: 1px solid gray;
   width: 90%;
 }
-
+.Text_sign2 {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+  font-family: "Jalnan";
+  font-size: 1rem;
+  color: #f05052;
+  border-bottom: 1px solid gray;
+  align-content: center;
+  justify-content: center;
+  width: 90%;
+}
 .Input_sign {
   border: 0px;
   width: 55%;
 }
 
-.Btn_sign {
+.Input_sign_email {
+  border: 0px;
+  width: 30%;
+}
+
+button.Btn_sign {
   margin-top: 15px;
   margin-bottom: 15px;
   color: white;
   border-radius: 60px;
   border: 0px;
   font-family: "Jalnan";
-  padding: 10px;
+  padding-left: 20vw;
+  padding-right: 20vw;
   font-size: 20px;
   background-color: #f05052;
+  box-shadow: 0px 6px 2px 1px rgb(165, 165, 165);
 }
 
 .Textbox_sign {
@@ -67,11 +85,37 @@
   font-family: "Jalnan";
 }
 
-.Double_sign {
+.email_text {
+  /* float: right; */
+  font-size: 11px;
+  color: rgb(165, 165, 165);
+}
+
+button.Double_sign {
   background-color: #f05052;
   font-family: "Jalnan";
-  font-size: 15px;
+  font-size: 11px;
   color: white;
   border-radius: 30px;
   border: 0px;
+  padding-left: 2.5vw;
+  padding-right: 2.5vw;
+  padding-top: 1.6vw;
+  padding-bottom: 1.6vw;
+  float: right;
+}
+.sex_button {
+  background-color: #f05052;
+  font-family: "Jalnan";
+  font-size: 11px;
+  border-radius: 30px;
+}
+.sex_label {
+  display: flex;
+  align-self: flex-start;
+  width: 37vw;
+}
+.sex_div {
+  display: flex;
+  width: 63vw;
 }

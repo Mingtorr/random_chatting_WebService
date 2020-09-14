@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./Signup.css";
-import { json } from "body-parser";
 
 export default class Signup extends Component {
   constructor(props) {
@@ -28,7 +27,8 @@ export default class Signup extends Component {
     console.log(e.target.value);
   };
 
-  sendEmail = () => {
+  sendEmail = (e) => {
+    e.preventDefault();
     this.setState({
       sendEmailClick: true,
     });
@@ -57,7 +57,8 @@ export default class Signup extends Component {
       });
   };
   // 인증메일을 확인한다.
-  authEmail = () => {
+  authEmail = (e) => {
+    e.preventDefault();
     if (this.state.authNum.toString() === this.state.authCheckNum.toString()) {
       alert("인증성공");
       this.setState({
@@ -76,7 +77,8 @@ export default class Signup extends Component {
     return false;
   };
 
-  checkId = () => {
+  checkId = (e) => {
+    e.preventDefault();
     var re = /^[a-zA-Z0-9]{4,12}$/; //아이디는 4~12자의 영문 대소문자와 숫자로만 입력
     if (
       !this.check(
@@ -111,7 +113,8 @@ export default class Signup extends Component {
     }
   };
   //닉네임 중복검사
-  checkNick = () => {
+  checkNick = (e) => {
+    e.preventDefault();
     var re = /^[a-zA-z가-힣0-9]{2,8}$/;
     if (
       !this.check(
@@ -205,12 +208,15 @@ export default class Signup extends Component {
               onChange={this.handleChange}
               className="Input_sign"
             />
-            <input
+            {/* <input
               type="button"
               value="중복확인"
               onClick={this.checkId}
               className="Double_sign"
-            />
+            /> */}
+            <button className="Double_sign" onClick={this.checkId}>
+              중복확인
+            </button>
           </div>
 
           <div className="Text_sign">
@@ -247,51 +253,50 @@ export default class Signup extends Component {
               onChange={this.handleChange}
               className="Input_sign"
             />
-            <input
-              type="button"
-              value="중복확인"
-              onClick={this.checkNick}
-              className="Double_sign"
-            />
+            <button onClick={this.checkNick} className="Double_sign">
+              중복확인
+            </button>
           </div>
-          <div className="Text_sign">
-            <label for="nickname">성별 </label>
-            <input
-              type="radio"
-              name="sex"
-              value="M"
-              onChange={this.handleChange}
-            />{" "}
-            남
-            <input
-              type="radio"
-              name="sex"
-              value="F"
-              onChange={this.handleChange}
-            />{" "}
-            여
+
+          <div className="Text_sign2">
+            <div className="sex_label">
+              <label for="nickname">성별 </label>
+            </div>
+            <div className="sex_div">
+              <input
+                type="radio"
+                name="sex"
+                value="M"
+                onChange={this.handleChange}
+                className="sex_button"
+              />{" "}
+              남
+              <input
+                type="radio"
+                name="sex"
+                value="F"
+                onChange={this.handleChange}
+                className="sex_button"
+              />{" "}
+              여
+            </div>
           </div>
 
           <div className="Text_sign">
-            <label for="email">학교 이메일 </label>
+            <label for="email">학교메일 </label>
             <input
               type="text"
               id="email"
               name="email"
               value={this.state.email}
               onChange={this.handleChange}
-              className="Input_sign"
+              className="Input_sign_email"
             />
-            <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              @changwon.ac.kr&nbsp;
-            </span>
-            <input
-              type="button"
-              value="전송"
-              onClick={this.sendEmail}
-              className="Double_sign"
-            />
+            <span className="email_text">@changwon.ac.kr</span>
+
+            <button onClick={this.sendEmail} className="Double_sign">
+              전송
+            </button>
           </div>
           {this.state.sendEmailClick ? (
             <div className="Text_sign">
@@ -304,12 +309,9 @@ export default class Signup extends Component {
                 onChange={this.handleChange}
                 className="Input_sign"
               />
-              <input
-                type="button"
-                value="인증"
-                onClick={this.authEmail}
-                className="Double_sign"
-              />
+              <button onClick={this.authEmail} className="Double_sign">
+                확인
+              </button>
             </div>
           ) : (
             <div></div>

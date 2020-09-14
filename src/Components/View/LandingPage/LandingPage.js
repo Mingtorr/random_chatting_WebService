@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import Start from "../../Utils/Start/Start.js";
+import Moddal from "../../Utils/Modal/Moddal";
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -12,8 +13,15 @@ export default class LandingPage extends Component {
       count: 1,
       toggle: false,
       admin: false,
+      open: false,
     };
   }
+
+  handleOpen = () => {
+    this.setState({
+      open: !this.state.open,
+    });
+  };
 
   onClick1 = (e) => {
     this.setState({
@@ -23,8 +31,8 @@ export default class LandingPage extends Component {
   };
   onClick2 = (e) => {
     this.setState({
-      count: 2,
-      toggle: false,
+      count: 1,
+      toggle: true,
     });
   };
   onClick3 = (e) => {
@@ -55,7 +63,7 @@ export default class LandingPage extends Component {
       this.setState({ toggle: false });
     }
   };
-  componentDidMount() {
+  componentWillMount() {
     if (localStorage.getItem("user") === null) {
       window.location.href = "/";
       alert("로그인해라");
@@ -66,6 +74,7 @@ export default class LandingPage extends Component {
     // localStorage.setItem("user", JSON.stringify(user));
     // console.log(JSON.parse(localStorage.getItem("user")));
   }
+
   logout = () => {
     localStorage.removeItem("user"); //로컬스토리지 지우기
     window.location.href = "/";
@@ -73,14 +82,17 @@ export default class LandingPage extends Component {
 
   render() {
     return (
-      <div classNanme="Container" onClick={this.toggleClose}>
+      <div className="Container_landing" onClick={this.toggleClose}>
         {/* 메시지 햄버거 */}
         <div className="Set_landing">
-          <Link to="Signup">
+          <button onClick={this.handleOpen} className="Btn_landing">
             <MenuIcon style={{ fontSize: 50, color: "white", marginTop: 5 }} />
-          </Link>
+          </button>
+          {this.state.open ? (
+            <Moddal closePopup={this.handleOpen.bind(this)} />
+          ) : null}
 
-          <Link to="Update">
+          <Link to="/Message_collect">
             <ChatBubbleOutlineIcon
               style={{ fontSize: 50, color: "white", marginTop: 10 }}
             />
@@ -107,22 +119,12 @@ export default class LandingPage extends Component {
                 1 : 1 과팅
               </button>
               <button onClick={this.onClick2} className="Toggle2_landing">
-                2 : 2 과팅
-              </button>
-              <button onClick={this.onClick3} className="Toggle2_landing">
-                3 : 3 과팅
-              </button>
-              <button onClick={this.onClick4} className="Toggle2_landing">
-                4 : 4 과팅
-              </button>
-              <button onClick={this.onClick5} className="Toggle2_landing">
-                5 : 5 과팅
+                다중매칭은 준비중입니다.
               </button>
             </div>
           )}
         </div>
         <div className="Title_landing">
-          <button onClick={this.logout}>로그아웃</button>
           <Start count={this.state.count} />
         </div>
       </div>

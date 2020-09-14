@@ -34,7 +34,6 @@ io.on("connection", function (socket) {
       "insert into wagle_message (message_userid,message_touserid,message_body,message_roomname,message_drop) values (?,?,?,?,?)",
       [post2.userid, post2.touserid, newmessage, post2.roomname, 1],
       function (err, rows, field) {
-        console.log("섹스세그세세ㅡ게ㅡ게ㅡ게ㅡ게그스" + post2.roomname);
         io.to(post2.roomname).emit("dropmessage2", post2);
       }
     );
@@ -44,7 +43,7 @@ io.on("connection", function (socket) {
     socket.join(userid);
   });
   socket.on("roomjoin", (roomname) => {
-    console.log("방창가" + roomname);
+    console.log("방참가" + roomname);
     //io.to(방)으로 조인 'room1'
     socket.join(roomname);
   });
@@ -183,7 +182,6 @@ io.on("connection", function (socket) {
                       "UPDATE matching_table_w SET matching_manid = (?) WHERE matching_userid =(?)",
                       [matchingm, _id],
                       function (err, rows, field) {
-                        console.log("a");
                         socket.emit("matching_success");
                       }
                     );
@@ -193,7 +191,6 @@ io.on("connection", function (socket) {
             });
           } else if (rows[0].matching_manid != null) {
             console.log("여자쪽 매칭 성공");
-            console.log("b");
             socket.emit("matching_success");
           }
         }
@@ -210,12 +207,10 @@ io.on("connection", function (socket) {
           if (err) {
             console.log("룸 만들다 err");
           } else {
-            console.log("3");
             console.log(rows[0]);
             // console.log(rows[0].womanid);
             if (rows[0] === undefined) {
             } else {
-              console.log("4");
               const room_name = rows[0].matching_userid.concat(
                 rows[0].matching_womanid
               );
@@ -233,9 +228,7 @@ io.on("connection", function (socket) {
                     connection.query(
                       "DELETE FROM matching_table_m WHERE matching_userid =(?)",
                       [_id],
-                      function (err, rows, field) {
-                        console.log("5");
-                      }
+                      function (err, rows, field) {}
                     );
                   }
                 );
@@ -252,10 +245,8 @@ io.on("connection", function (socket) {
           if (err) {
             console.log("룸 만들다 err");
           } else {
-            console.log("c");
             if (rows[0] === undefined) {
             } else {
-              console.log("d");
               const room_name = rows[0].matching_manid.concat(
                 rows[0].matching_userid
               );
@@ -269,7 +260,7 @@ io.on("connection", function (socket) {
                       "DELETE FROM matching_table_w WHERE matching_userid =(?)",
                       [_id],
                       function (err, rows, fields) {
-                        console.log("e");
+                        console.log("매칭 테이블 삭제");
                       }
                     );
                   }
@@ -300,7 +291,6 @@ app.post("/tomessage", (req, res) => {
     "INSERT INTO wagle_message (message_userid, message_body) values (?, ?)",
     [_id, msg],
     function (err, rows, fiedl) {
-      console.log(rows);
       res.send();
     }
   );
@@ -314,7 +304,6 @@ app.post("/callid", (req, res) => {
     [_id],
     function (err, rows, field) {
       res.send(rows);
-      console.log(rows);
     }
   );
 });
@@ -325,7 +314,7 @@ app.post("/message", (req, res) => {
   const roomname = req.body.roomname;
   const _toid = req.body.touser;
   const body = req.body.body;
-  console.log(req.body);
+
   connection.query(
     "INSERT INTO wagle_message (message_userid, message_touserid, message_body, message_roomname) VALUES (?, ?, ?, ?)",
     [_id, _toid, body, roomname],
@@ -339,7 +328,6 @@ app.post("/message", (req, res) => {
   );
 });
 app.post("/droproom", (req, res) => {
-  console.log("asdasd");
   connection.query(
     "DELETE FROM wagle_room WHERE room_userid=? and room_touserid=?",
     [req.body.userid, req.body.touserid],
@@ -349,7 +337,6 @@ app.post("/droproom", (req, res) => {
         'update wagle_room set room_lastmessage = "상대방이 나갔습니다." ,room_lastuserid=? where room_userid = ? and room_touserid = ?',
         [req.body.userid, req.body.touserid, req.body.userid],
         function (err, rows, field) {
-          console.log("섹스");
           res.send();
         }
       );
@@ -360,15 +347,15 @@ app.post("/droproom", (req, res) => {
 app.post("/last", (req, res) => {
   const _id = req.body.userid;
   const roomname = req.body.roomname;
-  console.log("시시시시시바라발바랍랍랍라" + roomname);
+
   const last = req.body.body;
-  console.log("1111222233");
+
   connection.query(
     "UPDATE wagle_room SET room_lastmessage = ?, room_lastuserid = ? WHERE room_roomname = ?",
     [last, _id, roomname],
     function (err, rows, field) {
       if (err) {
-        console.log("unc");
+        console.log("room_lastmessage: 업데이트 err");
       }
       console.log("업데이트 완료");
       res.send();
@@ -444,8 +431,6 @@ app.post("/CheckId", (req, res) => {
     "SELECT user_id FROM user_info WHERE user_id =(?)",
     [checkingId],
     function (err, rows, fields) {
-      console.log(rows[0]);
-      console.log(checkingId);
       if (rows[0] === undefined) {
         res.send(true); //중복 없음 사용가능
       } else {
@@ -465,7 +450,6 @@ app.post("/login", (req, res) => {
     "SELECT user_id FROM user_info WHERE user_id = (?)",
     [name],
     function (err, rows, fields) {
-      console.log(rows[0]);
       if (rows[0] === undefined) {
         res.send(box);
       } else {
@@ -486,7 +470,6 @@ app.post("/login", (req, res) => {
           }
         );
       }
-      //console.log(rows);
     }
   );
 });
@@ -499,7 +482,7 @@ app.post("/Sendmail", (req, res) => {
   }
 
   let emailParam = {
-    toEmail: email + "@gmail.com", //gmail.com -> changwon.ac.kr로 수정하기
+    toEmail: email + "@chanwon.ac.kr", //gmail.com -> changwon.ac.kr로 수정하기
     subject: "회원가입 인증 메일입니다.",
     text: "인증번호는 " + authNum + "입니다.",
   };
@@ -533,7 +516,7 @@ app.post("/Update_nick", (req, res) => {
           "UPDATE user_info SET user_nickname =(?) WHERE user_nickname =(?)",
           [nick, preNick]
         );
-        console.log("true");
+        console.log("닉네임 업데이트 실패");
         res.send(true);
       } else {
         console.log("중복된 닉네임");
@@ -554,9 +537,9 @@ app.post("/Update_password", (req, res) => {
     function (err, rows, fields) {
       if (err) {
         console.log(err);
-        console.log("변경실패");
+        console.log("비밀번호 변경실패");
       } else {
-        console.log("변경성공");
+        console.log("비밀번호 변경성공");
       }
     }
   );

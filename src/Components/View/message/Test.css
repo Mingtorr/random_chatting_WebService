@@ -6,12 +6,12 @@
   background-color: #131641;
 }
 .drop_message {
-  background-color: aqua;
-  color: black;
 }
 .Title_Test {
+  border-bottom: 1px solid #eccecf;
   margin-top: 5px;
   width: 100vw;
+  height: 7vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,21 +94,58 @@
 }
 
 .Input_test {
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 10vh;
+  margin-top: 2vh;
+  height: 8vh;
   background-color: #f05052;
 }
-
+.Input_test input {
+  width: 64vw;
+  height: 3vh;
+  border-radius: 8px;
+  border: 0px;
+  padding-left: 3vw;
+  padding-right: 3vw;
+  font-size: 12px;
+}
 .Btn_test {
   background-color: #f05052;
   color: white;
-  border-radius: 10px;
-  border: 0px;
+  border-radius: 24vh;
+  border: 0;
   width: auto;
+  height: 6vh;
   font-family: "Jalnan";
-  font-size: 15px;
+  font-size: 18px;
+  margin-left: 5vw;
+}
+.message_table {
+  display: flex;
+  width: 100vw;
+  height: 83vh;
+  margin-top: 1vh;
+}
+.scrollbottom {
+  display: flex;
+  width: 100vw;
+  height: 83vh;
+}
+.drop_message hr {
+  width: 90vw;
+  margin-bottom: 1vh;
+  margin-top: 0;
+}
+.drop_messagebody {
+  margin-bottom: 1vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 5vh;
+  color: black;
+  font-family: "Jalnan";
+  color: white;
 }
