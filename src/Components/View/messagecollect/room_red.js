@@ -52,7 +52,7 @@ export default class Messageroom_click extends React.Component {
     };
     socket.emit("dropmessage", post2); //123213213213213213213213213213
     socket.emit("roomout", post);
-    fetch("http://localhost:3001/droproom", {
+    fetch("http://localhost:3001/api/droproom", {
       method: "post",
       headers: {
         "content-type": "application/json",

@@ -36,7 +36,7 @@ export default class Signup extends Component {
       sendEmail: this.state.email,
     };
     // console.log(email);
-    fetch("http://localhost:3001/Sendmail", {
+    fetch("http://localhost:3001/api/Sendmail", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -92,7 +92,7 @@ export default class Signup extends Component {
       const checkId = {
         check_Id: this.state._id,
       };
-      fetch("http://localhost:3001/CheckId", {
+      fetch("http://localhost:3001/api/CheckId", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -128,7 +128,7 @@ export default class Signup extends Component {
       const checkNick = {
         check_Nick: this.state.nickname,
       };
-      fetch("http://localhost:3001/CheckNick", {
+      fetch("http://localhost:3001/api/CheckNick", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -168,7 +168,7 @@ export default class Signup extends Component {
         nick: this.state.nickname,
         sex: this.state.sex,
       };
-      fetch("http://localhost:3001/Signup", {
+      fetch("http://localhost:3001/api/Signup", {
         method: "post",
         headers: {
           "content-type": "application/json",

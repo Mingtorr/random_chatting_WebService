@@ -9,7 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const socket = io("http://localhost:3001");
+const socket = io("http://localhost:3001/");
 
 export default class Start extends Component {
   constructor(props) {
@@ -30,15 +30,13 @@ export default class Start extends Component {
   }
 
   componentWillMount() {
-    setInterval(
+    
       socket.on("apply", () => {
-        setInterval(
-          socket.emit("matching", this.state._id, this.state.sex),
-          3000
-        );
-      }),
-      3000
-    );
+       
+          socket.emit("matching", this.state._id, this.state.sex)
+      })
+      
+    
   }
   modalopen = (e) => {
     e.preventDefault();

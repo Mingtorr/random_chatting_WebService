@@ -23,7 +23,7 @@ export default class Login extends Component {
       name: this.state.name1,
       pass: this.state.pass,
     };
-    fetch("http://localhost:3001/login", {
+    fetch("http://localhost:3001/api/login", {
       method: "post",
       headers: {
         "content-type": "application/json",
