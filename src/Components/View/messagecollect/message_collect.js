@@ -5,7 +5,7 @@ import "./message_collect.css";
 import Messageroom_click from "./room_red";
 import Messageroom_white from "./room_white";
 
-const socket = io("http://localhost:3001/");
+const socket = io("api");
 
 export default class Message_collect extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ export default class Message_collect extends React.Component {
     const post = {
       userid: this.state.userid,
     };
-    fetch("http://localhost:3001/api/message_collect", {
+    fetch("api/message_collect", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -41,7 +41,7 @@ export default class Message_collect extends React.Component {
       );
       console.log(index);
       if (index === -1) {
-        fetch("http://localhost:3001/api/message_alldrop", {
+        fetch("api/message_alldrop", {
           method: "post",
           headers: {
             "content-type": "application/json",
@@ -64,7 +64,7 @@ export default class Message_collect extends React.Component {
       );
       console.log(index);
       if (index === -1) {
-        fetch("http://localhost:3001/api/message_alldrop", {
+        fetch("api/message_alldrop", {
           method: "post",
           headers: {
             "content-type": "application/json",

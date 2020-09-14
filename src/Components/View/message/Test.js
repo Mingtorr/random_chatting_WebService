@@ -7,7 +7,7 @@ import queryStirng from "query-string";
 import Dropmessage from "./drop";
 import ScrollToBottom from "react-scroll-to-bottom";
 
-const socket = io("http://localhost:3001/");
+const socket = io("api");
 
 export default class Test extends Component {
   constructor(props) {
@@ -47,7 +47,7 @@ export default class Test extends Component {
         messages: [...this.state.messages, row],
       });
     });
-    fetch("http://localhost:3001/api/messageshow", {
+    fetch("api/messageshow", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -112,7 +112,7 @@ export default class Test extends Component {
       touser: this.state.touserid,
       roomname: this.state.roomname,
     };
-    fetch("http://localhost:3001/api/message", {
+    fetch("api/message", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -120,7 +120,7 @@ export default class Test extends Component {
       body: JSON.stringify(post_2),
     }).then();
     socket.emit("send message", post_1);
-    fetch("http://localhost:3001/api/last", {
+    fetch("api/last", {
       method: "post",
       headers: {
         "content-type": "application/json",

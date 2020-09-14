@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-const socket = io("http://localhost:3001/");
+const socket = io("api");
 
 export default class Messageroom_click extends React.Component {
   constructor(props) {
@@ -52,7 +52,7 @@ export default class Messageroom_click extends React.Component {
     };
     socket.emit("dropmessage", post2); //123213213213213213213213213213
     socket.emit("roomout", post);
-    fetch("http://localhost:3001/api/droproom", {
+    fetch("api/droproom", {
       method: "post",
       headers: {
         "content-type": "application/json",

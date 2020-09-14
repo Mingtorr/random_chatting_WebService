@@ -49,7 +49,7 @@ export default class Update extends Component {
       };
       console.log(this.state.nickname);
       console.log(this.state.update_nickname);
-      fetch("http://localhost:3001/api/Update_nick", {
+      fetch("api/Update_nick", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -84,7 +84,7 @@ export default class Update extends Component {
         _id: this.state._id,
         pass: this.state.pass,
       };
-      fetch("http://localhost:3001/api/Update_password", {
+      fetch("api/Update_password", {
         method: "post",
         headers: {
           "content-type": "application/json",
