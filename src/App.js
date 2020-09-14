@@ -9,6 +9,7 @@ import Update from "./Components/View/Update/Update";
 import SocketIo from "./SocketIo";
 import SocketIo2 from "./SocketIo2";
 import Message_collect from "./Components/View/messagecollect/message_collect";
+import Message from "./Components/View/message/Test";
 export default class App extends Component {
   render() {
     return (
@@ -37,6 +38,9 @@ export default class App extends Component {
             </Route>
             <Route path="/Update">
               <Message_collect />
+            </Route>
+            <Route path="/Message">
+              <Message />
             </Route>
           </Switch>
         </div>

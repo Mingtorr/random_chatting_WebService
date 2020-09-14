@@ -1,0 +1,114 @@
+.Container_test {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #131641;
+}
+.drop_message {
+  background-color: aqua;
+  color: black;
+}
+.Title_Test {
+  margin-top: 5px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 25px;
+  font-family: "Jalnan";
+}
+
+.Sendme_con {
+  height: auto;
+  margin-top: 2vh;
+  display: flex;
+  /* justify-content: flex-end; */
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.Sendme_in {
+  display: inline-block;
+  word-break: break-all;
+  margin: 5px 20px;
+  max-width: 60%;
+  border: 1px solid #888;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f05052;
+  color: white;
+  text-align: left;
+  font-family: "Jalnan";
+  font-size: 13px;
+  border: 0px;
+}
+
+.Sendme_in2 {
+  display: inline-block;
+  word-break: break-all;
+  margin: 5px 20px;
+  max-width: 60%;
+  color: white;
+  text-align: left;
+  font-family: "Jalnan";
+  font-size: 13px;
+  border: 0px;
+}
+
+.Send_from {
+  height: auto;
+  margin-top: 2vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.Send_from2 {
+  display: inline-block;
+  word-break: break-all;
+  margin: 5px 20px;
+  max-width: 60%;
+  border: 1px solid #888;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  text-align: left;
+  font-family: "Jalnan";
+  font-size: 13px;
+  border: 0px;
+}
+
+.Send_from3 {
+  display: inline-block;
+  word-break: break-all;
+  margin: 5px 20px;
+  max-width: 60%;
+  color: white;
+  text-align: left;
+  font-family: "Jalnan";
+  font-size: 13px;
+  border: 0px;
+}
+
+.Input_test {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 10vh;
+  background-color: #f05052;
+}
+
+.Btn_test {
+  background-color: #f05052;
+  color: white;
+  border-radius: 10px;
+  border: 0px;
+  width: auto;
+  font-family: "Jalnan";
+  font-size: 15px;
+}

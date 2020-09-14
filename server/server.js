@@ -28,13 +28,38 @@ app.use(bodyparser.json());
 io.on("connection", function (socket) {
   // 소켓을 연결하는 부분
   //socket이랑 연결된 부분
-
-  socket.on("room", (id) => {
-    socket.join(id, () => {
-      console.log(id + "접속함");
-      // console.log(socket);
-    });
+  socket.on("dropmessage", (post2) => {
+    const newmessage = "상대방이 나갔습니다.";
+    connection.query(
+      "insert into wagle_message (message_userid,message_touserid,message_body,message_roomname,message_drop) values (?,?,?,?,?)",
+      [post2.userid, post2.touserid, newmessage, post2.roomname, 1],
+      function (err, rows, field) {
+        console.log("섹스세그세세ㅡ게ㅡ게ㅡ게ㅡ게그스" + post2.roomname);
+        io.to(post2.roomname).emit("dropmessage2", post2);
+      }
+    );
   });
+  socket.on("messageroomjoin", (userid) => {
+    console.log("message room 참가" + userid);
+    socket.join(userid);
+  });
+  socket.on("roomjoin", (roomname) => {
+    console.log("방창가" + roomname);
+    //io.to(방)으로 조인 'room1'
+    socket.join(roomname);
+  });
+  socket.on("roomout", (post) => {
+    console.log("roomout");
+    io.to(post.touserid).emit("roomout2", post);
+  });
+  socket.on("send message", (message) => {
+    console.log("sendmessage" + message);
+    console.log("방이름" + message.roomname);
+    //io 전체에 new message라는것을 보냄 but to('')는 특정 방에 보내는것
+    io.to(message.roomname).emit("new message", message);
+    io.to(message.touser).emit("new messageroom", message);
+  });
+
   //sql문에 매칭 추가
   socket.on("start", (_id, nick, sex) => {
     console.log("start : " + _id + " " + nick + " " + sex); //
@@ -256,18 +281,112 @@ io.on("connection", function (socket) {
       );
     }
   });
+});
+app.post("/message_alldrop", (req, res) => {
+  connection.query(
+    " DELETE FROM wagle_message WHERE (message_userid=? and message_touserid=?) or (message_userid =? and message_touserid=?)",
+    [req.body.userid, req.body.touserid, req.body.touserid, req.body.userid],
+    function (err, rows, field) {
+      console.log("삭제 완료");
+    }
+  );
+});
 
-  socket.on("room", (room_id) => {
-    socket.join(room_id, () => {
-      console.log(room_id + " 접속했음");
-    });
-  });
+//메시지 보낼 때 아이디 TOUSER인지 FROMUSER 인지
+app.post("/tomessage", (req, res) => {
+  const _id = req.body._id;
+  const msg = req.body.message;
+  connection.query(
+    "INSERT INTO wagle_message (message_userid, message_body) values (?, ?)",
+    [_id, msg],
+    function (err, rows, fiedl) {
+      console.log(rows);
+      res.send();
+    }
+  );
+});
 
-  socket.on("send message", (message) => {
-    // socket은 개인의 고유값
-    console.log(message);
-    io.to(message.id).emit("show message", message.message); //io 전체
-  });
+//to_id불러오기
+app.post("/callid", (req, res) => {
+  const _id = req.body.res;
+  connection.query(
+    "SELECT room_touserid FROM wagle_room WHERE userid = ?",
+    [_id],
+    function (err, rows, field) {
+      res.send(rows);
+      console.log(rows);
+    }
+  );
+});
+
+//메시지 저장
+app.post("/message", (req, res) => {
+  const _id = req.body.userid; //보내는 아이디
+  const roomname = req.body.roomname;
+  const _toid = req.body.touser;
+  const body = req.body.body;
+  console.log(req.body);
+  connection.query(
+    "INSERT INTO wagle_message (message_userid, message_touserid, message_body, message_roomname) VALUES (?, ?, ?, ?)",
+    [_id, _toid, body, roomname],
+    function (err, rows, field) {
+      if (err) {
+        console.log("실패");
+      }
+      console.log("메세지 입력완료 ");
+      res.send();
+    }
+  );
+});
+app.post("/droproom", (req, res) => {
+  console.log("asdasd");
+  connection.query(
+    "DELETE FROM wagle_room WHERE room_userid=? and room_touserid=?",
+    [req.body.userid, req.body.touserid],
+    function (err, rows, field) {
+      console.log("칼럼삭제");
+      connection.query(
+        'update wagle_room set room_lastmessage = "상대방이 나갔습니다." ,room_lastuserid=? where room_userid = ? and room_touserid = ?',
+        [req.body.userid, req.body.touserid, req.body.userid],
+        function (err, rows, field) {
+          console.log("섹스");
+          res.send();
+        }
+      );
+    }
+  );
+});
+//최근 메시지 저장
+app.post("/last", (req, res) => {
+  const _id = req.body.userid;
+  const roomname = req.body.roomname;
+  console.log("시시시시시바라발바랍랍랍라" + roomname);
+  const last = req.body.body;
+  console.log("1111222233");
+  connection.query(
+    "UPDATE wagle_room SET room_lastmessage = ?, room_lastuserid = ? WHERE room_roomname = ?",
+    [last, _id, roomname],
+    function (err, rows, field) {
+      if (err) {
+        console.log("unc");
+      }
+      console.log("업데이트 완료");
+      res.send();
+    }
+  );
+});
+
+//messageshow
+app.post("/messageshow", (req, res) => {
+  const _id = req.body._id;
+  const touserid = req.body.touser;
+  connection.query(
+    "SELECT * FROM wagle_message where (message_userid = ? and message_touserid = ?) or (message_userid = ? and message_touserid = ?) order by message_time",
+    [_id, touserid, touserid, _id],
+    function (err, rows, field) {
+      res.send(rows);
+    }
+  );
 });
 
 app.post("/message_collect", (req, res) => {

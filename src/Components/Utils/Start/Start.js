@@ -34,7 +34,6 @@ export default class Start extends Component {
 
     socket.on("matching_success", () => {
       console.log("매칭성공");
-
       socket.emit("room_join", this.state._id, this.state.sex);
       alert("매칭성공");
       socket.disconnect();
