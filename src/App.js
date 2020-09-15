@@ -6,7 +6,7 @@ import Login from "./Components/View/Login/Login";
 import "./App.css";
 import After from "./Components/View/After/After";
 import Update from "./Components/View/Update/Update";
-import Message_collect from "./Components/View/messagecollect/message_collect";
+import MessageCollect from "./Components/View/messagecollect/message_collect";
 import Message from "./Components/View/message/Test";
 export default class App extends Component {
   render() {
@@ -41,7 +41,7 @@ export default class App extends Component {
               <Message />
             </Route>
             <Route path="/Message_collect">
-              <Message_collect />
+              <MessageCollect />
             </Route>
           </Switch>
         </div>

@@ -6,7 +6,7 @@ const bodyparser = require("body-parser");
 const mysql = require("mysql");
 var http = require("http").createServer(app);
 const io = require("socket.io")(http);
-const route = require('./routes/index');
+const route = require("./routes/index");
 // nodemailer 모듈 요청
 const nodemailer = require("nodemailer");
 const { light } = require("@material-ui/core/styles/createPalette");
@@ -15,7 +15,7 @@ const { futimes } = require("fs");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "snsk3779@",
+  password: "root",
   database: "wagle",
 });
 
@@ -24,7 +24,7 @@ connection.connect();
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(bodyparser.json());
-app.use('/api', route);
+app.use("/api", route);
 io.on("connection", function (socket) {
   // 소켓을 연결하는 부분
   //socket이랑 연결된 부분

@@ -99,14 +99,10 @@ export default class Login extends Component {
             <button className="Btn_login" type="submit">
               로그인
             </button>
-            <input
-              className="Btn_login"
-              value="회원가입"
-              type="button"
-              onClick={this.singupBtn}
-            />
-            <button className="Btn_login" onClick={this.singupBtn}>
-              회원가입
+          </div>
+          <div>
+            <button className="Signup_btn" onClick={this.singupBtn}>
+              처음이신가요?
             </button>
           </div>
         </form>

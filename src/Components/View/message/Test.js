@@ -69,6 +69,7 @@ export default class Test extends Component {
             premsg: [...this.state.premsg, newrow],
           });
           console.log(this.state.premsg);
+          return null;
         });
       });
     console.log("시발라마 제발 되라" + queryObj.roomname);

@@ -30,13 +30,9 @@ export default class Start extends Component {
   }
 
   componentWillMount() {
-    
-      socket.on("apply", () => {
-       
-          socket.emit("matching", this.state._id, this.state.sex)
-      })
-      
-    
+    socket.on("apply", () => {
+      socket.emit("matching", this.state._id, this.state.sex);
+    });
   }
   modalopen = (e) => {
     e.preventDefault();
@@ -55,7 +51,12 @@ export default class Start extends Component {
       progress: (
         <CircularProgress
           color="secondary"
-          style={{ width: "100px", height: "100px", zIndex: "-3" }}
+          style={{
+            width: "100px",
+            height: "100px",
+            zIndex: "1",
+            position: "relative",
+          }}
         />
       ),
       open: true,

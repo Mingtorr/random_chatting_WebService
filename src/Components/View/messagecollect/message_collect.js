@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import io from "socket.io-client";
 import "./message_collect.css";
-import Messageroom_click from "./room_red";
-import Messageroom_white from "./room_white";
+import MessageroomClick from "./room_red";
+import MessageroomWhite from "./room_white";
 
 const socket = io("api");
 
@@ -91,7 +91,7 @@ export default class Message_collect extends React.Component {
             {this.state.messageroom.map((messageroom) => {
               if (messageroom.room_lastuserid === this.state.userid) {
                 return (
-                  <Messageroom_white
+                  <MessageroomWhite
                     userid={this.state.userid}
                     roomname={messageroom.room_roomname}
                     name={messageroom.room_touserid}
@@ -100,7 +100,7 @@ export default class Message_collect extends React.Component {
                 );
               } else {
                 return (
-                  <Messageroom_click
+                  <MessageroomClick
                     userid={this.state.userid}
                     roomname={messageroom.room_roomname}
                     name={messageroom.room_touserid}
