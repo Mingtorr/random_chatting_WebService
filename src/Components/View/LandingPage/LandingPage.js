@@ -101,9 +101,9 @@ export default class LandingPage extends Component {
 
         {/* 제목 */}
         <div className="Title_landing">
-          <text className="Title1_landing">창원대 과팅앱</text>
-          <text className="Title2_landing">창남 창녀.</text>
-          <text className="Title3_landing">우리... 할래요 ?</text>
+          <p className="Title1_landing">창원대 과팅앱</p>
+          <p className="Title2_landing">창남 창녀.</p>
+          <p className="Title3_landing">우리... 할래요 ?</p>
         </div>
 
         <div className="Title_landing">
