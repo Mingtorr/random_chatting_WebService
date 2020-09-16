@@ -76,6 +76,10 @@ export default class Update extends Component {
         });
     }
   };
+  onclickss = (e) => {
+    e.preventDefault();
+    window.location.replace("/main");
+  };
   updatePassword = () => {
     if (this.state.pass === "") {
       alert("변경할 비밀번호를 입력해주세요");
@@ -179,7 +183,7 @@ export default class Update extends Component {
             <div></div> */}
           {/* )} */}
           <div>
-            <button className="Btn_sign" type="submit">
+            <button className="Btn_sign" onClick={this.onclickss}>
               확인
             </button>
           </div>

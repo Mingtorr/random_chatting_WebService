@@ -40,13 +40,13 @@ export default class Login extends Component {
           //로그인 성공하면 localStorage에 저장하기
           json.onmatching = false;
           window.localStorage.setItem("user", JSON.stringify(json));
-          window.location.href = "/Main";
+          window.location.replace("/Main");
         }
       });
   };
   singupBtn = (e) => {
     e.preventDefault();
-    window.location.href = "/Signup";
+    window.location.replace("/Signup");
   };
 
   render() {

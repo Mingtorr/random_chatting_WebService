@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./Moddal.css";
-import { Link } from "react-router-dom";
 
 export default class Moddal extends Component {
   logout = () => {
@@ -8,6 +7,9 @@ export default class Moddal extends Component {
     window.location.href = "/";
   };
 
+  goUp = (e) => {
+    window.location.replace("/update");
+  };
   render() {
     return (
       <div className="Popup_modal">
@@ -17,9 +19,9 @@ export default class Moddal extends Component {
               X
             </button>
           </div>
-          <Link to="/Update">
+          <div onClick={this.goUp}>
             <button className="Update_modal">회원 정보 수정</button>
-          </Link>
+          </div>
           <button className="Btn_modal" onClick={this.logout}>
             로그아웃
           </button>

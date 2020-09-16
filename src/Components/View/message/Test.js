@@ -6,8 +6,9 @@ import Sendfrom from "./Sendfrom";
 import queryStirng from "query-string";
 import Dropmessage from "./drop";
 import ScrollToBottom from "react-scroll-to-bottom";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-const socket = io("http://localhost:3001/");
+const socket = io();
 
 export default class Test extends Component {
   constructor(props) {
@@ -129,11 +130,16 @@ export default class Test extends Component {
       body: JSON.stringify(post_2),
     }).then();
   };
-
+  goMcoll = (e) => {
+    window.location.replace("/Message_collect");
+  };
   render() {
     return (
       <div className="Container_test">
-        <div className="Title_Test">채팅방</div>
+        <div className="Title_Test">
+          <ArrowBackIcon style={{ fontSize: "50px" }} onClick={this.goMcoll} />
+          <span className="Chat_test">채팅방</span>
+        </div>
         <div className="message_table">
           <ScrollToBottom className="scrollbottom">
             {this.state.premsg.map((message) => {

@@ -4,8 +4,9 @@ import io from "socket.io-client";
 import "./message_collect.css";
 import MessageroomClick from "./room_red";
 import MessageroomWhite from "./room_white";
+import Footer from "../../Utils/Footer/Footer";
 
-const socket = io("http://localhost:3001/");
+const socket = io();
 
 export default class Message_collect extends React.Component {
   constructor(props) {
@@ -82,6 +83,10 @@ export default class Message_collect extends React.Component {
     });
   }
 
+  goHome = (e) => {
+    window.location.replace("/main");
+  };
+
   render() {
     return (
       <div className="messagerow_main">
@@ -110,6 +115,9 @@ export default class Message_collect extends React.Component {
               }
             })}
           </ScrollToBottom>
+        </div>
+        <div className="Footer_msg">
+          <Footer onClick={this.goHome} />
         </div>
       </div>
     );

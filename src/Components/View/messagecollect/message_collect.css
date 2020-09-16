@@ -277,3 +277,11 @@
   font-family: "Jalnan";
   color: white;
 }
+
+.Footer_msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  background-color: #131641;
+}

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./LandingPage.css";
-import { Link } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import Start from "../../Utils/Start/Start.js";
@@ -81,6 +80,10 @@ export default class LandingPage extends Component {
     window.location.href = "/";
   };
 
+  goMsg = (e) => {
+    window.location.replace("/Message_collect");
+  };
+
   render() {
     return (
       <div className="Container_landing" onClick={this.toggleClose}>
@@ -93,18 +96,18 @@ export default class LandingPage extends Component {
             <Moddal closePopup={this.handleOpen.bind(this)} />
           ) : null}
 
-          <Link to="/Message_collect">
+          <div onClick={this.goMsg}>
             <ChatBubbleOutlineIcon
               style={{ fontSize: 50, color: "white", marginTop: 10 }}
             />
-          </Link>
+          </div>
         </div>
 
         {/* 제목 */}
         <div className="Title_landing">
-          <p className="Title1_landing">창원대 과팅앱</p>
-          <p className="Title2_landing">창남 창녀.</p>
-          <p className="Title3_landing">우리... 할래요 ?</p>
+          <span className="Title1_landing">창원대 과팅앱</span>
+          <span className="Title2_landing">창남 창녀.</span>
+          <span className="Title3_landing">우리... 할래요 ?</span>
         </div>
 
         <div className="Title_landing">
