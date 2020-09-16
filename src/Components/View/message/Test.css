@@ -9,9 +9,8 @@
 }
 .Title_Test {
   border-bottom: 1px solid #eccecf;
-  margin-top: 5px;
   width: 100vw;
-  height: 7vh;
+  height: 44px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -29,7 +28,7 @@
 
 .Sendme_con {
   height: auto;
-  margin-top: 2vh;
+  margin-top: 15px;
   display: flex;
   /* justify-content: flex-end; */
   align-items: flex-end;
@@ -101,17 +100,19 @@
 }
 
 .Input_test {
+  position: absolute;
+  bottom: 0%;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
-  margin-top: 2vh;
-  height: 8vh;
+  margin-top: 14px;
+  height: 58.5px;
   background-color: #f05052;
 }
 .Input_test input {
   width: 64vw;
-  height: 3vh;
+  height: 22px;
   border-radius: 8px;
   border: 0px;
   padding-left: 3vw;
@@ -124,7 +125,7 @@
   border-radius: 24vh;
   border: 0;
   width: auto;
-  height: 6vh;
+  height: 44px;
   font-family: "Jalnan";
   font-size: 18px;
   margin-left: 5vw;
