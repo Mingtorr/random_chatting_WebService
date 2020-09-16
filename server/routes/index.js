@@ -152,6 +152,19 @@ router.post("/Signup", (req, res) => {
     }
   );
 });
+router.post("/onmatching", (req, res) => {
+  connection.query(
+    "SELECT * FROM wagle_room WHERE room_userid =(?)",
+    [req.body.userid],
+    function (err, rows, fields) {
+      if (rows[0] === undefined) {
+        res.send(false); //중복 없음 사용가능
+      } else {
+        res.send(true); // 중복 있음 사용안됨
+      }
+    }
+  );
+});
 //닉네임 중복검사 하는거
 router.post("/CheckNick", (req, res) => {
   const checkingNick = req.body.check_Nick;
@@ -182,25 +195,139 @@ router.post("/CheckId", (req, res) => {
     }
   );
 });
-//매칭테이블 확인
-router.post("/CheckMaching", (req, res) => {
-  console.log("매칭테이블 성별: " + req.body.sex);
-  const user_sex = req.body.sex;
-  if (user_sex === "M") {
-    connection.query("SELECT user");
+
+router.post("/CheckStart", (req, res) => {
+  if (req.body.sex === "M") {
+    connection.query(
+      "SELECT * FROM matching_table_m WHERE matching_userid = ?",
+      [req.body.userid],
+      function (err, rows, field) {
+        if (rows[0] === undefined) {
+          res.send(true);
+        } else {
+          res.send(false);
+        }
+      }
+    );
+  } else {
+    connection.query(
+      "SELECT * FROM matching_table_w WHERE matching_userid = ?",
+      [req.body.userid],
+      function (err, rows, field) {
+        if (rows[0] === undefined) {
+          res.send(true);
+        } else {
+          res.send(false);
+        }
+      }
+    );
   }
-  // const checkingNick = req.body.check_Nick;
-  // connection.query(
-  //   "SELECT user_nickname FROM user_info WHERE user_nickname =(?)",
-  //   [checkingNick],
-  //   function (err, rows, fields) {
-  //     if (rows[0] === undefined) {
-  //       res.send(true); //중복 없음 사용가능
-  //     } else {
-  //       res.send(false); // 중복 있음 사용안됨
-  //     }
-  //   }
-  // );
+});
+//매칭테이블 확인
+router.post("/CheckMatching", (req, res) => {
+  console.log("매칭테이블 성별: " + req.body.sex);
+  if (req.body.sex === "M") {
+    console.log("남 1");
+    connection.query("SELECT * FROM matching_table_w", [], function (
+      err,
+      rows,
+      fields
+    ) {
+      if (rows[0] === undefined) {
+        //매칭할 여자가 없을때 남자는 값을 넣는다.
+        //테이블 없음
+        console.log("매칭할 여자가 없음");
+        connection.query(
+          "INSERT INTO matching_table_m (matching_userid) values (?)",
+          [req.body.userid],
+          function (err, rows, field) {
+            const touserid = {
+              touserid: undefined,
+            };
+            console.log(touserid);
+            res.send(touserid); //생각
+          }
+        );
+      } else {
+        //매칭할 여자가 있을Eo
+        const userm = req.body.userid;
+        const userw = rows[0].matching_userid;
+        connection.query(
+          "INSERT INTO wagle_room (room_userid,room_touserid,room_roomname) values (?,?,?)",
+          [userm, userw, userm + userw],
+          function (err, rows, field) {
+            connection.query(
+              "delete from matching_table_w where matching_userid = ?",
+              [userw],
+              function (err, rows, field) {
+                if (err) {
+                  console.log("삭제 애러났음 ㅋㅋ");
+                }
+
+                const match_info = {
+                  userid: userm,
+                  touserid: userw,
+                  roomname: userm + userw,
+                };
+                res.send(match_info);
+              }
+            );
+          }
+        );
+      }
+    });
+  } else {
+    //여자일떄
+    console.log("여 1");
+    connection.query("SELECT * FROM matching_table_m", [], function (
+      err,
+      rows,
+      fields
+    ) {
+      if (rows[0] === undefined) {
+        //매칭할 남자가 없음 여자 값 넣음
+        //테이블 없음
+        console.log("매칭할 남자가 없음");
+        connection.query(
+          "INSERT INTO matching_table_w (matching_userid) values (?)",
+          [req.body.userid],
+          function (err, rows, field) {
+            const touserid = {
+              touserid: undefined,
+            };
+            console.log(touserid);
+            res.send(touserid); //생각
+          }
+        );
+      } else {
+        //매칭할 남자가 있을Eo
+        const userm = rows[0].matching_userid;
+        const userw = req.body.userid;
+        connection.query(
+          "INSERT INTO wagle_room (room_userid,room_touserid,room_roomname) values (?,?,?)",
+          [userw, userm, userm + userw],
+          function (err, rows, field) {
+            connection.query(
+              "delete from matching_table_m where matching_userid = ?",
+              [userm],
+              function (err, rows, field) {
+                if (err) {
+                  console.log("삭제 애러났음 ㅋㅋ");
+                }
+
+                const match_info = {
+                  userid: userw,
+                  touserid: userm,
+                  roomname: userm + userw,
+                };
+                res.send(match_info);
+              }
+            );
+          }
+        );
+      }
+    });
+  }
 });
 //로그인 하는 부분
 router.post("/login", (req, res) => {

@@ -14,6 +14,7 @@ export default class LandingPage extends Component {
       toggle: false,
       admin: false,
       open: false,
+      progress: "",
     };
   }
 

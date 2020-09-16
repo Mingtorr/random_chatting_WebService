@@ -30,8 +30,63 @@ export default class Start extends Component {
   }
 
   componentWillMount() {
-    socket.on("apply", () => {
-      socket.emit("matching", this.state._id, this.state.sex);
+    const user = {
+      userid: this.state._id,
+      sex: this.state.sex,
+    };
+    fetch("api/onmatching", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json === true) {
+          this.setState({
+            progress: "매칭완료했음으로 더이상 매칭은 안됩니다.",
+          });
+        } else {
+        }
+      });
+    fetch("api/CheckStart", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json) {
+        } else {
+          this.setState({
+            progress: (
+              <CircularProgress
+                color="secondary"
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  zIndex: "1",
+                  position: "relative",
+                }}
+              />
+            ),
+          });
+        }
+      });
+
+    socket.on("successmatching", (matching_info) => {
+      console.log("tlqkf");
+      this.setState({
+        progress: "매칭완료했음으로 더이상 매칭은 안됩니다.",
+      });
+      alert("매칭성공");
+    });
+    socket.emit("start join", this.state._id);
+    socket.on("a123", (userid) => {
+      alert("asdasdasd");
     });
   }
   modalopen = (e) => {
@@ -61,22 +116,30 @@ export default class Start extends Component {
       ),
       open: true,
     });
-    socket.emit("start", this.state._id, this.state.nick, this.state.sex);
 
-    socket.on("matching_success", () => {
-      console.log("매칭성공");
-      socket.emit("room_join", this.state._id, this.state.sex);
-      this.setState({
-        progress: (
-          <button className="Font_start" onClick={this.onMatching}>
-            {" "}
-            매칭 시작!{" "}
-          </button>
-        ),
+    const userid = {
+      userid: this.state._id,
+      sex: this.state.sex,
+    };
+    fetch("api/CheckMatching", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(userid),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        if (json.touserid === undefined) {
+        } else {
+          socket.emit("matchingtouser", json);
+          alert("매칭완료");
+          this.setState({
+            progress: "매칭완료했음으로 더이상 매칭은 안됩니다.",
+          });
+        }
       });
-      alert("매칭성공");
-      socket.disconnect();
-    });
   };
   componentDidMount() {}
 
