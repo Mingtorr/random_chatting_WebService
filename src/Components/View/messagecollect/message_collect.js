@@ -5,7 +5,7 @@ import "./message_collect.css";
 import MessageroomClick from "./room_red";
 import MessageroomWhite from "./room_white";
 
-const socket = io("api");
+const socket = io("http://localhost:3001/");
 
 export default class Message_collect extends React.Component {
   constructor(props) {

@@ -7,7 +7,7 @@ import queryStirng from "query-string";
 import Dropmessage from "./drop";
 import ScrollToBottom from "react-scroll-to-bottom";
 
-const socket = io("api");
+const socket = io("http://localhost:3001/");
 
 export default class Test extends Component {
   constructor(props) {

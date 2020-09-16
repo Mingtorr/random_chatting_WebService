@@ -182,6 +182,26 @@ router.post("/CheckId", (req, res) => {
     }
   );
 });
+//매칭테이블 확인
+router.post("/CheckMaching", (req, res) => {
+  console.log("매칭테이블 성별: " + req.body.sex);
+  const user_sex = req.body.sex;
+  if (user_sex === "M") {
+    connection.query("SELECT user");
+  }
+  // const checkingNick = req.body.check_Nick;
+  // connection.query(
+  //   "SELECT user_nickname FROM user_info WHERE user_nickname =(?)",
+  //   [checkingNick],
+  //   function (err, rows, fields) {
+  //     if (rows[0] === undefined) {
+  //       res.send(true); //중복 없음 사용가능
+  //     } else {
+  //       res.send(false); // 중복 있음 사용안됨
+  //     }
+  //   }
+  // );
+});
 //로그인 하는 부분
 router.post("/login", (req, res) => {
   const name = req.body.name;
