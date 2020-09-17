@@ -72,20 +72,49 @@ router.post("/message", (req, res) => {
 });
 router.post("/droproom", (req, res) => {
   connection.query(
-    "DELETE FROM wagle_room WHERE room_userid=? and room_touserid=?",
-    [req.body.userid, req.body.touserid],
+    "select * from wagle_room where room_userid = ?",
+    [req.body.userid],
     function (err, rows, field) {
-      console.log("칼럼삭제");
-      connection.query(
-        'update wagle_room set room_lastmessage = "상대방이 나갔습니다." ,room_lastuserid=? where room_userid = ? and room_touserid = ?',
-        [req.body.userid, req.body.touserid, req.body.userid],
-        function (err, rows, field) {
-          res.send();
-        }
-      );
+      if (rows[0].room_drop === null) {
+        connection.query(
+          "DELETE FROM wagle_room WHERE room_userid=? and room_touserid=?",
+          [req.body.userid, req.body.touserid],
+          function (err, rows, field) {
+            console.log("칼럼삭제");
+            connection.query(
+              'update wagle_room set room_drop=?, room_lastmessage = "상대방이 나갔습니다." ,room_lastuserid=? where room_userid = ? and room_touserid = ?',
+              [1, req.body.userid, req.body.touserid, req.body.userid],
+              function (err, rows, field) {
+                res.send();
+              }
+            );
+          }
+        );
+      } else {
+        connection.query(
+          "DELETE FROM wagle_room WHERE room_userid=? and room_touserid=?",
+          [req.body.userid, req.body.touserid],
+          function (err, rows, field) {
+            connection.query(
+              " DELETE FROM wagle_message WHERE (message_userid=? and message_touserid=?) or (message_userid =? and message_touserid=?)",
+              [
+                req.body.userid,
+                req.body.touserid,
+                req.body.touserid,
+                req.body.userid,
+              ],
+              function (err, rows, field) {
+                console.log("삭제 완료");
+                res.send();
+              }
+            );
+          }
+        );
+      }
     }
   );
 });
+
 //최근 메시지 저장
 router.post("/last", (req, res) => {
   const _id = req.body.userid;

@@ -7,8 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-const socket = io("http://localhost:3001");
-
+const socket = io("http://localhost:3001/");
 export default class Messageroom extends React.Component {
   constructor(props) {
     super(props);
@@ -96,7 +95,7 @@ export default class Messageroom extends React.Component {
           </div>
         </div>
         <div className="messageroom_button">
-          <button onClick={this.dropclick}>x</button>
+          <button onClick={this.modalopen}>x</button>
         </div>
       </div>
     );
