@@ -22,3 +22,10 @@
   justify-content: center;
   align-items: center;
 }
+
+.Progress_start {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

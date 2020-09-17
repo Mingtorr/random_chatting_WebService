@@ -463,6 +463,43 @@ router.post("/Update_password", (req, res) => {
     }
   );
 });
+
+//sql문에 매칭 취소
+router.post("/StopMatch", (req, res) => {
+  const _id = req.body._id;
+  const sex = req.body.sex;
+  console.log(_id);
+  if (sex === "M") {
+    connection.query(
+      "DELETE FROM matching_table_m WHERE matching_userid = ?",
+      [_id],
+      function (err, rows, fields) {
+        if (err) {
+          console.log("남자 매칭 취소 에러" + err);
+          res.send(false);
+        } else {
+          console.log("남자 매칭 취소 성공");
+          res.send(true);
+        }
+      }
+    );
+  } else {
+    connection.query(
+      "DELETE FROM matching_table_w WHERE matching_userid = ?",
+      [_id],
+      function (err, rows, fields) {
+        if (err) {
+          console.log("여자 매칭 취소 에러" + err);
+          res.send(false);
+        } else {
+          console.log("여자 매칭 취소 성공");
+          res.send(true);
+        }
+      }
+    );
+  }
+});
+
 /////삭제해야함
 router.post("/newmessage", (req, res) => {
   console.log();

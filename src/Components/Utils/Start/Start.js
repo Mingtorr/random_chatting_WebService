@@ -9,7 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const socket = io("http://localhost:3001");
+const socket = io();
 
 export default class Start extends Component {
   constructor(props) {
@@ -35,7 +35,6 @@ export default class Start extends Component {
       sex: this.state.sex,
     };
     fetch("api/onmatching", {
-      //매칭 되었는지 확인하고 되었다면 버튼 막기
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -46,9 +45,12 @@ export default class Start extends Component {
       .then((json) => {
         if (json === true) {
           this.setState({
-            progress: "매칭완료했음으로 더이상 매칭은 안됩니다.",
+            progress: (
+              <button className="Font_start">
+                다른 사람에게도 기회를 주세요
+              </button>
+            ),
           });
-          // window.location.reload(true);
         } else {
         }
       });
@@ -65,15 +67,20 @@ export default class Start extends Component {
         } else {
           this.setState({
             progress: (
-              <CircularProgress
-                color="secondary"
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  zIndex: "1",
-                  position: "relative",
-                }}
-              />
+              <div className="Progress_start">
+                <CircularProgress
+                  color="secondary"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    zIndex: "1",
+                    position: "relative",
+                  }}
+                />
+                <button className="Font2_start" onClick={this.stopMathing}>
+                  매칭취소
+                </button>
+              </div>
             ),
           });
         }
@@ -82,11 +89,11 @@ export default class Start extends Component {
     socket.on("successmatching", (matching_info) => {
       console.log("tlqkf");
       this.setState({
-        progress: "매칭완료했음으로 더이상 매칭은 안됩니다.",
+        progress: (
+          <button className="Font_start">다른 사람에게도 기회를 주세요</button>
+        ),
       });
-      window.location.reload(true);
       alert("매칭성공");
-      socket.emit("newmark", this.state._id);
     });
     socket.emit("start join", this.state._id);
     socket.on("a123", (userid) => {
@@ -105,18 +112,56 @@ export default class Start extends Component {
       open: false,
     });
   };
+
+  stopMathing = () => {
+    this.setState({
+      progress: (
+        <button className="Font_start" onClick={this.onMatching}>
+          {" "}
+          매칭 시작!{" "}
+        </button>
+      ),
+    });
+    alert("매칭 취소");
+    //modal로 바꾸기
+    const post = {
+      _id: this.state._id,
+      sex: this.state.sex,
+    };
+    fetch("api/StopMatch", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(post),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json === false) {
+          console.log("false");
+        } else {
+          console.log("true");
+        }
+      });
+  };
+
   onMatching = () => {
     this.setState({
       progress: (
-        <CircularProgress
-          color="secondary"
-          style={{
-            width: "100px",
-            height: "100px",
-            zIndex: "1",
-            position: "relative",
-          }}
-        />
+        <div className="Progress_start">
+          <CircularProgress
+            color="secondary"
+            style={{
+              width: "100px",
+              height: "100px",
+              zIndex: "1",
+              position: "relative",
+            }}
+          />
+          <button className="Font2_start" onClick={this.stopMathing}>
+            매칭취소
+          </button>
+        </div>
       ),
       open: true,
     });
@@ -140,7 +185,11 @@ export default class Start extends Component {
           socket.emit("matchingtouser", json);
           alert("매칭완료");
           this.setState({
-            progress: "매칭완료했음으로 더이상 매칭은 안됩니다.",
+            progress: (
+              <button className="Font_start">
+                다른 사람에게도 기회를 주세요
+              </button>
+            ),
           });
         }
       });
@@ -148,8 +197,6 @@ export default class Start extends Component {
   componentDidMount() {}
 
   render() {
-    //기존
-    // const {count} = this.state;
     return this.props.count === 1 ? (
       <div>
         <Dialog
@@ -177,19 +224,5 @@ export default class Start extends Component {
         <button className="Font2_start"> 매칭 찾기! </button>
       </div>
     );
-
-    //기존
-    // count === 5 ?
-    // <div>
-    //     <Link to ="#">
-    //         <button onClick={() => this.update(count)} className = "Font">{count} : {count} 과팅</button>
-    //     </Link>
-    // </div>
-    // :
-    // <div>
-    //     <Link to ="#">
-    //         <button onClick={() => this.modify(count + 1)} className = "Font">{count} : {count} 과팅</button>
-    //     </Link>
-    // </div>
   }
 }
