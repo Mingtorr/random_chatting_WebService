@@ -6,7 +6,7 @@ import MessageroomClick from "./room_red";
 import MessageroomWhite from "./room_white";
 import Footer from "../../Utils/Footer/Footer";
 
-const socket = io();
+const socket = io("http://localhost:3001");
 
 export default class Message_collect extends React.Component {
   constructor(props) {

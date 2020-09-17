@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import "./LandingPage.css";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
+import FiberNewRoundedIcon from "@material-ui/icons/FiberNewRounded";
 import Start from "../../Utils/Start/Start.js";
 import Moddal from "../../Utils/Modal/Moddal";
+import io from "socket.io-client";
+const socket = io("http://localhost:3001");
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -14,6 +17,8 @@ export default class LandingPage extends Component {
       admin: false,
       open: false,
       progress: "",
+      newmessage: false,
+      userid: JSON.parse(localStorage.getItem("user")).user_id,
     };
   }
 
@@ -64,6 +69,40 @@ export default class LandingPage extends Component {
     }
   };
   componentWillMount() {
+    socket.emit("start join", this.state.userid);
+    const userid = {
+      userid: this.state.userid,
+    };
+    socket.emit("newmark", this.state.userid);
+
+    socket.on("newmarking", (userid) => {
+      console.log("날두보다 새로운 메시지");
+      this.setState({
+        newmessage: true,
+      });
+      // window.location.reload(true);
+      // alert("날두보다 새로운 매시지 ");
+    });
+
+    // fetch("api/newmessage", {
+    //   method: "post",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(userid),
+    // })
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     if (json === true) {
+    //       // new 나와야함
+    //     } else {
+    //       // new 나오면 안됩
+    //     }
+    //     // this.setState({
+    //     //   newmessage: json,
+    //     // });
+    //   });
+
     if (localStorage.getItem("user") === null) {
       window.location.href = "/";
       alert("로그인해라");
@@ -81,6 +120,9 @@ export default class LandingPage extends Component {
   };
 
   goMsg = (e) => {
+    // this.setState({
+    //   newmessage: false,
+    // });
     window.location.replace("/Message_collect");
   };
 
@@ -96,11 +138,40 @@ export default class LandingPage extends Component {
             <Moddal closePopup={this.handleOpen.bind(this)} />
           ) : null}
 
-          <div onClick={this.goMsg}>
-            <ChatBubbleOutlineIcon
-              style={{ fontSize: 50, color: "white", marginTop: 10 }}
-            />
-          </div>
+          {this.state.newmessage ? (
+            <div onClick={this.goMsg} style={{ paddingRight: "12%" }}>
+              <ChatBubbleOutlineIcon
+                style={{
+                  fontSize: 50,
+                  color: "white",
+                  marginTop: 10,
+                  position: "absolute",
+                }}
+              />
+              <FiberNewRoundedIcon
+                style={{
+                  fontSize: 20,
+                  color: "#f05052",
+                  zIndex: "1",
+                  position: "absolute",
+                  marginTop: "10px",
+                  marginLeft: "31px",
+                  marginBottom: "40px",
+                }}
+              />{" "}
+            </div>
+          ) : (
+            <div onClick={this.goMsg} style={{ paddingRight: "12%" }}>
+              <ChatBubbleOutlineIcon
+                style={{
+                  fontSize: 50,
+                  color: "white",
+                  marginTop: 10,
+                  position: "absolute",
+                }}
+              />{" "}
+            </div>
+          )}
         </div>
 
         {/* 제목 */}

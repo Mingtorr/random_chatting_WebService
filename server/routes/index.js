@@ -434,6 +434,27 @@ router.post("/Update_password", (req, res) => {
     }
   );
 });
+/////삭제해야함
+router.post("/newmessage", (req, res) => {
+  console.log();
+  connection.query(
+    "SELECT * FROM wagle_room WHERE room_userid = (?)",
+    [req.body.userid],
+    function (err, rows, fields) {
+      if (err) {
+        console.log(err);
+        console.log("newmessage 찾기 err");
+      } else if (rows[0] === undefined) {
+        res.send(false);
+      } else if (rows[0].room_lastuserid === req.body.userid) {
+        //new가 아닐때
+        res.send(false);
+      } else {
+        res.send(true);
+      }
+    }
+  );
+});
 
 var mailSender = {
   // 메일발송 함수

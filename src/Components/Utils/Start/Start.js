@@ -9,7 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const socket = io();
+const socket = io("http://localhost:3001");
 
 export default class Start extends Component {
   constructor(props) {
@@ -35,6 +35,7 @@ export default class Start extends Component {
       sex: this.state.sex,
     };
     fetch("api/onmatching", {
+      //매칭 되었는지 확인하고 되었다면 버튼 막기
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -47,6 +48,7 @@ export default class Start extends Component {
           this.setState({
             progress: "매칭완료했음으로 더이상 매칭은 안됩니다.",
           });
+          // window.location.reload(true);
         } else {
         }
       });
@@ -82,7 +84,9 @@ export default class Start extends Component {
       this.setState({
         progress: "매칭완료했음으로 더이상 매칭은 안됩니다.",
       });
+      window.location.reload(true);
       alert("매칭성공");
+      socket.emit("newmark", this.state._id);
     });
     socket.emit("start join", this.state._id);
     socket.on("a123", (userid) => {

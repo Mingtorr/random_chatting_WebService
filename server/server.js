@@ -72,8 +72,38 @@ io.on("connection", function (socket) {
     console.log("sendmessage" + message);
     console.log("방이름" + message.roomname);
     //io 전체에 new message라는것을 보냄 but to('')는 특정 방에 보내는것
+    console.log(message.userid + "ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ123213213123123");
     io.to(message.roomname).emit("new message", message);
     io.to(message.touser).emit("new messageroom", message);
+    io.to(message.touser + "start").emit("newmarking", message.userid);
+  });
+  socket.on("newmark", (userid) => {
+    console.log("newmark");
+    connection.query(
+      "SELECT * FROM wagle_room WHERE room_userid = (?)",
+      [userid],
+      function (err, rows, fields) {
+        if (err) {
+          console.log(err);
+          console.log("newmessage 찾기 err");
+        } else if (rows[0] === undefined) {
+        } else if (rows[0].room_lastuserid === userid) {
+          console.log("new가 아닐때");
+          //new가 아닐때
+        } else {
+          console.log(
+            "new가 맞을때 rows[0].room_touserid: " + rows[0].room_touserid
+          );
+          // io.to(userid + "start").emit("newmarking");
+          socket.emit("newmarking");
+          io.to(rows[0].room_touserid + "start").emit(
+            "newmarking",
+            rows[0].room_touserid
+          );
+          // 상대방한테 emit
+        }
+      }
+    );
   });
 });
 
