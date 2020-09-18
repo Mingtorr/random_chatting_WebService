@@ -44,10 +44,15 @@ io.on("connection", function (socket) {
       "INSERT INTO wagle_room (room_userid,room_touserid,room_roomname) values (?,?,?)",
       [matching_info.touserid, matching_info.userid, matching_info.roomname],
       function (err, rows, field) {
-        console.log("여자도 완료");
         const username = matching_info.touserid + "start";
-        console.log(username);
+        console.log("매칭 완료되는거: " + matching_info);
+        console.log("username: " + username);
+        console.log("matching_info.touserid: " + matching_info.touserid);
+        console.log("matching_info.userid: " + matching_info.userid);
         io.to(username).emit("successmatching", matching_info);
+
+        io.to(matching_info.touserid + "start").emit("newmarking", username);
+        io.to(matching_info.userid + "start").emit("newmarking", username);
       }
     );
   });
@@ -76,34 +81,6 @@ io.on("connection", function (socket) {
     io.to(message.roomname).emit("new message", message);
     io.to(message.touser).emit("new messageroom", message);
     io.to(message.touser + "start").emit("newmarking", message.userid);
-  });
-  socket.on("newmark", (userid) => {
-    console.log("newmark");
-    connection.query(
-      "SELECT * FROM wagle_room WHERE room_userid = (?)",
-      [userid],
-      function (err, rows, fields) {
-        if (err) {
-          console.log(err);
-          console.log("newmessage 찾기 err");
-        } else if (rows[0] === undefined) {
-        } else if (rows[0].room_lastuserid === userid) {
-          console.log("new가 아닐때");
-          //new가 아닐때
-        } else {
-          console.log(
-            "new가 맞을때 rows[0].room_touserid: " + rows[0].room_touserid
-          );
-          // io.to(userid + "start").emit("newmarking");
-          socket.emit("newmarking");
-          io.to(rows[0].room_touserid + "start").emit(
-            "newmarking",
-            rows[0].room_touserid
-          );
-          // 상대방한테 emit
-        }
-      }
-    );
   });
 });
 

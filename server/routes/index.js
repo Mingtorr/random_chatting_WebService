@@ -75,7 +75,7 @@ router.post("/droproom", (req, res) => {
     "select * from wagle_room where room_userid = ?",
     [req.body.userid],
     function (err, rows, field) {
-      if (rows[0].room_drop === null) {
+      if (rows[0].room_drop === undefined) {
         connection.query(
           "DELETE FROM wagle_room WHERE room_userid=? and room_touserid=?",
           [req.body.userid, req.body.touserid],
@@ -500,28 +500,6 @@ router.post("/StopMatch", (req, res) => {
   }
 });
 
-/////삭제해야함
-router.post("/newmessage", (req, res) => {
-  console.log();
-  connection.query(
-    "SELECT * FROM wagle_room WHERE room_userid = (?)",
-    [req.body.userid],
-    function (err, rows, fields) {
-      if (err) {
-        console.log(err);
-        console.log("newmessage 찾기 err");
-      } else if (rows[0] === undefined) {
-        res.send(false);
-      } else if (rows[0].room_lastuserid === req.body.userid) {
-        //new가 아닐때
-        res.send(false);
-      } else {
-        res.send(true);
-      }
-    }
-  );
-});
-
 var mailSender = {
   // 메일발송 함수
   sendGmail: function (param) {
@@ -533,7 +511,7 @@ var mailSender = {
       requireTLS: true,
       auth: {
         user: "gjdnjsdud10@gmail.com",
-        pass: "ekdms!98",
+        pass: "wonyoung@0",
       },
     });
     // 메일 옵션

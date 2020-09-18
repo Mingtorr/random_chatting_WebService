@@ -6,7 +6,7 @@ import FiberNewRoundedIcon from "@material-ui/icons/FiberNewRounded";
 import Start from "../../Utils/Start/Start.js";
 import Moddal from "../../Utils/Modal/Moddal";
 import io from "socket.io-client";
-const socket = io();
+const socket = io("http://localhost:3001");
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -76,42 +76,15 @@ export default class LandingPage extends Component {
     socket.emit("newmark", this.state.userid);
 
     socket.on("newmarking", (userid) => {
-      console.log("날두보다 새로운 메시지");
       this.setState({
         newmessage: true,
       });
-      // window.location.reload(true);
-      // alert("날두보다 새로운 매시지 ");
     });
-
-    // fetch("api/newmessage", {
-    //   method: "post",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(userid),
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     if (json === true) {
-    //       // new 나와야함
-    //     } else {
-    //       // new 나오면 안됩
-    //     }
-    //     // this.setState({
-    //     //   newmessage: json,
-    //     // });
-    //   });
 
     if (localStorage.getItem("user") === null) {
       window.location.href = "/";
       alert("로그인해라");
     }
-    // console.log(JSON.parse(localStorage.getItem("user")));
-    // const user = JSON.parse(localStorage.getItem("user"));
-    // user.user_nickname = "sex";
-    // localStorage.setItem("user", JSON.stringify(user));
-    // console.log(JSON.parse(localStorage.getItem("user")));
   }
 
   logout = () => {
@@ -120,9 +93,6 @@ export default class LandingPage extends Component {
   };
 
   goMsg = (e) => {
-    // this.setState({
-    //   newmessage: false,
-    // });
     window.location.replace("/Message_collect");
   };
 
