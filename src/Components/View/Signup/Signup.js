@@ -24,7 +24,6 @@ export default class Signup extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
-    console.log(e.target.value);
   };
 
   sendEmail = (e) => {
@@ -49,7 +48,7 @@ export default class Signup extends Component {
           alert("이미 가입된 메일입니다.");
         } else {
           alert("인증 메일이 전송되었습니다.");
-          console.log(json);
+
           this.setState({
             authNum: json,
           });
@@ -177,7 +176,6 @@ export default class Signup extends Component {
       })
         .then((res) => res.json())
         .then((json) => {
-          console.log(json);
           if (json) {
             alert("회원가입 성공");
             window.location.href = "/";
@@ -196,7 +194,7 @@ export default class Signup extends Component {
             <text className="Intro_sign">창원대 과팅앱</text>
           </div>
           <div className="Textbox_sign">
-            <text className="Intro2_sign">창남 창녀.</text>
+            <text className="Intro2_sign">와글와글</text>
           </div>
           <div className="Text_sign">
             <label for="name">아이디 </label>
@@ -241,21 +239,6 @@ export default class Signup extends Component {
               onChange={this.handleChange}
               className="Input_sign"
             />
-          </div>
-
-          <div className="Text_sign">
-            <label for="nickname">닉네임 </label>
-            <input
-              type="text"
-              id="nickname"
-              name="nickname"
-              value={this.state.nickname}
-              onChange={this.handleChange}
-              className="Input_sign"
-            />
-            <button onClick={this.checkNick} className="Double_sign">
-              중복확인
-            </button>
           </div>
 
           <div className="Text_sign2">
@@ -317,9 +300,12 @@ export default class Signup extends Component {
             <div></div>
           )}
 
-          <div>
+          <div className="btn_sigh">
             <button className="Btn_sign" type="submit">
               회원가입
+            </button>
+            <button className="Btn_sign" type="submit">
+              로그인
             </button>
           </div>
         </form>

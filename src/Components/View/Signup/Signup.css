@@ -57,8 +57,6 @@ button.Btn_sign {
   border-radius: 60px;
   border: 0px;
   font-family: "Jalnan";
-  padding-left: 20vw;
-  padding-right: 20vw;
   font-size: 20px;
   background-color: #f05052;
   box-shadow: 0px 6px 2px 1px rgb(165, 165, 165);
@@ -118,4 +116,12 @@ button.Double_sign {
 .sex_div {
   display: flex;
   width: 63vw;
+}
+
+.btn_sigh {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
 }

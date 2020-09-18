@@ -39,16 +39,12 @@ io.on("connection", function (socket) {
     );
   });
   socket.on("matchingtouser", (matching_info) => {
-    console.log(matching_info.touserid);
     connection.query(
       "INSERT INTO wagle_room (room_userid,room_touserid,room_roomname) values (?,?,?)",
       [matching_info.touserid, matching_info.userid, matching_info.roomname],
       function (err, rows, field) {
         const username = matching_info.touserid + "start";
-        console.log("매칭 완료되는거: " + matching_info);
-        console.log("username: " + username);
-        console.log("matching_info.touserid: " + matching_info.touserid);
-        console.log("matching_info.userid: " + matching_info.userid);
+
         io.to(username).emit("successmatching", matching_info);
 
         io.to(matching_info.touserid + "start").emit("newmarking", username);
@@ -74,10 +70,8 @@ io.on("connection", function (socket) {
     io.to(post.touserid).emit("roomout2", post);
   });
   socket.on("send message", (message) => {
-    console.log("sendmessage" + message);
-    console.log("방이름" + message.roomname);
     //io 전체에 new message라는것을 보냄 but to('')는 특정 방에 보내는것
-    console.log(message.userid + "ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ123213213123123");
+
     io.to(message.roomname).emit("new message", message);
     io.to(message.touser).emit("new messageroom", message);
     io.to(message.touser + "start").emit("newmarking", message.userid);

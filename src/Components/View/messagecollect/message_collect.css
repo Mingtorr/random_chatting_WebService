@@ -43,6 +43,10 @@
   color: white;
   font-size: 4vh;
 }
+.MuiButton-label{
+  font-family: "Jalnan";
+  color: #f05052;
+}
 .message_sendme_main {
   height: auto;
   margin-top: 2vh;

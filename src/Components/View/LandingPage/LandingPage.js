@@ -6,7 +6,7 @@ import FiberNewRoundedIcon from "@material-ui/icons/FiberNewRounded";
 import Start from "../../Utils/Start/Start.js";
 import Moddal from "../../Utils/Modal/Moddal";
 import io from "socket.io-client";
-const socket = io("http://localhost:3001");
+const socket = io();
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -147,7 +147,7 @@ export default class LandingPage extends Component {
         {/* 제목 */}
         <div className="Title_landing">
           <span className="Title1_landing">창원대 과팅앱</span>
-          <span className="Title2_landing">창남 창녀.</span>
+          <span className="Title2_landing">와글와글</span>
           <span className="Title3_landing">우리... 할래요 ?</span>
         </div>
 

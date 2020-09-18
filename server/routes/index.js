@@ -20,9 +20,7 @@ router.post("/message_alldrop", (req, res) => {
   connection.query(
     " DELETE FROM wagle_message WHERE (message_userid=? and message_touserid=?) or (message_userid =? and message_touserid=?)",
     [req.body.userid, req.body.touserid, req.body.touserid, req.body.userid],
-    function (err, rows, field) {
-      console.log("삭제 완료");
-    }
+    function (err, rows, field) {}
   );
 });
 
@@ -63,9 +61,8 @@ router.post("/message", (req, res) => {
     [_id, _toid, body, roomname],
     function (err, rows, field) {
       if (err) {
-        console.log("실패");
       }
-      console.log("메세지 입력완료 ");
+
       res.send();
     }
   );
@@ -75,12 +72,11 @@ router.post("/droproom", (req, res) => {
     "select * from wagle_room where room_userid = ?",
     [req.body.userid],
     function (err, rows, field) {
-      if (rows[0].room_drop === undefined) {
+      if (rows[0].room_drop === null) {
         connection.query(
           "DELETE FROM wagle_room WHERE room_userid=? and room_touserid=?",
           [req.body.userid, req.body.touserid],
           function (err, rows, field) {
-            console.log("칼럼삭제");
             connection.query(
               'update wagle_room set room_drop=?, room_lastmessage = "상대방이 나갔습니다." ,room_lastuserid=? where room_userid = ? and room_touserid = ?',
               [1, req.body.userid, req.body.touserid, req.body.userid],
@@ -104,7 +100,6 @@ router.post("/droproom", (req, res) => {
                 req.body.userid,
               ],
               function (err, rows, field) {
-                console.log("삭제 완료");
                 res.send();
               }
             );
@@ -127,9 +122,8 @@ router.post("/last", (req, res) => {
     [last, _id, roomname],
     function (err, rows, field) {
       if (err) {
-        console.log("room_lastmessage: 업데이트 err");
       }
-      console.log("업데이트 완료");
+
       res.send();
     }
   );
@@ -154,7 +148,6 @@ router.post("/message_collect", (req, res) => {
     "select * from wagle_room where room_userid = ?",
     [userid],
     function (err, rows, field) {
-      console.log("message_collect api log" + rows);
       res.send(rows);
     }
   );
@@ -254,9 +247,7 @@ router.post("/CheckStart", (req, res) => {
 });
 //매칭테이블 확인
 router.post("/CheckMatching", (req, res) => {
-  console.log("매칭테이블 성별: " + req.body.sex);
   if (req.body.sex === "M") {
-    console.log("남 1");
     connection.query("SELECT * FROM matching_table_w", [], function (
       err,
       rows,
@@ -265,7 +256,7 @@ router.post("/CheckMatching", (req, res) => {
       if (rows[0] === undefined) {
         //매칭할 여자가 없을때 남자는 값을 넣는다.
         //테이블 없음
-        console.log("매칭할 여자가 없음");
+
         connection.query(
           "INSERT INTO matching_table_m (matching_userid) values (?)",
           [req.body.userid],
@@ -273,7 +264,7 @@ router.post("/CheckMatching", (req, res) => {
             const touserid = {
               touserid: undefined,
             };
-            console.log(touserid);
+
             res.send(touserid); //생각
           }
         );
@@ -290,7 +281,6 @@ router.post("/CheckMatching", (req, res) => {
               [userw],
               function (err, rows, field) {
                 if (err) {
-                  console.log("삭제 애러났음 ㅋㅋ");
                 }
 
                 const match_info = {
@@ -307,7 +297,7 @@ router.post("/CheckMatching", (req, res) => {
     });
   } else {
     //여자일떄
-    console.log("여 1");
+
     connection.query("SELECT * FROM matching_table_m", [], function (
       err,
       rows,
@@ -316,7 +306,7 @@ router.post("/CheckMatching", (req, res) => {
       if (rows[0] === undefined) {
         //매칭할 남자가 없음 여자 값 넣음
         //테이블 없음
-        console.log("매칭할 남자가 없음");
+
         connection.query(
           "INSERT INTO matching_table_w (matching_userid) values (?)",
           [req.body.userid],
@@ -324,7 +314,7 @@ router.post("/CheckMatching", (req, res) => {
             const touserid = {
               touserid: undefined,
             };
-            console.log(touserid);
+
             res.send(touserid); //생각
           }
         );
@@ -341,7 +331,6 @@ router.post("/CheckMatching", (req, res) => {
               [userm],
               function (err, rows, field) {
                 if (err) {
-                  console.log("삭제 애러났음 ㅋㅋ");
                 }
 
                 const match_info = {
@@ -364,7 +353,7 @@ router.post("/login", (req, res) => {
   const pass = req.body.pass;
   const box = {};
   box.boolean = false;
-  console.log("시발");
+
   connection.query(
     "SELECT user_id FROM user_info WHERE user_id = (?)",
     [name],
@@ -435,10 +424,9 @@ router.post("/Update_nick", (req, res) => {
           "UPDATE user_info SET user_nickname =(?) WHERE user_nickname =(?)",
           [nick, preNick]
         );
-        console.log("닉네임 업데이트 실패");
+
         res.send(true);
       } else {
-        console.log("중복된 닉네임");
         res.send(false);
       }
     }
@@ -448,17 +436,13 @@ router.post("/Update_nick", (req, res) => {
 router.post("/Update_password", (req, res) => {
   const pass = req.body.pass;
   const user_id = req.body._id;
-  console.log(pass);
-  console.log(user_id);
+
   connection.query(
     "UPDATE user_info SET user_password =(?) WHERE user_id =(?)",
     [pass, user_id],
     function (err, rows, fields) {
       if (err) {
-        console.log(err);
-        console.log("비밀번호 변경실패");
       } else {
-        console.log("비밀번호 변경성공");
       }
     }
   );
@@ -468,17 +452,15 @@ router.post("/Update_password", (req, res) => {
 router.post("/StopMatch", (req, res) => {
   const _id = req.body._id;
   const sex = req.body.sex;
-  console.log(_id);
+
   if (sex === "M") {
     connection.query(
       "DELETE FROM matching_table_m WHERE matching_userid = ?",
       [_id],
       function (err, rows, fields) {
         if (err) {
-          console.log("남자 매칭 취소 에러" + err);
           res.send(false);
         } else {
-          console.log("남자 매칭 취소 성공");
           res.send(true);
         }
       }
@@ -489,10 +471,8 @@ router.post("/StopMatch", (req, res) => {
       [_id],
       function (err, rows, fields) {
         if (err) {
-          console.log("여자 매칭 취소 에러" + err);
           res.send(false);
         } else {
-          console.log("여자 매칭 취소 성공");
           res.send(true);
         }
       }
@@ -524,9 +504,7 @@ var mailSender = {
     // 메일 발송
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
       } else {
-        console.log("Email sent: " + info.response);
       }
     });
   },

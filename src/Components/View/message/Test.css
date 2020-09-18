@@ -157,3 +157,12 @@
   font-family: "Jalnan";
   color: white;
 }
+
+.drop_messagetime {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-family: "Jalnan";
+  color: white;
+}

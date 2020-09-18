@@ -42,12 +42,12 @@
 }
 
 .Btn_modal {
-  margin-top: 20%;
+  margin-top: 10%;
   width: 40vw;
   background-color: #f05052;
   color: white;
   height: 5vh;
-  font-size: 15px;
+  font-size: 18px;
   font-family: "Jalnan";
   border: 0px;
   border-radius: 50px;
@@ -64,4 +64,19 @@
   border: 0px;
   text-decoration: none;
   border-radius: 50px;
+}
+
+.Span_exp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+  flex-direction: column;
+}
+
+.Style_exp {
+  font-size: 17px;
+  color: #f05052;
+  font-family: "Jalnan";
+  margin-bottom: 10px;
 }

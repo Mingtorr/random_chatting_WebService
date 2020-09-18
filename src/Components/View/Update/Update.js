@@ -47,8 +47,7 @@ export default class Update extends Component {
         preNick: this.state.nickname,
         nick: this.state.update_nickname,
       };
-      console.log(this.state.nickname);
-      console.log(this.state.update_nickname);
+
       fetch("api/Update_nick", {
         method: "post",
         headers: {
@@ -63,12 +62,11 @@ export default class Update extends Component {
             update_info.user_nickname = this.state.update_nickname;
             localStorage.setItem("user", JSON.stringify(update_info));
 
-            console.log(JSON.parse(localStorage.getItem("user")));
             this.setState({
               user_nickname: JSON.parse(localStorage.getItem("user"))
                 .user_nickname,
             });
-            console.log("state의 닉네임: " + this.state.user_nickname);
+
             alert("닉네임이 변경되었습니다.");
           } else {
             alert("이미 사용중인 닉네임 입니다.");

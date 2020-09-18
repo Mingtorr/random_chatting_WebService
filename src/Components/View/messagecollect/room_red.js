@@ -7,8 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-
-const socket = io("http://localhost:3001");
+const socket = io();
 
 export default class Messageroom_click extends React.Component {
   constructor(props) {
@@ -77,16 +76,13 @@ export default class Messageroom_click extends React.Component {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              상대방이 슬퍼하질도몰라요 다시 생각해보세요 ㅠㅠ
+              상대방이 슬퍼하질도몰라요.
+              <br /> 다시 생각해보세요 ㅠㅠ
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.dropclick} color="primary">
-              나가기
-            </Button>
-            <Button onClick={this.modalclose} color="primary" autoFocus>
-              되돌아가기
-            </Button>
+            <Button onClick={this.dropclick}>나가기</Button>
+            <Button onClick={this.modalclose}>되돌아가기</Button>
           </DialogActions>
         </Dialog>
         <div className="messageroom_main_click" onClick={this.onClick}>

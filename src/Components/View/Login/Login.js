@@ -68,7 +68,7 @@ export default class Login extends Component {
               <text className="Intro_login">창원대 과팅앱</text>
             </div>
             <div className="Textbox_login">
-              <text className="Intro2_login">창남 창녀.</text>
+              <text className="Intro2_login">와글와글</text>
             </div>
           </div>
 

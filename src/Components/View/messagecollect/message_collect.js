@@ -6,7 +6,7 @@ import MessageroomClick from "./room_red";
 import MessageroomWhite from "./room_white";
 import Footer from "../../Utils/Footer/Footer";
 
-const socket = io("http://localhost:3001");
+const socket = io();
 
 export default class Message_collect extends React.Component {
   constructor(props) {
@@ -31,7 +31,6 @@ export default class Message_collect extends React.Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         this.setState({
           messageroom: json,
         });
@@ -40,7 +39,7 @@ export default class Message_collect extends React.Component {
       const index = this.state.messageroom.findIndex(
         (x) => x.room_touserid === post.userid
       );
-      console.log("인덱스" + index);
+
       if (index === -1) {
         fetch("api/message_alldrop", {
           method: "post",
@@ -59,11 +58,10 @@ export default class Message_collect extends React.Component {
       }
     });
     socket.on("new messageroom", (post) => {
-      console.log(post.userid);
       const index = this.state.messageroom.findIndex(
         (x) => x.room_touserid === post.userid
       );
-      console.log("인덱스" + index);
+
       if (index === -1) {
         fetch("api/message_alldrop", {
           method: "post",

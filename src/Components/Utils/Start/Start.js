@@ -8,8 +8,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
-const socket = io("http://localhost:3001");
+import Photos from "./photos.png";
+const socket = io();
 
 export default class Start extends Component {
   constructor(props) {
@@ -87,13 +87,12 @@ export default class Start extends Component {
       });
 
     socket.on("successmatching", (matching_info) => {
-      console.log("tlqkf");
       this.setState({
         progress: (
           <button className="Font_start">다른 사람에게도 기회를 주세요</button>
         ),
+        open: true,
       });
-      alert("매칭성공");
     });
     socket.emit("start join", this.state._id);
     socket.on("a123", (userid) => {
@@ -138,9 +137,7 @@ export default class Start extends Component {
       .then((res) => res.json())
       .then((json) => {
         if (json === false) {
-          console.log("false");
         } else {
-          console.log("true");
         }
       });
   };
@@ -163,7 +160,6 @@ export default class Start extends Component {
           </button>
         </div>
       ),
-      open: true,
     });
 
     const userid = {
@@ -179,12 +175,11 @@ export default class Start extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         if (json.touserid === undefined) {
         } else {
           socket.emit("matchingtouser", json);
-          alert("매칭완료");
           this.setState({
+            open: true,
             progress: (
               <button className="Font_start">
                 다른 사람에게도 기회를 주세요
@@ -198,25 +193,26 @@ export default class Start extends Component {
 
   render() {
     return this.props.count === 1 ? (
-      <div>
+      <div className="matching_dialog">
         <Dialog
           open={this.state.open}
           onClose={this.modalclose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"매칭 주의사항"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title2">
+            <img id="photos" src={Photos} width="30vw" height="30vw" />
+            {"매칭 완료!"}
+            <div className="photos"></div>
+          </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              매칭을 하고 다른 페이지로 이동시 매칭이 취소되요 ㅠㅠ
+              매칭이 완료 되었습니다.
+              <br /> 오른쪽 상단의 메시지함으로 들어가세요.
             </DialogContentText>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={this.modalclose} color="primary">
-              나가기
-            </Button>
-          </DialogActions>
         </Dialog>
+
         <div className="start_progress">{this.state.progress}</div>
       </div>
     ) : (
