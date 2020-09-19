@@ -6,7 +6,7 @@ import FiberNewRoundedIcon from "@material-ui/icons/FiberNewRounded";
 import Start from "../../Utils/Start/Start.js";
 import Moddal from "../../Utils/Modal/Moddal";
 import io from "socket.io-client";
-const socket = io();
+const socket = io("http://localhost:3001");
 
 export default class LandingPage extends Component {
   constructor(props) {

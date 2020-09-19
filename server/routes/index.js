@@ -382,34 +382,6 @@ router.post("/login", (req, res) => {
   );
 });
 
-router.post("/Sendmail", (req, res) => {
-  const email = req.body.sendEmail;
-  var authNum = Math.floor(Math.random() * 1000000) + 100000;
-  if (authNum > 1000000) {
-    authNum = authNum - 100000;
-  }
-
-  let emailParam = {
-    toEmail: email + "@chanwon.ac.kr", //gmail.com -> changwon.ac.kr로 수정하기
-    subject: "회원가입 인증 메일입니다.",
-    text: "인증번호는 " + authNum + "입니다.",
-  };
-  connection.query(
-    "SELECT user_email FROM user_info WHERE user_email = (?)",
-    [email],
-    function (err, rows, fields) {
-      if (rows[0] === undefined) {
-        //중복된 메일 없음 메일 발송
-        mailSender.sendGmail(emailParam);
-        res.send(authNum.toString());
-      } else {
-        //중복된 메일이 있음
-        res.send(true);
-      }
-    }
-  );
-});
-
 //닉네임 업데이트하기
 router.post("/Update_nick", (req, res) => {
   const nick = req.body.nick;
@@ -480,23 +452,51 @@ router.post("/StopMatch", (req, res) => {
   }
 });
 
+router.post("/Sendmail", (req, res) => {
+  const email = req.body.sendEmail;
+  var authNum = Math.floor(Math.random() * 1000000) + 100000;
+  if (authNum > 1000000) {
+    authNum = authNum - 100000;
+  }
+
+  let emailParam = {
+    // toEmail: email + "@changwon.ac.kr", //gmail.com -> changwon.ac.kr로 수정하기
+    toEmail: "dnjsdud2257@gmail.com",
+    subject: "와글와글 회원가입 인증 메일입니다.",
+    text: "인증번호는 " + authNum + "입니다.",
+  };
+
+  connection.query(
+    "SELECT user_email FROM user_info WHERE user_email = (?)",
+    [email],
+    function (err, rows, fields) {
+      if (rows[0] === undefined) {
+        //중복된 메일 없음 메일 발송
+        mailSender.sendGmail(emailParam);
+        res.send(authNum.toString());
+      } else {
+        //중복된 메일이 있음
+        res.send(true);
+      }
+    }
+  );
+});
+
 var mailSender = {
   // 메일발송 함수
   sendGmail: function (param) {
+    console.log(param);
     var transporter = nodemailer.createTransport({
       service: "gmail",
-      prot: 587,
-      host: "smtp.gmail.com",
-      secure: false,
-      requireTLS: true,
+      prot: 465,
       auth: {
-        user: "gjdnjsdud10@gmail.com",
-        pass: "wonyoung@0",
+        user: "waglewagle20@gmail.com",
+        pass: "changwon@0",
       },
     });
     // 메일 옵션
     var mailOptions = {
-      from: "gjdnjsdud10@gmail.com",
+      from: "waglewagle20@gmail.com",
       to: param.toEmail, // 수신할 이메일
       subject: param.subject, // 메일 제목
       text: param.text, // 메일 내용
@@ -504,7 +504,9 @@ var mailSender = {
     // 메일 발송
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
+        console.log(error);
       } else {
+        console.log("Email sent: " + info.response);
       }
     });
   },

@@ -9,7 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Photos from "./photos.png";
-const socket = io();
+const socket = io("http://localhost:3001");
 
 export default class Start extends Component {
   constructor(props) {
