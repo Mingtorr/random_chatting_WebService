@@ -147,6 +147,10 @@ export default class Signup extends Component {
         });
     }
   };
+  moveLogin = (e) => {
+    e.preventDefault();
+    window.location.replace("/");
+  };
 
   onSubmit = (e) => {
     e.preventDefault(); //이벤트 발생시 새로고침을 안하게 한다.
@@ -304,7 +308,7 @@ export default class Signup extends Component {
             <button className="Btn_sign" type="submit">
               회원가입
             </button>
-            <button className="Btn_sign" type="submit">
+            <button className="Btn_sign" onClick={this.moveLogin}>
               로그인
             </button>
           </div>

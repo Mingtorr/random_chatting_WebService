@@ -8,6 +8,7 @@ const io = require("socket.io")(http);
 const nodemailer = require("nodemailer");
 const { light } = require("@material-ui/core/styles/createPalette");
 const { futimes } = require("fs");
+const hbs = require("nodemailer-express-handlebars");
 //mysql연결
 var connection = mysql.createConnection({
   host: "localhost",
@@ -452,6 +453,10 @@ router.post("/StopMatch", (req, res) => {
   }
 });
 
+router.post("/test", (req, res) => {
+  console.log("이메일 보내기 접속 확인");
+});
+
 router.post("/Sendmail", (req, res) => {
   const email = req.body.sendEmail;
   var authNum = Math.floor(Math.random() * 1000000) + 100000;
@@ -494,12 +499,24 @@ var mailSender = {
         pass: "changwon@0",
       },
     });
+
+    transporter.use(
+      "compile",
+      hbs({
+        viewEngine: "express-handlebars",
+        viewPath: "../server/",
+      })
+    );
     // 메일 옵션
     var mailOptions = {
       from: "waglewagle20@gmail.com",
       to: param.toEmail, // 수신할 이메일
       subject: param.subject, // 메일 제목
       text: param.text, // 메일 내용
+      // html:
+      //   '<div style ="background-image:url("background.jpg");width: 434px; height: 609; background-repeat: no-repeat; display: flex; > <div style= "display: flex; flex-direction: column"><span style="font-size: 16px; color: #f05052">창원대 과팅앱</span><span style="font-size: 40px; color: #f05052">와글와글</span> </div> <div style ="display: flex; flex-direction: column; justify-content:center; align-item:center; margin-top: 90px;"><span style="font-size: 20px; color: #f05052">인증번호는 123123입니다.</span></div> </div>',
+      // html: '<img src = "background.jpg"/>',
+      template: "main",
     };
     // 메일 발송
     transporter.sendMail(mailOptions, function (error, info) {
