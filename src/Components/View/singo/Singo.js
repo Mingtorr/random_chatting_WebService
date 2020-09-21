@@ -20,7 +20,6 @@ class Singo extends React.Component {
     this.setState({
       [e.target.name]: e.target.value, // input 태그에 연결돼 있는 친군데
     }); // 입력 시 이름에 맞는 state 값이 초기화 된다
-    console.log(this.state.title + this.state.content);
   };
 
   onSubmit = (e) => {

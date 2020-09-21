@@ -1,10 +1,11 @@
-import React, { Component } from "react";
-import "./Moddal.css";
+import React from "react";
+import "./Singo.css";
 import HomeIcon from "@material-ui/icons/Home";
 
-export default class Report extends Component {
+class Singo extends React.Component {
   constructor(props) {
     super(props);
+
     const user_info = JSON.parse(localStorage.getItem("user"));
     this.state = {
       userid: user_info.user_id,
@@ -13,10 +14,14 @@ export default class Report extends Component {
     };
   }
 
-  handleChg = (e) => {
+  home = (e) => {
+    window.location.replace("/main");
+  };
+
+  onChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value,
-    });
+      [e.target.name]: e.target.value, // input 태그에 연결돼 있는 친군데
+    }); // 입력 시 이름에 맞는 state 값이 초기화 된다
   };
 
   reportBad = () => {
@@ -45,55 +50,56 @@ export default class Report extends Component {
     }
   };
 
-  goMain = () => {
-    window.location.replace("/main");
-  };
   render() {
     return (
-      <div className="Report_one">
-        <span className="Report_rep">비매너 유저 신고</span>
-        <span className="Report_plz">
-          {" "}
-          노력하는 창대 학생 개발팀이 되겠습니다
-          <br /> 여러분의 신고에 끊임없는 피드백 수정이 <br />
-          이루어질 예정입니다 감사합니다
-        </span>
+      <div className="Singo_page">
+        <header>비매너유저신고</header>
+        <body className="Singo_body">
+          <span>
+            {" "}
+            빠르고 정확하게 비매너유저를 처리하겠습니다.
+            <br /> 신중한 신고 감사합니다. <br />
+            신고가 빠른 시간내에 이루어질 예정입니다 감사합니다
+          </span>
+          <article>
+            <div className="Singo_article">
+              <form>
+                <div className="first_input">
+                  <span>비매너유저</span>
+                  <input
+                    type="text"
+                    name="badman"
+                    placeholder="비매너유저입력"
+                    onChange={this.onChange}
+                  ></input>
+                </div>
 
-        <div className="Report_form">
-          {/* <div className="Xbtn_modal">
-            <button onClick={this.goMain} className="Xbtn_modal2">
-              X
-            </button>
-          </div> */}
+                <div className="second_input">
+                  <div>내용</div>
+                  <div>
+                    <textarea
+                      name="reason"
+                      placeholder="최대 200자까지 가능해요"
+                      onChange={this.onChange}
+                    ></textarea>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </article>
+        </body>
+        <footer>
+          <button onClick={this.reportBad}>제출</button>
 
-          <div className="Span_rep2">
-            <span className="Style_exp">유저 아이디</span>
-            <input
-              placeholder="신고할 대상의 닉네임"
-              name="badman"
-              onChange={this.handleChg}
-            />
-          </div>
-          <span className="Style_exp">신고 사유</span>
-          <div className="report_input">
-            <textarea
-              placeholder="최대 300자까지 가능해요."
-              name="reason"
-              onChange={this.handleChg}
-            />
-          </div>
-        </div>
-        <div className="Report_footer">
-          <button onClick={this.reportBad} className="Report_button">
-            접수하기
-          </button>
           <HomeIcon
             className="Home_footer"
-            onClick={this.goMain}
+            onClick={this.home}
             style={{ fontSize: 50 }}
           />
-        </div>
+        </footer>
       </div>
     );
   }
 }
+
+export default Singo;
