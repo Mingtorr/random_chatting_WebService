@@ -46,12 +46,12 @@ export default class Moddal extends Component {
               X
             </button>
           </div>
-          <button className="Btn_modal" onClick={this.changeExp}>
+          {/* <button className="Btn_modal" onClick={this.changeExp}>
             설명서
           </button>
           {this.state.explain ? (
             <Explain closeExp={this.changeExp.bind(this)} />
-          ) : null}
+          ) : null} */}
 
           {/* <div onClick={this.goUp}>
             <button className="Btn_modal">회원 정보 수정</button>

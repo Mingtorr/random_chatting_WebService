@@ -76,7 +76,7 @@ export default class Report extends Component {
           </div>
           <span className="Style_exp">신고 사유</span>
           <div className="report_input">
-            <input
+            <textarea
               placeholder="최대 300자까지 가능해요."
               name="reason"
               onChange={this.handleChg}

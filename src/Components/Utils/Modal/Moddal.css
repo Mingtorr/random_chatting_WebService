@@ -42,7 +42,7 @@
 }
 
 .Btn_modal {
-  margin-top: 4%;
+  margin-top: 7%;
   width: 40vw;
   background-color: #f05052;
   color: white;
@@ -67,18 +67,29 @@
 }
 
 .Span_exp {
+  margin-top: 7px;
   display: flex;
-  justify-content: center;
+  line-height: 15px;
+  justify-content: flex-start;
   align-items: center;
-  height: 70%;
+  height: 60%;
   flex-direction: column;
 }
 
 .Style_exp {
-  font-size: 3vh;
+  font-size: 2.5vh;
   color: #f05052;
   font-family: "Jalnan";
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
+  width: 30%;
+}
+
+.Style_exp3 {
+  font-size: 12px;
+  color: #f05052;
+  font-family: "Jalnan";
+  /* margin-bottom: 10px; */
+  width: 70%;
 }
 
 .Style_exp2 {
@@ -131,7 +142,7 @@
   flex-direction: row;
   width: 100%;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -141,7 +152,7 @@
   height: 25px;
   border-radius: 12px;
   border: 0px;
-  margin-left: 15px;
+  margin-left: 5px;
   width: 150px;
   padding-left: 10px;
 }
@@ -167,7 +178,7 @@
   height: 250px;
 }
 
-.report_input input {
+.report_input textarea {
   /* display: block; */
   font-family: "Jalnan";
   width: 80%;
@@ -188,4 +199,10 @@
   font-family: "Jalnan";
   border: 0px;
   border-radius: 50px;
+}
+
+.Title_mod {
+  font-family: "Jalnan";
+  font-size: "20px";
+  font-weight: 500;
 }

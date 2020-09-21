@@ -327,12 +327,6 @@ export default class Signup extends Component {
               onChange={this.handleChange}
               className="Input_sign"
             />
-            {/* <input
-              type="button"
-              value="중복확인"
-              onClick={this.checkId}
-              className="Double_sign"
-            /> */}
             <button className="Double_sign" onClick={this.checkId}>
               중복확인
             </button>

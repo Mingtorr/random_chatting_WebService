@@ -10,9 +10,24 @@
 }
 
 .Set_landing {
-  flex-direction: row-reverse;
+  flex-direction: row;
+  justify-content: space-between;
   display: flex;
   width: 100vw;
+}
+
+.Title_use {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 170px;
+  height: 40px;
+}
+
+.Title_usee {
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .Title_landing {
@@ -55,6 +70,13 @@
   color: white;
   font-size: 25px;
   font-family: "Jalnan";
+}
+
+.Title4_landing {
+  color: white;
+  font-size: 15px;
+  font-family: "Jalnan";
+  margin-top: 10px;
 }
 
 .Start_landing {

@@ -468,7 +468,6 @@ router.post("/Badman", (req, res) => {
         console.log(err);
         res.send(false);
       } else {
-        console.log("신고접수");
         res.send(true);
       }
     }
@@ -487,8 +486,8 @@ router.post("/Sendmail", (req, res) => {
   }
 
   let emailParam = {
-    // toEmail: email + "@changwon.ac.kr", //gmail.com -> changwon.ac.kr로 수정하기
-    toEmail: "dnjsdud2257@gmail.com",
+    toEmail: email + "@changwon.ac.kr", //gmail.com -> changwon.ac.kr로 수정하기
+    // toEmail: "dnjsdud2257@gmail.com",
     subject: "와글와글 회원가입 인증 메일입니다.",
     text: "인증번호는 " + authNum + "입니다.",
   };
@@ -507,12 +506,6 @@ router.post("/Sendmail", (req, res) => {
       }
     }
   );
-});
-
-router.get("/", function (req, res) {
-  var emailHtml;
-  emailHTML = emailHTML.parse;
-  res.render("");
 });
 
 var mailSender = {
@@ -600,8 +593,6 @@ var mailSender = {
 router.post("/Singo", (req, res) => {
   let singo_title = req.body.title;
   let singo_content = req.body.content;
-
-  console.log(req);
 
   let sql = "INSERT INTO singo_table (singo_title,singo_content) VALUES(?, ?);";
 

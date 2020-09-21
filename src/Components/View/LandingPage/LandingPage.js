@@ -12,7 +12,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Soju from "./soju.png";
-const socket = io("http://localhost:3001");
+import Heart from "./heart.png";
+import Triangle from "./triangle.png";
+import Explain from "../../Utils/Modal/Explain";
+import Caution from "../../Utils/Modal/Caution";
+
+const socket = io();
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -26,8 +31,24 @@ export default class LandingPage extends Component {
       newmessage: false,
       userid: JSON.parse(localStorage.getItem("user")).user_id,
       openEvent: false,
+      openEvent2: false,
+      openEvent3: false,
+      use: false,
+      caution: false,
     };
   }
+
+  handleUse = () => {
+    this.setState({
+      use: !this.state.use,
+    });
+  };
+
+  handleCau = () => {
+    this.setState({
+      caution: !this.state.caution,
+    });
+  };
 
   handleOpen = () => {
     this.setState({
@@ -78,7 +99,30 @@ export default class LandingPage extends Component {
       openEvent: false,
     });
   };
-
+  modalopenEvent2 = (e) => {
+    e.preventDefault();
+    this.setState({
+      openEvent2: true,
+    });
+  };
+  modalcloseEvent2 = (e) => {
+    e.preventDefault();
+    this.setState({
+      openEvent2: false,
+    });
+  };
+  modalopenEvent3 = (e) => {
+    e.preventDefault();
+    this.setState({
+      openEvent3: true,
+    });
+  };
+  modalcloseEvent3 = (e) => {
+    e.preventDefault();
+    this.setState({
+      openEvent3: false,
+    });
+  };
   handleToggle = (e) => {
     this.setState({ toggle: !this.state.toggle });
   };
@@ -121,47 +165,58 @@ export default class LandingPage extends Component {
       <div className="Container_landing" onClick={this.toggleClose}>
         {/* 메시지 햄버거 */}
         <div className="Set_landing">
-          <button onClick={this.handleOpen} className="Btn_landing">
-            <MenuIcon style={{ fontSize: 50, color: "white", marginTop: 5 }} />
-          </button>
-          {this.state.open ? (
-            <Moddal closePopup={this.handleOpen.bind(this)} />
-          ) : null}
+          <div className="Title_use">
+            <span className="Title4_landing" onClick={this.modalopenEvent2}>
+              설명서
+            </span>
+            <span className="Title4_landing" onClick={this.modalopenEvent3}>
+              주의사항
+            </span>
+          </div>
 
-          {this.state.newmessage ? (
-            <div onClick={this.goMsg} style={{ paddingRight: "12%" }}>
-              <ChatBubbleOutlineIcon
-                style={{
-                  fontSize: 50,
-                  color: "white",
-                  marginTop: 10,
-                  position: "absolute",
-                }}
+          <div className="Title_usee">
+            <button onClick={this.handleOpen} className="Btn_landing">
+              <MenuIcon
+                style={{ fontSize: 50, color: "white", marginTop: 5 }}
               />
-              <FiberNewRoundedIcon
-                style={{
-                  fontSize: 20,
-                  color: "#f05052",
-                  zIndex: "1",
-                  position: "absolute",
-                  marginTop: "10px",
-                  marginLeft: "31px",
-                  marginBottom: "40px",
-                }}
-              />{" "}
-            </div>
-          ) : (
-            <div onClick={this.goMsg} style={{ paddingRight: "12%" }}>
-              <ChatBubbleOutlineIcon
-                style={{
-                  fontSize: 50,
-                  color: "white",
-                  marginTop: 10,
-                  position: "absolute",
-                }}
-              />{" "}
-            </div>
-          )}
+            </button>
+            {this.state.open ? (
+              <Moddal closePopup={this.handleOpen.bind(this)} />
+            ) : null}
+
+            {this.state.newmessage ? (
+              <div onClick={this.goMsg}>
+                <ChatBubbleOutlineIcon
+                  style={{
+                    fontSize: 50,
+                    color: "white",
+                    marginTop: 10,
+                  }}
+                />
+                <FiberNewRoundedIcon
+                  style={{
+                    fontSize: 30,
+                    color: "#f05052",
+                    zIndex: "1",
+                    position: "absolute",
+                    marginTop: "20px",
+                    marginLeft: "-41px",
+                    marginBottom: "40px",
+                  }}
+                />{" "}
+              </div>
+            ) : (
+              <div onClick={this.goMsg}>
+                <ChatBubbleOutlineIcon
+                  style={{
+                    fontSize: 50,
+                    color: "white",
+                    marginTop: 10,
+                  }}
+                />{" "}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* 제목 */}
@@ -212,6 +267,61 @@ export default class LandingPage extends Component {
               주의사항: <br />
               1. 한 테이블당 한번만! <br />
               2. 쿠폰 양심껏 사용하기
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          open={this.state.openEvent2}
+          onClose={this.modalcloseEvent2}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle>
+            {" "}
+            <img src={Heart} width="20px" height="20px" />
+            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;설명서 &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              1. 매칭을 누른다.
+              <br />
+              <br />
+              2. 매칭이 되면 우측상단의 메시지함 버튼을 누른다.
+              <br />
+              <br />
+              3. 자유로운 채팅을 즐긴다.
+              <br />
+              <br />
+              4. 다음 매칭을 즐기려면 메시지함을 삭제한다.
+              <br />
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          open={this.state.openEvent3}
+          onClose={this.modalcloseEvent3}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle>
+            {" "}
+            <img src={Triangle} width="20px" height="20px" />
+            &nbsp;&nbsp;&nbsp;&nbsp; 주의사항 &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              1. 화면 내 버튼만 사용해서 이동해야합니다.
+              <br />
+              <br />
+              2. 카카오톡 브라우저로 접속하면 느려요.
+              <br />
+              ex) 삼성 인터넷, 사파리 등을 권장드립니다.
+              <br />
+              <br />
+              3. 모바일 접속을 권장드립니다.
+              <br />
             </DialogContentText>
           </DialogContent>
         </Dialog>
