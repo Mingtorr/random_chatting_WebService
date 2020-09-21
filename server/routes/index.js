@@ -8,7 +8,6 @@ const io = require("socket.io")(http);
 const nodemailer = require("nodemailer");
 const { light } = require("@material-ui/core/styles/createPalette");
 const { futimes } = require("fs");
-const hbs = require("nodemailer-express-handlebars");
 //mysql연결
 var connection = mysql.createConnection({
   host: "localhost",
@@ -487,6 +486,12 @@ router.post("/Sendmail", (req, res) => {
   );
 });
 
+router.get("/", function (req, res) {
+  var emailHtml;
+  emailHTML = emailHTML.parse;
+  res.render("");
+});
+
 var mailSender = {
   // 메일발송 함수
   sendGmail: function (param) {
@@ -500,23 +505,63 @@ var mailSender = {
       },
     });
 
-    transporter.use(
-      "compile",
-      hbs({
-        viewEngine: "express-handlebars",
-        viewPath: "../server/",
-      })
-    );
     // 메일 옵션
     var mailOptions = {
       from: "waglewagle20@gmail.com",
       to: param.toEmail, // 수신할 이메일
       subject: param.subject, // 메일 제목
       text: param.text, // 메일 내용
-      // html:
-      //   '<div style ="background-image:url("background.jpg");width: 434px; height: 609; background-repeat: no-repeat; display: flex; > <div style= "display: flex; flex-direction: column"><span style="font-size: 16px; color: #f05052">창원대 과팅앱</span><span style="font-size: 40px; color: #f05052">와글와글</span> </div> <div style ="display: flex; flex-direction: column; justify-content:center; align-item:center; margin-top: 90px;"><span style="font-size: 20px; color: #f05052">인증번호는 123123입니다.</span></div> </div>',
-      // html: '<img src = "background.jpg"/>',
-      template: "main",
+      html: `<body style="margin: 0; padding: 0">
+      <div style=
+        font-family: " Apple SD Gothic Neo", "sans-serif" ; width: 540px; height: 600px; border-top: 4px solid #f05052;
+        margin: 100px auto; padding: 30px 0; box-sizing: border-box; ">
+        <h1 style=" margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400">
+        <span style="font-size: 15px; margin: 0 0 10px 3px">창원대 과팅앱</span><br />
+        <b style="color: #f05052">메일인증</b> 안내입니다.
+        </h1>
+        <p style="
+              font-size: 16px;
+              line-height: 26px;
+              margin-top: 50px;
+              padding: 0 5px;
+            ">
+          안녕하세요.<br />
+          <b style="color: #f05052">와글와글</b>에 가입해 주셔서 진심으로
+          감사드립니다.<br />
+          아래
+          <b style="color: #f05052">'인증 번호'</b>를 입력하여 회원가입을 완료해
+          주세요.<br />
+          감사합니다. <br /><br />
+          인증번호: ${param.text}
+          <script>
+            document.write(authNumber);
+          </script>
+        </p>
+    
+        <a style="color: #fff; text-decoration: none; text-align: center" href="{$auth_url}" target="_blank">
+          <p style="
+                display: inline-block;
+                width: 210px;
+                height: 45px;
+                margin: 30px 5px 40px;
+                background: #f05052;
+                line-height: 45px;
+                vertical-align: middle;
+                font-size: 16px;
+              " class="move_wagle">
+            와글 홈페이지로 이동
+          </p>
+        </a>
+    
+        <div style="border-top: 1px solid #ddd; padding: 5px">
+          <p style="font-size: 13px; line-height: 21px; color: #555">
+            만약 버튼이 정상적으로 클릭되지 않는다면, 아래 링크를 복사하여 접속해
+            주세요.<br />
+            {$auth_url}
+          </p>
+        </div>
+      </div>
+    </body>`,
     };
     // 메일 발송
     transporter.sendMail(mailOptions, function (error, info) {
@@ -528,5 +573,19 @@ var mailSender = {
     });
   },
 };
+
+router.post("/Singo", (req, res) => {
+  let singo_title = req.body.title;
+  let singo_content = req.body.content;
+
+  console.log(req);
+
+  let sql = "INSERT INTO singo_table (singo_title,singo_content) VALUES(?, ?);";
+
+  connection.query(sql, [singo_title, singo_content], function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
+});
 
 module.exports = router;

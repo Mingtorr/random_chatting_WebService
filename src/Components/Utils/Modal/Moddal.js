@@ -25,6 +25,10 @@ export default class Moddal extends Component {
     });
   };
 
+  goSingo = (e) => {
+    window.location.replace("/Singo_page");
+  };
+
   render() {
     return (
       <div className="Popup_modal">
@@ -46,6 +50,10 @@ export default class Moddal extends Component {
           </div> */}
           <button className="Btn_modal" onClick={this.logout}>
             로그아웃
+          </button>
+
+          <button className="Btn_modal" onClick={this.goSingo}>
+            불편사항 신고
           </button>
         </div>
       </div>

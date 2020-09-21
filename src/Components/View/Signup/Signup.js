@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import "./Signup.css";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 export default class Signup extends Component {
   constructor(props) {
@@ -17,9 +21,48 @@ export default class Signup extends Component {
       authNum: "", //보낸 인증번호
       authCheckNum: "", // 사용자가 적은 인증번호
       sendEmailClick: false,
+      open1: false,
+      open2: false,
+      open3: false,
     };
   }
 
+  modalopen1 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open1: true,
+    });
+  };
+  modalclose1 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open1: false,
+    });
+  };
+  modalopen2 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open2: true,
+    });
+  };
+  modalclose2 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open2: false,
+    });
+  };
+  modalopen3 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open3: true,
+    });
+  };
+  modalclose3 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open3: false,
+    });
+  };
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -45,9 +88,17 @@ export default class Signup extends Component {
       .then((res) => res.json())
       .then((json) => {
         if (json === true) {
-          alert("이미 가입된 메일입니다.");
+          // alert("이미 가입된 메일입니다.");
+          this.setState({
+            open2: true,
+            text2: "이미 가입된 메일입니다.",
+          });
         } else {
-          alert("인증 메일이 전송되었습니다.");
+          // alert("인증 메일이 전송되었습니다.");
+          this.setState({
+            open2: true,
+            text2: "인증 메일이 전송되었습니다.",
+          });
 
           this.setState({
             authNum: json,
@@ -59,12 +110,18 @@ export default class Signup extends Component {
   authEmail = (e) => {
     e.preventDefault();
     if (this.state.authNum.toString() === this.state.authCheckNum.toString()) {
-      alert("인증성공");
+      this.setState({
+        open2: true,
+        text2: "인증성공",
+      });
       this.setState({
         checked_email: true,
       });
     } else {
-      alert("인증실패");
+      this.setState({
+        open2: true,
+        text2: "인증 실패",
+      });
     }
   };
 
@@ -72,7 +129,10 @@ export default class Signup extends Component {
     if (re.test(what)) {
       return true;
     }
-    alert(message);
+    this.setState({
+      open1: true,
+      text1: message,
+    });
     return false;
   };
 
@@ -101,12 +161,18 @@ export default class Signup extends Component {
         .then((res) => res.json())
         .then((json) => {
           if (json) {
-            alert("사용가능한 아이디 입니다.");
+            this.setState({
+              open1: true,
+              text1: "사용 가능한 아이디 입니다.",
+            });
             this.setState({
               checked_id: true,
             });
           } else {
-            alert("이미 사용중인 아이디 입니다.");
+            this.setState({
+              open1: true,
+              text1: "이미 사용중인 아이디 입니다.",
+            });
           }
         });
     }
@@ -119,7 +185,7 @@ export default class Signup extends Component {
       !this.check(
         re,
         this.state.nickname,
-        "닉네임은 2~8자의 영문 한글 숫자로만 입력가능합니다."
+        "닉네임은 2~8자의 영문 한글 숫자로만 <br/>입력가능합니다."
       )
     ) {
       return false;
@@ -155,13 +221,25 @@ export default class Signup extends Component {
   onSubmit = (e) => {
     e.preventDefault(); //이벤트 발생시 새로고침을 안하게 한다.
     if (!this.state.checked_id) {
-      alert("아이디 중복검사를 해주세요");
+      this.setState({
+        open2: true,
+        text2: "아이디 중복 검사를 해주세요",
+      });
     } else if (!(this.state.pass === this.state.pass2)) {
-      alert("비밀번호가 일지하지 않습니다.");
-    } else if (!this.state.checked_nick) {
-      alert("닉네임 중복검사를 해주세요");
+      this.setState({
+        open2: true,
+        text2: "비밀번호가 일치하지 않습니다.",
+      });
     } else if (!this.state.checked_email) {
-      alert("메일 인증을 해주세요");
+      this.setState({
+        open2: true,
+        text2: "메일 인증을 해주세요.",
+      });
+    } else if (this.state.sex === "") {
+      this.setState({
+        open2: true,
+        text2: "성별 채크를 해주세요.",
+      });
     } else {
       const user_info = {
         _id: this.state._id,
@@ -181,10 +259,16 @@ export default class Signup extends Component {
         .then((res) => res.json())
         .then((json) => {
           if (json) {
-            alert("회원가입 성공");
+            this.setState({
+              open3: true,
+              text3: "회원가입 성공",
+            });
             window.location.href = "/";
           } else {
-            alert("회원가입 실패");
+            this.setState({
+              open3: true,
+              text3: "회원가입 실패",
+            });
           }
         });
     }
@@ -193,6 +277,38 @@ export default class Signup extends Component {
   render() {
     return (
       <div className="White_sign">
+        <Dialog
+          open={this.state.open1}
+          onClose={this.modalclose1}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {this.state.text1}
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          open={this.state.open2}
+          onClose={this.modalclose2}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {this.state.text2}
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          open={this.state.open3}
+          onClose={this.modalclose3}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title2">{this.state.text3}</DialogTitle>
+        </Dialog>
         <form className="Container_sign" onSubmit={this.onSubmit}>
           <div className="Textbox_sign" style={{ marginTop: "15px" }}>
             <text className="Intro_sign">창원대 과팅앱</text>

@@ -1,0 +1,150 @@
+.Singo_page {
+  font-family: "Jalnan";
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Singo_page header {
+  color: white;
+  text-align: center;
+  font-size: 4vh;
+  margin-top: 50px;
+}
+
+.Singo_body {
+  /* border: 1px solid blueviolet; */
+  height: auto;
+}
+
+.Singo_body > span {
+  margin-top: 20px;
+  color: #f05052;
+  font-family: "Jalnan";
+  display: block;
+  text-align: center;
+  line-height: 1.5em;
+}
+
+.Singo_body article {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  margin-top: 20px;
+  display: block;
+  /* border-top: 1px solid white; */
+  /* border-bottom: 1px solid white; */
+}
+
+.Singo_body article {
+  display: flex;
+  justify-content: center;
+  height: auto;
+}
+
+.Singo_body article > div {
+  background-color: white;
+  width: 90%;
+  height: 400px;
+  border-radius: 15px;
+}
+
+.Singo_page footer button {
+  width: 40vw;
+  background-color: #f05052;
+  color: white;
+  height: 5vh;
+  font-size: 18px;
+  font-family: "Jalnan";
+  border: 0px;
+  border-radius: 50px;
+}
+
+.Singo_article {
+  display: flex;
+  justify-content: center;
+}
+
+.Singo_article div span {
+  color: #f05052;
+  font-family: "Jalnan";
+  font-size: 3vh;
+}
+
+.second_input div {
+  color: #f05052;
+  font-family: "Jalnan";
+  font-size: 3vh;
+  text-align: center;
+}
+
+.first_input {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.Singo_article {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 50px;
+}
+
+.first_input input {
+  background-color: rgb(216, 216, 216);
+  font-family: "Jalnan";
+  height: 25px;
+  border-radius: 12px;
+
+  border: 0px;
+  margin-left: 15px;
+
+  width: 200px;
+  padding-left: 10px;
+}
+
+.second_input {
+  display: flex;
+  /* border: 1px solid black; */
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.second_input div {
+  display: flex;
+  justify-content: center;
+}
+
+.second_input textarea {
+  /* display: block; */
+  font-family: "Jalnan";
+  width: 80%;
+  height: 250px;
+  background-color: rgb(216, 216, 216);
+
+  border-radius: 12px;
+
+  border: 0px;
+
+  margin-top: 10px;
+  padding-left: 10px;
+
+  padding-top: 10px;
+}
+
+.Singo_page footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  bottom: 20px;
+}
+
+.Singo_page footer button {
+  margin-right: 10px;
+}

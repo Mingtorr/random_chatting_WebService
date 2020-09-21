@@ -29,17 +29,16 @@
   align-items: center;
   flex-direction: column;
 }
-.MuiTypography-root.MuiTypography-h6{
+.MuiTypography-root.MuiTypography-h6 {
   text-align: center;
   font-family: "Jalnan";
-  color:  #1d1b1b;
-  margin-right: 8vw;
+  color: #1d1b1b;
 }
-.MuiTypography-root.MuiDialogContentText-root.MuiTypography-body1.MuiTypography-colorTextSecondary{
+.MuiTypography-root.MuiDialogContentText-root.MuiTypography-body1.MuiTypography-colorTextSecondary {
   font-family: "Jalnan";
-  color:  rgb(73, 73, 73);
+  color: rgb(73, 73, 73);
   font-size: 14px;
 }
-#photos{
+#photos {
   margin-right: 5vw;
 }

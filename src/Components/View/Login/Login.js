@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Login.css";
-
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -8,9 +10,21 @@ export default class Login extends Component {
       name1: "",
       pass: "",
       success: false,
+      open: false,
     };
   }
-
+  modalopen1 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open: true,
+    });
+  };
+  modalclose1 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open: false,
+    });
+  };
   handleName = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -33,9 +47,15 @@ export default class Login extends Component {
       .then((res) => res.json())
       .then((json) => {
         if (json.boolean === false) {
-          alert("아이디 또는 비밀번호가 틀렸어요ㅠㅠ");
+          this.setState({
+            open: true,
+            text1: "아이디 또는 비밀번호가 틀렸어요",
+          });
         } else {
-          alert("로그인 성공");
+          this.setState({
+            open: true,
+            text1: "로그인 성공",
+          });
           //자바스크립트 라우트
           //로그인 성공하면 localStorage에 저장하기
           json.onmatching = false;
@@ -52,6 +72,18 @@ export default class Login extends Component {
   render() {
     return (
       <div className="White_login">
+        <Dialog
+          open={this.state.open}
+          onClose={this.modalclose1}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {this.state.text1}
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
         {/* style  안주면 안먹혀 이유는 몰랑 */}
         <form
           style={{
