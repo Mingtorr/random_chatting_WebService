@@ -21,7 +21,7 @@
 }
 
 .Text_login {
-  width: 65%;
+  width: 80%;
   margin-top: 15px;
   font-family: "Jalnan";
   font-size: 15px;
@@ -31,6 +31,7 @@
 
 .Input_login {
   border: 0px;
+  width: 70%;
 }
 
 .Input_login_id {

@@ -7,6 +7,7 @@ export default class Moddal extends Component {
     super(props);
     this.state = {
       explain: false,
+      report: false,
     };
   }
 
@@ -29,6 +30,13 @@ export default class Moddal extends Component {
     window.location.replace("/Singo_page");
   };
 
+  goReport = (e) => {
+    this.setState({
+      report: !this.state.report,
+    });
+    window.location.replace("/report");
+  };
+
   render() {
     return (
       <div className="Popup_modal">
@@ -48,12 +56,14 @@ export default class Moddal extends Component {
           {/* <div onClick={this.goUp}>
             <button className="Btn_modal">회원 정보 수정</button>
           </div> */}
-          <button className="Btn_modal" onClick={this.logout}>
-            로그아웃
-          </button>
-
           <button className="Btn_modal" onClick={this.goSingo}>
             불편사항 신고
+          </button>
+          <button className="Btn_modal" onClick={this.goReport}>
+            비매너 신고
+          </button>
+          <button className="Btn_modal" onClick={this.logout}>
+            로그아웃
           </button>
         </div>
       </div>

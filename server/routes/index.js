@@ -452,6 +452,27 @@ router.post("/StopMatch", (req, res) => {
   }
 });
 
+//badman
+router.post("/Badman", (req, res) => {
+  const _id = req.body.userid;
+  const bad = req.body.badman;
+  const reason = req.body.reason;
+
+  connection.query(
+    "INSERT INTO bad_man (userid, badman, reason) values (?, ?,?)",
+    [_id, bad, reason],
+    function (err, rows, fields) {
+      if (err) {
+        console.log(err);
+        res.send(false);
+      } else {
+        console.log("신고접수");
+        res.send(true);
+      }
+    }
+  );
+});
+
 router.post("/test", (req, res) => {
   console.log("이메일 보내기 접속 확인");
 });

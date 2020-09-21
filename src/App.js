@@ -9,6 +9,7 @@ import Update from "./Components/View/Update/Update";
 import MessageCollect from "./Components/View/messagecollect/message_collect";
 import Message from "./Components/View/message/Test";
 import Singo from "./Components/View/singo/Singo";
+import Report from "./Components/Utils/Modal/Report";
 export default class App extends Component {
   render() {
     return (
@@ -46,6 +47,9 @@ export default class App extends Component {
             </Route>
             <Route path="/singo_page">
               <Singo />
+            </Route>
+            <Route path="/Report">
+              <Report />
             </Route>
           </Switch>
         </div>

@@ -26,7 +26,7 @@
   width: 100vw;
   flex-direction: column;
   height: 83vh;
-  border: 1px solid yellow;
+  /* border: 1px solid yellow; */
 }
 .messagerow_scroll {
   display: flex;
@@ -34,7 +34,7 @@
   width: 100vw;
   flex-direction: column;
   height: 90vh;
-  border: 1px solid yellow;
+  /* border: 1px solid yellow; */
   justify-content: center;
   align-content: center;
 }
@@ -43,7 +43,7 @@
   color: white;
   font-size: 4vh;
 }
-.MuiButton-label{
+.MuiButton-label {
   font-family: "Jalnan";
   color: #f05052;
 }
