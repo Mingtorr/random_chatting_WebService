@@ -40,12 +40,7 @@ export default class Moddal extends Component {
   render() {
     return (
       <div className="Popup_modal">
-        <div className="Popupinner_modal">
-          <div className="Xbtn_modal">
-            <button onClick={this.props.closePopup} className="Xbtn_modal2">
-              X
-            </button>
-          </div>
+        <div>
           {/* <button className="Btn_modal" onClick={this.changeExp}>
             설명서
           </button>

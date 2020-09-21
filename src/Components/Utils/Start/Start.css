@@ -38,6 +38,7 @@
   font-family: "Jalnan";
   color: rgb(73, 73, 73);
   font-size: 14px;
+  width: auto;
 }
 #photos {
   margin-right: 5vw;

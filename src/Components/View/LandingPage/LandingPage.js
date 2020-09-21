@@ -33,6 +33,7 @@ export default class LandingPage extends Component {
       openEvent: false,
       openEvent2: false,
       openEvent3: false,
+      openEvent4: false,
       use: false,
       caution: false,
     };
@@ -123,6 +124,18 @@ export default class LandingPage extends Component {
       openEvent3: false,
     });
   };
+  modalopenEvent4 = (e) => {
+    e.preventDefault();
+    this.setState({
+      openEvent4: true,
+    });
+  };
+  modalcloseEvent4 = (e) => {
+    e.preventDefault();
+    this.setState({
+      openEvent4: false,
+    });
+  };
   handleToggle = (e) => {
     this.setState({ toggle: !this.state.toggle });
   };
@@ -175,14 +188,11 @@ export default class LandingPage extends Component {
           </div>
 
           <div className="Title_usee">
-            <button onClick={this.handleOpen} className="Btn_landing">
+            <button onClick={this.modalopenEvent4} className="Btn_landing">
               <MenuIcon
                 style={{ fontSize: 50, color: "white", marginTop: 5 }}
               />
             </button>
-            {this.state.open ? (
-              <Moddal closePopup={this.handleOpen.bind(this)} />
-            ) : null}
 
             {this.state.newmessage ? (
               <div onClick={this.goMsg}>
@@ -247,6 +257,18 @@ export default class LandingPage extends Component {
         <div className="Title_landing">
           <Start count={this.state.count} />
         </div>
+        <Dialog
+          open={this.state.openEvent4}
+          onClose={this.modalcloseEvent4}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent id="sibal">
+            <DialogContentText id="alert-dialog-description">
+              <Moddal />
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
         <Dialog
           open={this.state.openEvent}
           onClose={this.modalcloseEvent}

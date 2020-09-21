@@ -8,7 +8,13 @@
   background-image: url(../../../assets/Images/background.jpg);
   background-repeat: no-repeat;
 }
-
+#alert_sivbal {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  width: 200px;
+  height: auto;
+}
 .Set_landing {
   flex-direction: row;
   justify-content: space-between;
