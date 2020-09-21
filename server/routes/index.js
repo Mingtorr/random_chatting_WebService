@@ -272,9 +272,10 @@ router.post("/CheckMatching", (req, res) => {
         //매칭할 여자가 있을Eo
         const userm = req.body.userid;
         const userw = rows[0].matching_userid;
+        const lastmessage = "매칭이 성공적으로 되었습니다.";
         connection.query(
-          "INSERT INTO wagle_room (room_userid,room_touserid,room_roomname) values (?,?,?)",
-          [userm, userw, userm + userw],
+          "INSERT INTO wagle_room (room_userid,room_touserid,room_lastmessage,room_roomname) values (?,?,?,?)",
+          [userm, userw, lastmessage, userm + userw],
           function (err, rows, field) {
             connection.query(
               "delete from matching_table_w where matching_userid = ?",
@@ -322,9 +323,10 @@ router.post("/CheckMatching", (req, res) => {
         //매칭할 남자가 있을Eo
         const userm = rows[0].matching_userid;
         const userw = req.body.userid;
+        const lastmessage = "매칭이 성공적으로 되었습니다.";
         connection.query(
-          "INSERT INTO wagle_room (room_userid,room_touserid,room_roomname) values (?,?,?)",
-          [userw, userm, userm + userw],
+          "INSERT INTO wagle_room (room_userid,room_touserid,room_lastmessage,room_roomname) values (?,?,?,?)",
+          [userw, userm, lastmessage, userm + userw],
           function (err, rows, field) {
             connection.query(
               "delete from matching_table_m where matching_userid = ?",

@@ -7,6 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
+import Soju from "../LandingPage/soju.png";
 const socket = io("http://localhost:3001");
 
 export default class Messageroom extends React.Component {
@@ -86,7 +87,9 @@ export default class Messageroom extends React.Component {
           </DialogActions>
         </Dialog>
         <div className="messageroom_main" onClick={this.onClick}>
-          <div className="messageroom_img"></div>
+          <div className="messageroom_img">
+            <img src={Soju} width="50vw" height="50vw" />
+          </div>
           <div className="messageroom_body">
             <div className="messageroom_body_name">{this.props.name}</div>
             <div className="messageroom_body_main">{this.props.body}</div>

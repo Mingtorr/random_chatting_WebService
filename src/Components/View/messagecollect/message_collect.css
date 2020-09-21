@@ -175,12 +175,15 @@
 }
 .messageroom_img {
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 18vw;
   height: 18vw;
   border-radius: 50%;
-  background-color: rgb(209, 209, 209);
+  background-color: rgb(241, 241, 241);
   margin-left: 3vw;
 }
+
 .messageroom_body {
   display: flex;
   flex-direction: column;

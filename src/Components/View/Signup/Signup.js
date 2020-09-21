@@ -138,12 +138,13 @@ export default class Signup extends Component {
 
   checkId = (e) => {
     e.preventDefault();
-    var re = /^[a-zA-Z0-9]{4,12}$/; //아이디는 4~12자의 영문 대소문자와 숫자로만 입력
+    // var re = /^[a-zA-Z0-9]{4,12}$/; //아이디는 4~12자의 영문 대소문자와 숫자로만 입력
+    var re = /^[a-zA-z가-힣]{2,8}$/;
     if (
       !this.check(
         re,
         this.state._id,
-        "아이디는 4~12자의 영문 대소문자와 숫자로만 입력가능합니다."
+        "닉네임은 2~8자의 '영문' '한글' 로만 입력가능합니다."
       )
     ) {
       return false;
@@ -163,7 +164,7 @@ export default class Signup extends Component {
           if (json) {
             this.setState({
               open1: true,
-              text1: "사용 가능한 아이디 입니다.",
+              text1: "사용 가능한 닉네임 입니다.",
             });
             this.setState({
               checked_id: true,
@@ -171,7 +172,7 @@ export default class Signup extends Component {
           } else {
             this.setState({
               open1: true,
-              text1: "이미 사용중인 아이디 입니다.",
+              text1: "이미 사용중인 닉네임 입니다.",
             });
           }
         });
@@ -223,7 +224,7 @@ export default class Signup extends Component {
     if (!this.state.checked_id) {
       this.setState({
         open2: true,
-        text2: "아이디 중복 검사를 해주세요",
+        text2: "닉네임 중복 검사를 해주세요",
       });
     } else if (!(this.state.pass === this.state.pass2)) {
       this.setState({
@@ -317,7 +318,7 @@ export default class Signup extends Component {
             <text className="Intro2_sign">와글와글</text>
           </div>
           <div className="Text_sign">
-            <label for="name">아이디 </label>
+            <label for="name">닉네임 </label>
             <input
               type="text"
               id="name"

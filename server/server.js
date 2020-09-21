@@ -39,9 +39,15 @@ io.on("connection", function (socket) {
     );
   });
   socket.on("matchingtouser", (matching_info) => {
+    const lastmessage = "매칭이 성공적으로 되었습니다.";
     connection.query(
-      "INSERT INTO wagle_room (room_userid,room_touserid,room_roomname) values (?,?,?)",
-      [matching_info.touserid, matching_info.userid, matching_info.roomname],
+      "INSERT INTO wagle_room (room_userid,room_touserid,room_lastmessage, room_roomname) values (?,?,?,?)",
+      [
+        matching_info.touserid,
+        matching_info.userid,
+        lastmessage,
+        matching_info.roomname,
+      ],
       function (err, rows, field) {
         const username = matching_info.touserid + "start";
 

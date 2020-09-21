@@ -6,6 +6,12 @@ import FiberNewRoundedIcon from "@material-ui/icons/FiberNewRounded";
 import Start from "../../Utils/Start/Start.js";
 import Moddal from "../../Utils/Modal/Moddal";
 import io from "socket.io-client";
+import Event from "./event.png";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Soju from "./soju.png";
 const socket = io("http://localhost:3001");
 
 export default class LandingPage extends Component {
@@ -19,6 +25,7 @@ export default class LandingPage extends Component {
       progress: "",
       newmessage: false,
       userid: JSON.parse(localStorage.getItem("user")).user_id,
+      openEvent: false,
     };
   }
 
@@ -56,6 +63,19 @@ export default class LandingPage extends Component {
     this.setState({
       count: 5,
       toggle: false,
+    });
+  };
+
+  modalopenEvent = (e) => {
+    e.preventDefault();
+    this.setState({
+      openEvent: true,
+    });
+  };
+  modalcloseEvent = (e) => {
+    e.preventDefault();
+    this.setState({
+      openEvent: false,
     });
   };
 
@@ -171,6 +191,33 @@ export default class LandingPage extends Component {
         </div>
         <div className="Title_landing">
           <Start count={this.state.count} />
+        </div>
+        <Dialog
+          open={this.state.openEvent}
+          onClose={this.modalcloseEvent}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle>
+            <img src={Soju} width="30px" height="30px" />
+            소주한병 쿠폰
+            <img src={Soju} width="30px" height="30px" />
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              사용방법: <br />
+              1. 사장님께 보여주고 소주받기!!" <br />
+              2. 사장님께 감사인사 전하기!! <br />
+              <br />
+              주의사항: <br />
+              1. 한 테이블당 한번만! <br />
+              2. 쿠폰 양심껏 사용하기
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <div className="event_url" onClick={this.modalopenEvent}>
+          <img src={Event} />
+          <p>이벤트</p>
         </div>
       </div>
     );

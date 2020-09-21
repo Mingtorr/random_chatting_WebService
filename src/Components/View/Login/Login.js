@@ -105,7 +105,7 @@ export default class Login extends Component {
           </div>
 
           <div className="Text_login">
-            <label for="name">아이디 </label>
+            <label for="name">닉네임 </label>
             <input
               type="text"
               id="name"
