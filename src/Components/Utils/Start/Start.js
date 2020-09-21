@@ -18,6 +18,7 @@ export default class Start extends Component {
       sex: JSON.parse(localStorage.getItem("user")).user_sex,
       nick: JSON.parse(localStorage.getItem("user")).user_nickname,
       open: false,
+      open2: false,
       progress: (
         <button className="Font_start" onClick={this.onMatching}>
           {" "}
@@ -44,9 +45,7 @@ export default class Start extends Component {
         if (json === true) {
           this.setState({
             progress: (
-              <button className="Font_start">
-                다른 사람에게도 기회를 주세요
-              </button>
+              <button className="Font_start">메시지함을 확인하세요</button>
             ),
           });
         } else {
@@ -86,16 +85,11 @@ export default class Start extends Component {
 
     socket.on("successmatching", (matching_info) => {
       this.setState({
-        progress: (
-          <button className="Font_start">다른 사람에게도 기회를 주세요</button>
-        ),
+        progress: <button className="Font_start">메시지함을 확인하세요</button>,
         open: true,
       });
     });
     socket.emit("start join", this.state._id);
-    socket.on("a123", (userid) => {
-      alert("asdasdasd");
-    });
   }
   modalopen = (e) => {
     e.preventDefault();
@@ -110,6 +104,19 @@ export default class Start extends Component {
     });
   };
 
+  modalopen2 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open2: true,
+    });
+  };
+  modalclose2 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open2: false,
+    });
+  };
+
   stopMathing = () => {
     this.setState({
       progress: (
@@ -118,8 +125,10 @@ export default class Start extends Component {
           매칭 시작!{" "}
         </button>
       ),
+
+      open2: true,
     });
-    alert("매칭 취소");
+    // alert("매칭 취소");
     //modal로 바꾸기
     const post = {
       _id: this.state._id,
@@ -179,9 +188,7 @@ export default class Start extends Component {
           this.setState({
             open: true,
             progress: (
-              <button className="Font_start">
-                다른 사람에게도 기회를 주세요
-              </button>
+              <button className="Font_start">메시지함을 확인하세요</button>
             ),
           });
         }
@@ -207,6 +214,18 @@ export default class Start extends Component {
             <DialogContentText id="alert-dialog-description">
               매칭이 완료 되었습니다.
               <br /> 오른쪽 상단의 메시지함으로 들어가세요.
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          open={this.state.open2}
+          onClose={this.modalclose2}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              매칭이 취소 되었습니다.
             </DialogContentText>
           </DialogContent>
         </Dialog>
