@@ -14,8 +14,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Soju from "./soju.png";
 import Heart from "./heart.png";
 import Triangle from "./triangle.png";
-import Explain from "../../Utils/Modal/Explain";
-import Caution from "../../Utils/Modal/Caution";
+import { Button } from "@material-ui/core";
 
 const socket = io("http://localhost:3001");
 
@@ -29,15 +28,38 @@ export default class LandingPage extends Component {
       open: false,
       progress: "",
       newmessage: false,
-      userid: JSON.parse(localStorage.getItem("user")).user_id,
+      userid: JSON.parse(localStorage.getItem("user")).user_id, // 임마가 닉네암
+      changeid: "", //임마가 변경할 닉네임
+      realid: JSON.parse(localStorage.getItem("user")).user_realid, // 임마는 id
       openEvent: false,
       openEvent2: false,
       openEvent3: false,
       openEvent4: false,
+      openEvent5: false,
+      openEvent6: false,
       use: false,
       caution: false,
+      change_nickname_switch: true,
     };
   }
+
+  nickname_switch_true = () => {
+    this.setState({
+      change_nickname_switch: true,
+    });
+  };
+
+  nickname_switch_false = () => {
+    this.setState({
+      change_nickname_switch: false,
+    });
+  };
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
 
   handleUse = () => {
     this.setState({
@@ -134,6 +156,94 @@ export default class LandingPage extends Component {
     e.preventDefault();
     this.setState({
       openEvent4: false,
+    });
+  };
+  modalopenEvent5 = (e) => {
+    e.preventDefault();
+    this.setState({
+      openEvent5: true,
+    });
+  };
+  modalcloseEvent5 = (e) => {
+    e.preventDefault();
+    this.setState({
+      openEvent5: false,
+    });
+  };
+
+  check = (re, what, message) => {
+    if (re.test(what)) {
+      console.log("3");
+      console.log(what);
+      return true;
+    }
+    this.setState({
+      openEvent6: true,
+      changeNickText: message,
+    });
+
+    return false;
+  };
+
+  modalopenEvent6 = (e) => {
+    e.preventDefault();
+
+    var re = /^[a-zA-z가-힣]{2,8}$/;
+
+    if (
+      !this.check(
+        re,
+        this.state.changeid,
+        "닉네임은 2~8자의 '영문' '한글' 로만 입력가능합니다."
+      )
+    ) {
+      console.log("1");
+      return false;
+    } else {
+      console.log("2");
+      const user_id = {
+        userid: this.state.userid,
+        changeid: this.state.changeid,
+      };
+
+      fetch("api/updateuserid", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(user_id),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json) {
+            //닉네임 변경 성공
+            //로컬에 저장해야함
+
+            const update_info = JSON.parse(localStorage.getItem("user"));
+            update_info.user_id = this.state.changeid;
+            localStorage.setItem("user", JSON.stringify(update_info));
+
+            this.setState({
+              openEvent6: true,
+              changeNickText: "닉네임 변경되었습니다.!",
+            });
+            window.location.replace("/Main");
+          } else {
+            this.setState({
+              openEvent6: true,
+              changeNickText: "이미 사용중인 닉네임 입니다.",
+            });
+          }
+        });
+    }
+    //로컬스토리지 저장해야됨
+
+    // window.location.replace("/Main");
+  };
+  modalcloseEvent6 = (e) => {
+    e.preventDefault();
+    this.setState({
+      openEvent6: false,
     });
   };
   handleToggle = (e) => {
@@ -255,8 +365,24 @@ export default class LandingPage extends Component {
           )}
         </div>
         <div className="Title_landing">
-          <Start count={this.state.count} />
+          <Start
+            count={this.state.count}
+            nickname_switch_true={this.nickname_switch_true}
+            nickname_switch_false={this.nickname_switch_false}
+          />
         </div>
+        {this.state.change_nickname_switch ? (
+          <div className="Title_landing">
+            <button
+              className="nickname_change_btn"
+              onClick={this.modalopenEvent5}
+            >
+              닉네임 변경
+            </button>
+          </div>
+        ) : (
+          <div></div>
+        )}
         <Dialog
           open={this.state.openEvent4}
           onClose={this.modalcloseEvent4}
@@ -266,6 +392,49 @@ export default class LandingPage extends Component {
           <DialogContent id="sibal">
             <DialogContentText id="alert-dialog-description">
               <Moddal />
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          open={this.state.openEvent6}
+          onClose={this.modalcloseEvent6}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent id="sibal">
+            <DialogContentText id="alert-dialog-description">
+              {this.state.changeNickText}
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          open={this.state.openEvent5}
+          onClose={this.modalcloseEvent5}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle>닉네임 변경하기</DialogTitle>
+          <DialogContent id="sibal">
+            <DialogContentText id="alert-dialog-description">
+              <div>
+                <div className="change_nickname">
+                  <label>현재 닉네임</label>
+                </div>
+
+                <div className="change_nickname2">{this.state.userid}</div>
+              </div>
+              <div className="change_nickname3">
+                <label>바꿀 닉네임</label>
+                <input
+                  type="text"
+                  name="changeid"
+                  value={this.state.changeid}
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div className="change_nickname_button">
+                <Button onClick={this.modalopenEvent6}>변경</Button>
+              </div>
             </DialogContentText>
           </DialogContent>
         </Dialog>

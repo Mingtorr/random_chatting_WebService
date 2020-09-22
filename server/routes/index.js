@@ -160,11 +160,11 @@ router.post("/Signup", (req, res) => {
   const mail = req.body.email;
   const pass = req.body.pass;
   const pass2 = req.body.pass2;
-  const nickname = req.body.nick;
+  const realid = req.body.realid;
   const sex = req.body.sex;
   connection.query(
-    "insert into user_info (user_id,user_password, user_nickname, user_email, user_sex) values (?,?,?,?,?)",
-    [_id, pass, nickname, mail, sex],
+    "insert into user_info (user_id,user_password, user_realid, user_email, user_sex) values (?,?,?,?,?)",
+    [_id, pass, realid, mail, sex],
     function (err, rows, fields) {
       if (err) {
         res.send(false);
@@ -188,11 +188,10 @@ router.post("/onmatching", (req, res) => {
   );
 });
 //닉네임 중복검사 하는거
-router.post("/CheckNick", (req, res) => {
-  const checkingNick = req.body.check_Nick;
+router.post("/checkRealid", (req, res) => {
   connection.query(
-    "SELECT user_nickname FROM user_info WHERE user_nickname =(?)",
-    [checkingNick],
+    "SELECT user_realid FROM user_info WHERE user_realid =(?)",
+    [req.body.checkRealid],
     function (err, rows, fields) {
       if (rows[0] === undefined) {
         res.send(true); //중복 없음 사용가능
@@ -202,6 +201,7 @@ router.post("/CheckNick", (req, res) => {
     }
   );
 });
+
 //ID 중복검사 하는거
 router.post("/CheckId", (req, res) => {
   const checkingId = req.body.check_Id;
@@ -357,14 +357,14 @@ router.post("/login", (req, res) => {
   box.boolean = false;
 
   connection.query(
-    "SELECT user_id FROM user_info WHERE user_id = (?)",
+    "SELECT user_realid FROM user_info WHERE user_realid = (?)",
     [name],
     function (err, rows, fields) {
       if (rows[0] === undefined) {
         res.send(box);
       } else {
         connection.query(
-          "SELECT user_id, user_password ,user_email,user_nickname, user_sex FROM user_info WHERE  user_id = (?) AND user_password =(?)",
+          "SELECT * FROM user_info WHERE  user_realid = (?) AND user_password =(?)",
           [name, pass],
           function (err, rows, fields) {
             if (rows[0] === undefined) {
@@ -372,7 +372,7 @@ router.post("/login", (req, res) => {
             } else {
               box.user_id = rows[0].user_id;
               box.user_email = rows[0].user_email;
-              box.user_nickname = rows[0].user_nickname;
+              box.user_realid = rows[0].user_realid;
               box.user_sex = rows[0].user_sex;
               box.boolean = true;
               res.send(box);
@@ -384,28 +384,58 @@ router.post("/login", (req, res) => {
   );
 });
 
-//닉네임 업데이트하기
-router.post("/Update_nick", (req, res) => {
-  const nick = req.body.nick;
-  const preNick = req.body.preNick;
+//닉네임 변경 쿼리에서 user_id 변경
+router.post("/updateuserid", (req, res) => {
   connection.query(
-    "SELECT user_nickname FROM user_info WHERE user_nickname = (?)",
-    [nick],
+    "SELECT user_id FROM user_info WHERE user_id = ?",
+    [req.body.changeid],
     function (err, rows, fields) {
-      //중복된 닉네임이 없음 닉네임 변경 진행
-      if (rows[0] === undefined && !err) {
+      if (err) {
+        console.log(err);
+        console.log("닉변 중복검사중 err발생" + err);
+      } else if (rows[0] === undefined) {
         connection.query(
-          "UPDATE user_info SET user_nickname =(?) WHERE user_nickname =(?)",
-          [nick, preNick]
+          "UPDATE user_info SET user_id =(?) WHERE user_id =(?)",
+          [req.body.changeid, req.body.userid],
+          function (err, rows, fields) {
+            if (err) {
+              console.log("닉변할때 err발생:" + err);
+            } else {
+              console.log("중복되는 닉네임 없음");
+              res.send(true);
+            }
+          }
         );
-
-        res.send(true);
       } else {
         res.send(false);
+        console.log("중복되는 닉네임이 있음");
       }
     }
   );
 });
+
+//닉네임 업데이트하기
+// router.post("/Update_nick", (req, res) => {
+//   const nick = req.body.nick;
+//   const preNick = req.body.preNick;
+//   connection.query(
+//     "SELECT user_nickname FROM user_info WHERE user_nickname = (?)",
+//     [nick],
+//     function (err, rows, fields) {
+//       //중복된 닉네임이 없음 닉네임 변경 진행
+//       if (rows[0] === undefined && !err) {
+//         connection.query(
+//           "UPDATE user_info SET user_nickname =(?) WHERE user_nickname =(?)",
+//           [nick, preNick]
+//         );
+
+//         res.send(true);
+//       } else {
+//         res.send(false);
+//       }
+//     }
+//   );
+// });
 
 router.post("/Update_password", (req, res) => {
   const pass = req.body.pass;

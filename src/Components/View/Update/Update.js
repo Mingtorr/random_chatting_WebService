@@ -66,7 +66,6 @@ export default class Update extends Component {
               user_nickname: JSON.parse(localStorage.getItem("user"))
                 .user_nickname,
             });
-
             alert("닉네임이 변경되었습니다.");
           } else {
             alert("이미 사용중인 닉네임 입니다.");

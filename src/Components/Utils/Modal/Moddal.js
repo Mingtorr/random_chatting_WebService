@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./Moddal.css";
-import Explain from "./Explain";
 
 export default class Moddal extends Component {
   constructor(props) {

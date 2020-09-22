@@ -88,7 +88,12 @@ export default class Messageroom extends React.Component {
         </Dialog>
         <div className="messageroom_main" onClick={this.onClick}>
           <div className="messageroom_img">
-            <img src={Soju} width="50vw" height="50vw" />
+            <img
+              src={Soju}
+              alt="소주아이콘 이미지"
+              width="50vw"
+              height="50vw"
+            />
           </div>
           <div className="messageroom_body">
             <div className="messageroom_body_name">{this.props.name}</div>

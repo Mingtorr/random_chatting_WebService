@@ -139,14 +139,14 @@ export default class Test extends Component {
           <span className="Chat_test">채팅방</span>
         </div> */}
         <div className="message_table">
+          <div className="Title_Test">
+            <ArrowBackIcon
+              style={{ fontSize: "50px" }}
+              onClick={this.goMcoll}
+            />
+            <span className="Chat_test">채팅방</span>
+          </div>
           <ScrollToBottom className="scrollbottom">
-            <div className="Title_Test">
-              <ArrowBackIcon
-                style={{ fontSize: "50px" }}
-                onClick={this.goMcoll}
-              />
-              <span className="Chat_test">채팅방</span>
-            </div>
             {this.state.premsg.map((message) => {
               if (message.message_drop === 1) {
                 return (
@@ -194,7 +194,7 @@ export default class Test extends Component {
         <div className="Input_test">
           <input value={this.state.message} onChange={this.onchage} />
           {this.state.message.trim() === "" ? (
-            <button onClick={this.onclick} className="Btn_test">
+            <button className="Btn_test">
               <img src={plane} width="25px" height="25px" />
             </button>
           ) : (

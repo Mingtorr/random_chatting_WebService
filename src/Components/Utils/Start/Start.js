@@ -43,6 +43,7 @@ export default class Start extends Component {
       .then((res) => res.json())
       .then((json) => {
         if (json === true) {
+          this.props.nickname_switch_false();
           this.setState({
             progress: (
               <button className="Font_start">메시지함을 확인하세요</button>
@@ -62,6 +63,7 @@ export default class Start extends Component {
       .then((json) => {
         if (json) {
         } else {
+          this.props.nickname_switch_false();
           this.setState({
             progress: (
               <div className="Progress_start">
@@ -84,6 +86,7 @@ export default class Start extends Component {
       });
 
     socket.on("successmatching", (matching_info) => {
+      this.props.nickname_switch_false();
       this.setState({
         progress: <button className="Font_start">메시지함을 확인하세요</button>,
         open: true,
@@ -128,6 +131,7 @@ export default class Start extends Component {
 
       open2: true,
     });
+    this.props.nickname_switch_true();
     // alert("매칭 취소");
     //modal로 바꾸기
     const post = {
@@ -169,6 +173,8 @@ export default class Start extends Component {
       ),
     });
 
+    this.props.nickname_switch_false();
+
     const userid = {
       userid: this.state._id,
       sex: this.state.sex,
@@ -184,6 +190,7 @@ export default class Start extends Component {
       .then((json) => {
         if (json.touserid === undefined) {
         } else {
+          this.props.nickname_switch_false();
           socket.emit("matchingtouser", json);
           this.setState({
             open: true,

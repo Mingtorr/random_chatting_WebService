@@ -8,6 +8,37 @@
   background-image: url(../../../assets/Images/background.jpg);
   background-repeat: no-repeat;
 }
+.change_nickname {
+  display: inline-block;
+  margin-right: 14vw;
+  margin-bottom: 5vw;
+}
+.change_nickname2 {
+  display: inline-block;
+}
+.change_nickname3 {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40px;
+}
+.change_nickname3 input {
+  margin-left: 5vw;
+  width: 37vw;
+}
+.change_nickname_button {
+  float: right;
+}
+
+.nickname_change_btn {
+  font-size: 16px;
+  font-family: "Jalnan";
+  color: white;
+  background-color: green;
+  border: 0;
+  border-radius: 60px;
+  padding: 15px;
+}
+
 #alert_sivbal {
   display: flex;
   justify-items: center;
