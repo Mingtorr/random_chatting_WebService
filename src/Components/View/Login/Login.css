@@ -16,7 +16,9 @@
   border: 1px;
   justify-content: space-evenly;
   align-items: center;
-  /* border-radius: 60px; */
+  background-color: white;
+  width: 80%;
+  border-radius: 60px;
   /* box-shadow: 2px 2px 2px 2px black; */
 }
 
@@ -80,4 +82,5 @@
   font-family: "Jalnan";
   background-color: white;
   border: 0px;
+  margin-top: 10px;
 }

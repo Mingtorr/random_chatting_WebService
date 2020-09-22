@@ -33,7 +33,7 @@ class Singo extends React.Component {
 
     let length = this.state.reason;
 
-    if (this.state.badman === "" || this.state.reason === "") {
+    if (this.state.badman.trim() === "" || this.state.reason.trim() === "") {
       alert("입력해 주세요");
     } else if (length.length >= 200) {
       alert("200자를 초과 했어요");

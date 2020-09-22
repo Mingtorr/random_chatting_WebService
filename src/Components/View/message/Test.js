@@ -7,7 +7,7 @@ import queryStirng from "query-string";
 import Dropmessage from "./drop";
 import ScrollToBottom from "react-scroll-to-bottom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-
+import plane from "./plane.png";
 const socket = io("http://localhost:3001");
 
 export default class Test extends Component {
@@ -134,12 +134,19 @@ export default class Test extends Component {
   render() {
     return (
       <div className="Container_test">
-        <div className="Title_Test">
+        {/* <div className="Title_Test">
           <ArrowBackIcon style={{ fontSize: "50px" }} onClick={this.goMcoll} />
           <span className="Chat_test">채팅방</span>
-        </div>
+        </div> */}
         <div className="message_table">
           <ScrollToBottom className="scrollbottom">
+            <div className="Title_Test">
+              <ArrowBackIcon
+                style={{ fontSize: "50px" }}
+                onClick={this.goMcoll}
+              />
+              <span className="Chat_test">채팅방</span>
+            </div>
             {this.state.premsg.map((message) => {
               if (message.message_drop === 1) {
                 return (
@@ -183,12 +190,18 @@ export default class Test extends Component {
             })}
           </ScrollToBottom>
         </div>
-
+        {/* cex  고쳐라 */}
         <div className="Input_test">
           <input value={this.state.message} onChange={this.onchage} />
-          <button onClick={this.onclick} className="Btn_test">
-            입력
-          </button>
+          {this.state.message.trim() === "" ? (
+            <button onClick={this.onclick} className="Btn_test">
+              <img src={plane} width="25px" height="25px" />
+            </button>
+          ) : (
+            <button onClick={this.onclick} className="Btn_test">
+              <img src={plane} width="25px" height="25px" />
+            </button>
+          )}
         </div>
       </div>
     );

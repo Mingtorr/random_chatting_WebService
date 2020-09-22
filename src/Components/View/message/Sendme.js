@@ -5,7 +5,7 @@ export default class Sendme extends Component {
   render() {
     return (
       <div className="Sendme_con">
-        <span className="Sendme_in">{this.props.message}</span>
+        <pre className="Sendme_in">{this.props.message}</pre>
         <span className="Sendme_in2">{this.props.time}</span>
       </div>
     );

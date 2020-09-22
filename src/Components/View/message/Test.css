@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-
+  justify-content: space-between;
   background-color: #131641;
 }
 .drop_message {
@@ -17,7 +17,9 @@
   align-items: center;
   color: white;
   font-size: 25px;
+  position: fixed;
   font-family: "Jalnan";
+  background-color: #131641;
 }
 
 .Chat_test {
@@ -101,13 +103,13 @@
 }
 
 .Input_test {
-  position: absolute;
-  bottom: 0%;
+  /* position: absolute; */
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   height: 58.5px;
   background-color: #f05052;
 }
@@ -134,13 +136,12 @@
 .message_table {
   display: flex;
   width: 100vw;
-  height: 83vh;
-  margin-top: 1vh;
+  height: 93vh;
+  /* margin-top: 1vh; */
 }
 .scrollbottom {
   display: flex;
   width: 100vw;
-  height: 83vh;
 }
 .drop_message hr {
   width: 90vw;

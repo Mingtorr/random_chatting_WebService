@@ -32,7 +32,7 @@ class Singo extends React.Component {
 
     let length = this.state.content;
 
-    if (this.state.title === "" || this.state.content === "") {
+    if (this.state.title.trim() === "" || this.state.content.trim() === "") {
       alert("제목이나 내용을 입력해 주세요");
     } else if (length.length >= 200) {
       alert("200자를 초과 했어요");
