@@ -179,41 +179,41 @@ export default class Signup extends Component {
     }
   };
   //닉네임 중복검사
-  checkNick = (e) => {
-    e.preventDefault();
-    var re = /^[a-zA-z가-힣0-9]{2,8}$/;
-    if (
-      !this.check(
-        re,
-        this.state.nickname,
-        "닉네임은 2~8자의 영문 한글 숫자로만 <br/>입력가능합니다."
-      )
-    ) {
-      return false;
-    } else {
-      const checkNick = {
-        check_Nick: this.state.nickname,
-      };
-      fetch("api/CheckNick", {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(checkNick),
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          if (json) {
-            alert("사용가능한 닉네임 입니다.");
-            this.setState({
-              checked_nick: true,
-            });
-          } else {
-            alert("이미 사용중인 닉네임 입니다.");
-          }
-        });
-    }
-  };
+  // checkNick = (e) => {
+  //   e.preventDefault();
+  //   var re = /^[a-zA-z가-힣0-9]{2,8}$/;
+  //   if (
+  //     !this.check(
+  //       re,
+  //       this.state.nickname,
+  //       "닉네임은 2~8자의 영문 한글 숫자로만 <br/>입력가능합니다."
+  //     )
+  //   ) {
+  //     return false;
+  //   } else {
+  //     const checkNick = {
+  //       check_Nick: this.state.nickname,
+  //     };
+  //     fetch("api/CheckNick", {
+  //       method: "post",
+  //       headers: {
+  //         "content-type": "application/json",
+  //       },
+  //       body: JSON.stringify(checkNick),
+  //     })
+  //       .then((res) => res.json())
+  //       .then((json) => {
+  //         if (json) {
+  //           alert("사용가능한 닉네임 입니다.");
+  //           this.setState({
+  //             checked_nick: true,
+  //           });
+  //         } else {
+  //           alert("이미 사용중인 닉네임 입니다.");
+  //         }
+  //       });
+  //   }
+  // };
   moveLogin = (e) => {
     e.preventDefault();
     window.location.replace("/");

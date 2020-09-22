@@ -8,7 +8,7 @@ import Dropmessage from "./drop";
 import ScrollToBottom from "react-scroll-to-bottom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-const socket = io();
+const socket = io("http://localhost:3001");
 
 export default class Test extends Component {
   constructor(props) {
@@ -61,8 +61,8 @@ export default class Test extends Component {
           const newtime = new Date(row.message_time);
           var hour = newtime.getHours();
           var min = newtime.getMinutes();
-          var messagetime = [hour, min].join("시");
-          messagetime = messagetime.concat("분");
+          var messagetime = [hour, min].join(" : ");
+          messagetime = messagetime.concat("");
           const newrow = row;
           newrow.message_time = messagetime;
 
@@ -93,8 +93,8 @@ export default class Test extends Component {
     var sysdate = new Date();
     var hour = sysdate.getHours();
     var min = sysdate.getMinutes();
-    var messagetime = [hour, min].join("시");
-    messagetime = messagetime.concat("분");
+    var messagetime = [hour, min].join(" : ");
+    messagetime = messagetime.concat("");
 
     this.setState({
       message: "",
