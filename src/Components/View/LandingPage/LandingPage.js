@@ -418,14 +418,15 @@ export default class LandingPage extends Component {
             <DialogContentText id="alert-dialog-description">
               <div>
                 <div className="change_nickname">
-                  <label>현재 닉네임</label>
+                  <label style={{ color: "#f05052" }}>현재 닉네임</label>
                 </div>
 
                 <div className="change_nickname2">{this.state.userid}</div>
               </div>
               <div className="change_nickname3">
-                <label>바꿀 닉네임</label>
+                <label style={{ color: "#f05052" }}>바꿀 닉네임</label>
                 <input
+                  className="name_change_input"
                   type="text"
                   name="changeid"
                   value={this.state.changeid}
@@ -433,7 +434,12 @@ export default class LandingPage extends Component {
                 />
               </div>
               <div className="change_nickname_button">
-                <Button onClick={this.modalopenEvent6}>변경</Button>
+                <Button
+                  onClick={this.modalopenEvent6}
+                  style={{ fontSize: "18px" }}
+                >
+                  변경
+                </Button>
               </div>
             </DialogContentText>
           </DialogContent>

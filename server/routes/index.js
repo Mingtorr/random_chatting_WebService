@@ -632,4 +632,110 @@ router.post("/Singo", (req, res) => {
   });
 });
 
+router.post("/serchID", (req, res) => {
+  // SELECT user_nickname FROM user_info WHERE user_nickname = (?)
+  let user_email = req.body.sendEmail;
+
+  let sql =
+    "SELECT user_realid,user_password FROM user_info WHERE user_email = (?); ";
+  connection.query(sql, [user_email], function (err, rows, result) {
+    let tf = {
+      boolean: true,
+    };
+
+    if (rows[0] != undefined) {
+      console.log(rows[0]);
+
+      const user_info = {
+        user_realid: rows[0].user_realid,
+        user_password: rows[0].user_password,
+      };
+
+      let emailParam = {
+        toEmail: user_email + "@changwon.ac.kr", //gmail.com -> changwon.ac.kr로 수정하기
+        // toEmail: "dnjsdud2257@gmail.com",
+        subject: "와글와글 아이디/비밀번호 확인",
+        // text: `☞ ${rows[0].user_realid} ☞ ${rows[0].user_password}`,
+        text: user_info,
+      };
+
+      if (rows[0] != undefined) {
+        mailSender2.sendGmail(emailParam);
+        res.send(true);
+      } else {
+        res.send(false);
+      }
+    } else {
+      tf.boolean = false;
+      res.send(tf);
+    }
+    // console.log(rows[0]);
+
+    // let information = { id: rows[0].user_realid, pw: rows[0].user_password };
+  });
+});
+
+var mailSender2 = {
+  // 메일발송 함수
+  sendGmail: function (param) {
+    console.log(param);
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      prot: 465,
+      auth: {
+        user: "waglewagle20@gmail.com",
+        pass: "changwon@0",
+      },
+    });
+
+    // 메일 옵션
+    var mailOptions = {
+      from: "waglewagle20@gmail.com",
+      to: param.toEmail, // 수신할 이메일
+      subject: param.subject, // 메일 제목
+      text: toString(param.text), // 메일 내용
+      html: `<body style="margin: 0; padding: 0">
+      <div style=
+        font-family: " Apple SD Gothic Neo", "sans-serif" ; width: 540px; height: 600px; border-top: 4px solid #f05052;
+        margin: 100px auto; padding: 30px 0; box-sizing: border-box; ">
+        <h1 style=" margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400">
+        <span style="font-size: 15px; margin: 0 0 10px 3px">창원대 과팅앱</span><br />
+        <b style="color: #f05052">아이디/비밀번호 찾기</b> 안내입니다.
+        </h1>
+        <p style="
+              font-size: 16px;
+              line-height: 26px;
+              margin-top: 50px;
+              padding: 0 5px;
+            ">
+          안녕하세요.<br />
+          <b style="color: #f05052">와글와글</b>에 다시 찾아 주셔서 진심으로
+          감사드립니다.<br />
+          아래
+          <b style="color: #f05052">'아이디/비밀번호'</b>를 확인해
+          주세요.<br />
+          감사합니다. <br /><br />
+          아이디: ${param.text.user_realid} <br />
+          비밀번호: ${param.text.user_password}<br />
+          <script>
+            document.write(authNumber);
+          </script>
+        </p>
+    
+
+      </div>
+    </body>`,
+    };
+    // 메일 발송
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        // console.log("아이디 찾기 메일 에러");
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+  },
+};
+
 module.exports = router;

@@ -3,6 +3,9 @@ import "./Login.css";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import { DialogTitle } from "@material-ui/core";
+import ID_Search from "./ID_Search";
+
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +14,7 @@ export default class Login extends Component {
       pass: "",
       success: false,
       open: false,
+      open2: false,
     };
   }
   modalopen1 = (e) => {
@@ -68,6 +72,18 @@ export default class Login extends Component {
     e.preventDefault();
     window.location.replace("/Signup");
   };
+  modalopen2 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open2: true,
+    });
+  };
+  modalclose2 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open2: false,
+    });
+  };
 
   render() {
     return (
@@ -84,6 +100,21 @@ export default class Login extends Component {
             </DialogContentText>
           </DialogContent>
         </Dialog>
+
+        <Dialog
+          open={this.state.open2}
+          onClose={this.modalclose2}
+          aria-labelledy="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle>ID/PW 찾기</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <ID_Search />
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+
         <form className="Container_login" onSubmit={this.onSubmit}>
           <div className="Textbox_login">
             <div className="Textbox_login">
@@ -126,6 +157,9 @@ export default class Login extends Component {
           <div>
             <button className="Signup_btn" onClick={this.singupBtn}>
               처음이신가요?
+            </button>
+            <button className="Signup_btn" onClick={this.modalopen2}>
+              ID/PW 찾기
             </button>
           </div>
         </form>

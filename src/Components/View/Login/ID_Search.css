@@ -1,0 +1,31 @@
+.id_search input {
+  background-color: rgb(215, 215, 215);
+  border: 0px;
+  border-radius: 10px;
+  margin-left: 10px;
+  height: 25px;
+  width: 30vw;
+}
+.id_search_email_button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.id_search {
+  font-size: 18px;
+}
+
+.id_search_example {
+  font-size: 13px;
+  color: rgb(100, 100, 100);
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.id_search_title {
+  display: flex;
+  justify-content: center;
+  color: #f05052;
+}
