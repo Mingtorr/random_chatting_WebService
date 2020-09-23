@@ -40,24 +40,21 @@ io.on("connection", function (socket) {
     );
   });
   socket.on("allroomjoin", (userid) => {
-    console.log("시발");
     socket.join("allmatchingroom");
     if (io.sockets === undefined) {
     } else {
       var clients = io.sockets.adapter.rooms["allmatchingroom"].sockets;
 
       //to get the number of clients
-      console.log(clients);
+
       var numClients =
         typeof clients !== "undefined" ? Object.keys(clients).length : 0;
 
-      console.log(numClients);
       io.to("allmatchingroom").emit("clientnum", numClients);
     }
   });
 
   socket.on("send allmessage", (post) => {
-    console.log(post);
     io.to("allmatchingroom").emit("recieve allmessage", post);
   });
   socket.on("disconnectallmessage", (userid) => {
@@ -70,7 +67,7 @@ io.on("connection", function (socket) {
         var clients = io.sockets.adapter.rooms["allmatchingroom"].sockets;
         var numClients =
           typeof clients !== "undefined" ? Object.keys(clients).length : 0;
-        console.log("이런리너" + numClients);
+
         io.to("allmatchingroom").emit("clientnum", numClients);
       }
     }
