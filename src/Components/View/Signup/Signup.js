@@ -13,19 +13,19 @@ export default class Signup extends Component {
       pass: "",
       pass2: "",
       email: "",
-      nickname: "",
+      realid: "",
       sex: "",
       checked_id: false, // ID 중복검사
-      checked_nick: false,
       checked_email: false, // 메일 인증 확인
+      checked_realid: false,
       authNum: "", //보낸 인증번호
       authCheckNum: "", // 사용자가 적은 인증번호
       sendEmailClick: false,
       waitingEmail: true,
-      open1: false,
-      open2: false,
-      open3: false,
-      open5: false, ///
+      open1: false, //닉네임 확인
+      open2: false, //이메일 확인
+      open3: false, //회원가입 성공
+      open4: false, //아이디 확인
     };
   }
 
@@ -66,6 +66,18 @@ export default class Signup extends Component {
     });
   };
   ///////
+  modalopen4 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open4: true,
+    });
+  };
+  modalclose4 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open4: false,
+    });
+  };
 
   modalopen5 = (e) => {
     e.preventDefault();
@@ -220,42 +232,49 @@ export default class Signup extends Component {
         });
     }
   };
-  //닉네임 중복검사
-  // checkNick = (e) => {
-  //   e.preventDefault();
-  //   var re = /^[a-zA-z가-힣0-9]{2,8}$/;
-  //   if (
-  //     !this.check(
-  //       re,
-  //       this.state.nickname,
-  //       "닉네임은 2~8자의 영문 한글 숫자로만 <br/>입력가능합니다."
-  //     )
-  //   ) {
-  //     return false;
-  //   } else {
-  //     const checkNick = {
-  //       check_Nick: this.state.nickname,
-  //     };
-  //     fetch("api/CheckNick", {
-  //       method: "post",
-  //       headers: {
-  //         "content-type": "application/json",
-  //       },
-  //       body: JSON.stringify(checkNick),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((json) => {
-  //         if (json) {
-  //           alert("사용가능한 닉네임 입니다.");
-  //           this.setState({
-  //             checked_nick: true,
-  //           });
-  //         } else {
-  //           alert("이미 사용중인 닉네임 입니다.");
-  //         }
-  //       });
-  //   }
-  // };
+
+  // 아이디 중복검사
+  checkRealid = (e) => {
+    e.preventDefault();
+    var re = /^[a-z]+[a-z0-9]{5,19}$/g;
+    if (
+      !this.check(
+        re,
+        this.state.realid,
+        "아이디는 영문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다."
+      )
+    ) {
+      return false;
+    } else {
+      const checkRealid = {
+        checkRealid: this.state.realid,
+      };
+      fetch("api/checkRealid", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(checkRealid),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json);
+          if (json) {
+            this.setState({
+              open4: true,
+              text4: "사용가능한 아이디 입니다.",
+              checked_realid: true,
+            });
+          } else {
+            this.setState({
+              open4: true,
+              text4: "이미 사용중인 아이디 입니다.",
+            });
+          }
+        });
+    }
+  };
+
   moveLogin = (e) => {
     e.preventDefault();
     window.location.replace("/");
@@ -263,7 +282,14 @@ export default class Signup extends Component {
 
   onSubmit = (e) => {
     e.preventDefault(); //이벤트 발생시 새로고침을 안하게 한다.
-    if (!this.state.checked_id) {
+    if (!this.state.checked_realid) {
+      // 아이디 고치면 중복검사다시하게 하기
+      // alert("아이디 중복 검사를 해주세요");
+      this.setState({
+        open2: true,
+        text2: "아이디 중복 검사를 해주세요",
+      });
+    } else if (!this.state.checked_id) {
       this.setState({
         open2: true,
         text2: "닉네임 중복 검사를 해주세요",
@@ -289,7 +315,7 @@ export default class Signup extends Component {
         pass: this.state.pass,
         pass2: this.state.pass2,
         email: this.state.email,
-        nick: this.state.nickname,
+        realid: this.state.realid,
         sex: this.state.sex,
       };
       fetch("api/Signup", {
@@ -365,12 +391,38 @@ export default class Signup extends Component {
             </DialogContentText>
           </DialogContent>
         </Dialog>
+        <Dialog
+          open={this.state.open4}
+          onClose={this.modalclose4}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {this.state.text4}
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
         <form className="Container_sign" onSubmit={this.onSubmit}>
           <div className="Textbox_sign" style={{ marginTop: "15px" }}>
             <text className="Intro_sign">창원대 과팅앱</text>
           </div>
           <div className="Textbox_sign">
             <text className="Intro2_sign">와글와글</text>
+          </div>
+          <div className="Text_sign">
+            <label for="name">아이디 </label>
+            <input
+              type="text"
+              id="name"
+              name="realid"
+              value={this.state.realid}
+              onChange={this.handleChange}
+              className="Input_sign"
+            />
+            <button className="Double_sign" onClick={this.checkRealid}>
+              중복확인
+            </button>
           </div>
           <div className="Text_sign">
             <label for="name">닉네임 </label>
@@ -413,7 +465,7 @@ export default class Signup extends Component {
 
           <div className="Text_sign2">
             <div className="sex_label">
-              <label for="nickname">성별 </label>
+              <label for="sex">성별 </label>
             </div>
             <div className="sex_div">
               <input
