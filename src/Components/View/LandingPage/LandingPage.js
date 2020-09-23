@@ -16,7 +16,7 @@ import Heart from "./heart.png";
 import Triangle from "./triangle.png";
 import { Button } from "@material-ui/core";
 
-const socket = io();
+const socket = io("http://localhost:3001");
 
 export default class LandingPage extends Component {
   constructor(props) {

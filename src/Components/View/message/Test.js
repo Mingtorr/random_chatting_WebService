@@ -8,7 +8,7 @@ import Dropmessage from "./drop";
 import ScrollToBottom from "react-scroll-to-bottom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import plane from "./plane.png";
-const socket = io();
+const socket = io("http://localhost:3001");
 
 export default class Test extends Component {
   constructor(props) {
