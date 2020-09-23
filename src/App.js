@@ -10,6 +10,7 @@ import MessageCollect from "./Components/View/messagecollect/message_collect";
 import Message from "./Components/View/message/Test";
 import Singo from "./Components/View/singo/Singo";
 import Report from "./Components/Utils/Modal/Report";
+import Allmessage from "./Components/View/allmessage/Allmessage";
 export default class App extends Component {
   render() {
     return (
@@ -50,6 +51,9 @@ export default class App extends Component {
             </Route>
             <Route path="/Report">
               <Report />
+            </Route>
+            <Route path="/allmessage">
+              <Allmessage />
             </Route>
           </Switch>
         </div>

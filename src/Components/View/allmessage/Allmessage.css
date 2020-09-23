@@ -1,0 +1,118 @@
+.allmessage_main{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid white;
+    width: 100vw;
+    height: 100vh;
+}
+.allmessage_title{
+    
+    width: 100vw;
+    height: 50px;
+   
+    background-color: #f05052;
+    justify-content: center;
+    align-items: center;
+    font-family: "Jalnan";
+    color: white;
+    font-size: 25px;
+}
+.arrowbackdiv{
+ 
+    float: left;
+  
+}
+.arrowbackdiv2{
+    margin-left: 13vw;
+    margin-top: 3vw;
+    float: left;
+    
+}
+.allmessage_people{
+    display: flex;
+    width: 100vw;
+    height: 40px;
+    font-family: "Jalnan";
+    color: white;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 20px;
+    
+}
+.allmessage_people div{
+    margin-right: 30px;
+}
+.allmessage_message_main{
+    display: flex;
+    width: 100vw;
+    height: 83vh;
+   
+}
+.scrollbottom2 {
+    display: flex;
+    width: 100vw;
+  }
+  .Allview_main{
+      display: flex;
+      flex-direction:column;
+      height: auto;
+      width: 100vw;
+  }
+  .Allview_main2{
+    display: flex;
+    flex-direction:column;
+ 
+    align-items: flex-end;
+    height: auto;
+    width: 100vw;
+}
+  .Allview_name{
+    font-family: "TmoneyRoundWindExtraBold";
+    color: white;
+      display: flex;
+      word-break: break-all;
+      
+      min-width: 10vw;
+     
+     margin-left: 10px;
+     margin-top: 10px;
+      
+      font-size: 13px;
+      height: auto;
+      width: auto;
+  }
+  .Allview_body{
+    display: flex;
+  }
+  .Allview_body span{
+    display: inline-block;
+    word-break: break-all;
+    margin: 5px 10px;
+    border: 1px solid #888;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f05052;
+    color: white;
+    text-align: left;
+    font-family: "TmoneyRoundWindExtraBold";
+    font-size: 13px;
+    border: 0px;
+    max-width: 60%;
+
+  }
+  .Allview_body2 span{
+    display: inline-block;
+    word-break: break-all;
+    margin: 5px 10px;
+    border: 1px solid #888;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+    color:  #f05052;
+    text-align: left;
+    font-family: "TmoneyRoundWindExtraBold";
+    font-size: 13px;
+    border: 0px;
+    max-width: 60%;
+
+  }

@@ -282,6 +282,9 @@ export default class LandingPage extends Component {
   goMsg = (e) => {
     window.location.replace("/Message_collect");
   };
+  goMsg2 = (e) => {
+    window.location.replace("/allmessage");
+  };
 
   render() {
     return (
@@ -294,6 +297,9 @@ export default class LandingPage extends Component {
             </span>
             <span className="Title4_landing" onClick={this.modalopenEvent3}>
               주의사항
+            </span>
+            <span className="Title4_landing2" onClick={this.goMsg2}>
+              와글채팅
             </span>
           </div>
 

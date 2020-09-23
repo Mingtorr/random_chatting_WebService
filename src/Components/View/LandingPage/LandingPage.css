@@ -58,7 +58,7 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  width: 170px;
+  width: 240px;
   height: 40px;
 }
 
@@ -111,6 +111,12 @@
 
 .Title4_landing {
   color: white;
+  font-size: 15px;
+  font-family: "Jalnan";
+  margin-top: 10px;
+}
+.Title4_landing2 {
+  color: #f05052;
   font-size: 15px;
   font-family: "Jalnan";
   margin-top: 10px;

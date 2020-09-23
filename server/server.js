@@ -26,6 +26,7 @@ app.use(cors());
 app.use(bodyparser.json());
 app.use("/api", route);
 io.on("connection", function (socket) {
+  var numClients = {};
   // 소켓을 연결하는 부분
   //socket이랑 연결된 부분
   socket.on("dropmessage", (post2) => {
@@ -37,6 +38,42 @@ io.on("connection", function (socket) {
         io.to(post2.roomname).emit("dropmessage2", post2);
       }
     );
+  });
+  socket.on("allroomjoin", (userid) => {
+    console.log("시발");
+    socket.join("allmatchingroom");
+    if (io.sockets === undefined) {
+    } else {
+      var clients = io.sockets.adapter.rooms["allmatchingroom"].sockets;
+
+      //to get the number of clients
+      console.log(clients);
+      var numClients =
+        typeof clients !== "undefined" ? Object.keys(clients).length : 0;
+
+      console.log(numClients);
+      io.to("allmatchingroom").emit("clientnum", numClients);
+    }
+  });
+
+  socket.on("send allmessage", (post) => {
+    console.log(post);
+    io.to("allmatchingroom").emit("recieve allmessage", post);
+  });
+  socket.on("disconnectallmessage", (userid) => {
+    socket.leave("allmatchingroom");
+    if (io.sockets === undefined) {
+    } else {
+      if (io.sockets === undefined) {
+      } else if (io.sockets.adapter.rooms["allmatchingroom"] === undefined) {
+      } else {
+        var clients = io.sockets.adapter.rooms["allmatchingroom"].sockets;
+        var numClients =
+          typeof clients !== "undefined" ? Object.keys(clients).length : 0;
+        console.log("이런리너" + numClients);
+        io.to("allmatchingroom").emit("clientnum", numClients);
+      }
+    }
   });
   socket.on("matchingtouser", (matching_info) => {
     const lastmessage = "매칭이 성공적으로 되었습니다.";
