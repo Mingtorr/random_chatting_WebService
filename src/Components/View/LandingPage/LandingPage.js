@@ -15,6 +15,7 @@ import Soju from "./soju.png";
 import Heart from "./heart.png";
 import Triangle from "./triangle.png";
 import { Button } from "@material-ui/core";
+import { json } from "body-parser";
 
 const socket = io();
 
@@ -46,6 +47,7 @@ export default class LandingPage extends Component {
       use: false,
       caution: false,
       change_nickname_switch: true,
+      noti: "",
     };
   }
 
@@ -273,6 +275,23 @@ export default class LandingPage extends Component {
         newmessage: true,
       });
     });
+    const box = {
+      userid: this.state.userid,
+    };
+    fetch("api/notification", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(box),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        this.setState({
+          noti: json.message,
+        });
+      });
   }
 
   logout = () => {
@@ -347,6 +366,7 @@ export default class LandingPage extends Component {
         </div>
 
         {/* 제목 */}
+        <div className="notification_div">{this.state.noti}</div>
         <div className="Title_landing">
           <span className="Title1_landing">창원대 과팅앱</span>
           <span className="Title2_landing">와글와글</span>

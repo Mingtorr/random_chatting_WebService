@@ -23,7 +23,23 @@ router.post("/message_alldrop", (req, res) => {
     function (err, rows, field) {}
   );
 });
-
+router.post("/notification", (req, res) => {
+  console.log("tlasdasd");
+  connection.query("select * from noti", [], function (err, rows, field) {
+    console.log(rows[0]);
+    if (rows[0] === undefined) {
+      const noti = {
+        message: "",
+      };
+      res.send(noti);
+    } else {
+      const noti = {
+        message: rows[0].noti_message,
+      };
+      res.send(noti);
+    }
+  });
+});
 //메시지 보낼 때 아이디 TOUSER인지 FROMUSER 인지
 router.post("/tomessage", (req, res) => {
   const _id = req.body._id;
