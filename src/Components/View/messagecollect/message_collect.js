@@ -5,6 +5,7 @@ import "./message_collect.css";
 import MessageroomClick from "./room_red";
 import MessageroomWhite from "./room_white";
 import Footer from "../../Utils/Footer/Footer";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const socket = io();
 
@@ -88,7 +89,10 @@ export default class Message_collect extends React.Component {
   render() {
     return (
       <div className="messagerow_main">
-        <div className="messagerow_title">메시지 보관함</div>
+        <div className="messagerow_title">
+          <ArrowBackIcon style={{ fontSize: "50px" }} onClick={this.goHome} />
+          <pre className="msg_title_title">메시지 보관함</pre>
+        </div>
         <div className="messagerow_scroll">
           <ScrollToBottom className="chat_scroll">
             {this.state.messageroom.map((messageroom) => {

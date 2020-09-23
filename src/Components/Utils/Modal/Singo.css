@@ -95,7 +95,7 @@
 
 .first_input input {
   background-color: rgb(216, 216, 216);
-  font-family: "Jalnan";
+  font-family: "TmoneyRoundWindExtraBold";
   height: 25px;
   border-radius: 12px;
 
@@ -121,7 +121,7 @@
 
 .second_input textarea {
   /* display: block; */
-  font-family: "Jalnan";
+  font-family: "TmoneyRoundWindExtraBold";
   width: 80%;
   height: 250px;
   background-color: rgb(216, 216, 216);

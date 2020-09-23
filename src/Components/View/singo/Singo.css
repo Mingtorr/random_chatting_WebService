@@ -49,11 +49,11 @@
   border-radius: 15px;
 }
 
-.Singo_page footer button {
+.Singo_page button {
   width: 40vw;
   background-color: #f05052;
   color: white;
-  height: 5vh;
+  height: 100vw;
   font-size: 18px;
   font-family: "Jalnan";
   border: 0px;

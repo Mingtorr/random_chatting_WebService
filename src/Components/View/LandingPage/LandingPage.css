@@ -5,7 +5,8 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-image: url(../../../assets/Images/background.jpg);
+  /* background-image: url(../../../assets/Images/background.jpg); */
+  background-image: url(./backimg.png);
   background-repeat: no-repeat;
 }
 .change_nickname {

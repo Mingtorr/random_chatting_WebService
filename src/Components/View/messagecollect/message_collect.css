@@ -130,14 +130,22 @@
   display: flex;
   background-color: #131641;
   border-bottom: 1px solid white;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
   height: 10vh;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  color: white;
+}
+
+.msg_title_title {
   font-family: "Jalnan";
   color: white;
   font-size: 4vh;
+  position: absolute;
+  left: 20vw;
+  right: 20vw;
+  text-align: center;
 }
 .messageroom_main {
   display: flex;

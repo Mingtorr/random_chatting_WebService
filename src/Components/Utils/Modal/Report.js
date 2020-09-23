@@ -57,9 +57,9 @@ class Singo extends React.Component {
         <body className="Singo_body">
           <span>
             {" "}
-            빠르고 정확하게 비매너유저를 처리하겠습니다.
-            <br /> 신중한 신고 감사합니다. <br />
-            신고가 빠른 시간내에 이루어질 예정입니다 감사합니다
+            노력하는 창원대 창업동아리 WESIX가 되겠습니다.
+            <br /> 신고가 빠른 시간내에 이루어질 예정입니다. <br />
+            신중한 신고 부탁드립니다.
           </span>
           <article>
             <div className="Singo_article">

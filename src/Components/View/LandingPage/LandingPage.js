@@ -21,6 +21,12 @@ const socket = io();
 export default class LandingPage extends Component {
   constructor(props) {
     super(props);
+
+    if (localStorage.getItem("user") === null) {
+      window.location.href = "/";
+      alert("로그인해라");
+    }
+
     this.state = {
       count: 1,
       toggle: false,
@@ -267,11 +273,6 @@ export default class LandingPage extends Component {
         newmessage: true,
       });
     });
-
-    if (localStorage.getItem("user") === null) {
-      window.location.href = "/";
-      alert("로그인해라");
-    }
   }
 
   logout = () => {
@@ -458,18 +459,26 @@ export default class LandingPage extends Component {
         >
           <DialogTitle>
             <img src={Soju} width="30px" height="30px" />
-            소주한병 쿠폰
+            서버 오픈 기념 이벤트
             <img src={Soju} width="30px" height="30px" />
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              사용방법: <br />
-              1. 사장님께 보여주고 소주받기!!" <br />
+              기간 : 09/23 ~ 27
+              <br />
+              장소 : 창원대 앞 넌술포차 <br />
+              대상 : 어플 사용자 누구나 <br />
+              <br />
+              사용방법 <br />
+              1. 넌술포차를 간다 !<br />
+              2. 쿠폰을 보여준다 !<br />
+              3. 소주한병을 받아서 마신다 ! <br />
+              {/* 1. 사장님께 보여주고 소주받기!!" <br />
               2. 사장님께 감사인사 전하기!! <br />
               <br />
               주의사항: <br />
               1. 한 테이블당 한번만! <br />
-              2. 쿠폰 양심껏 사용하기
+              2. 쿠폰 양심껏 사용하기 */}
             </DialogContentText>
           </DialogContent>
         </Dialog>
@@ -498,6 +507,9 @@ export default class LandingPage extends Component {
               <br />
               4. 다음 매칭을 즐기려면 메시지함을 삭제한다.
               <br />
+              <br />
+              5. 와글채팅방은 모두가 다같이 즐기는 채팅방입니다.
+              <br />
             </DialogContentText>
           </DialogContent>
         </Dialog>
@@ -524,6 +536,9 @@ export default class LandingPage extends Component {
               <br />
               <br />
               3. 모바일 접속을 권장드립니다.
+              <br />
+              <br />
+              4. 닉네임 변경은 메세지함을 비운후 가능합니다.
               <br />
             </DialogContentText>
           </DialogContent>

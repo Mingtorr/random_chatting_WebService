@@ -112,7 +112,7 @@ export default class Signup extends Component {
           this.setState({
             waitingEmail: true,
           }),
-        30000
+        10000
       );
 
       // waitingEamil이 true일때
@@ -143,7 +143,7 @@ export default class Signup extends Component {
             this.setState({
               open2: true,
               text2:
-                "인증 메일이 전송되었습니다. 30초 후 다시 전송이 가능합니다",
+                "인증 메일이 전송되었습니다. 10초 후 다시 전송이 가능합니다",
               waitingEmail: false,
             });
 
@@ -155,7 +155,7 @@ export default class Signup extends Component {
     } else {
       //false 상태
       this.setState({
-        text5: "아직 30초가 안지났어요",
+        text5: "아직 10초가 안지났어요",
         open5: true,
       });
     }
@@ -526,8 +526,8 @@ export default class Signup extends Component {
             <button className="Btn_sign" type="submit">
               회원가입
             </button>
-            <button className="Btn_sign" onClick={this.moveLogin}>
-              로그인
+            <button className="Btn_sign2" onClick={this.moveLogin}>
+              뒤로가기
             </button>
           </div>
         </form>

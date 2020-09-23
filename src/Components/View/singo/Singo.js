@@ -59,7 +59,7 @@ class Singo extends React.Component {
         <body className="Singo_body">
           <span>
             {" "}
-            노력하는 창대 학생 개발팀이 되겠습니다
+            노력하는 창원대 창업동아리 WESIX가 되겠습니다
             <br /> 여러분의 신고에 끊임없는 피드백 수정이 <br />
             이루어질 예정입니다 감사합니다
           </span>
