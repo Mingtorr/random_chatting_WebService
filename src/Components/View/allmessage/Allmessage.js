@@ -11,7 +11,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Photos from "./photos.png";
-const socket = io("http://localhost:3001");
+const socket = io();
 
 export default class Allmessage extends React.Component {
   constructor(props) {
@@ -27,12 +27,10 @@ export default class Allmessage extends React.Component {
   }
   componentWillMount() {
     var user_realid = JSON.parse(localStorage.getItem("user")).user_realid;
-    console.log(user_realid);
 
     const box2 = {
       user_realid: user_realid,
     };
-    // console.log(email);
     fetch("api/Ben", {
       method: "post",
       headers: {
@@ -43,7 +41,6 @@ export default class Allmessage extends React.Component {
       .then((res) => res.json())
       .then((json) => {
         if (json.benTF === false) {
-          console.log("입장불가능");
           alert("신고가 접수 되어 이용이 불가합니다");
           window.location.replace("/");
         }
@@ -57,9 +54,7 @@ export default class Allmessage extends React.Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         json.map((row) => {
-          console.log(row.waglegroup_message);
           const newrow = {
             nickname: row.waglegroup_nickname,
             message: row.waglegroup_message,
@@ -71,7 +66,6 @@ export default class Allmessage extends React.Component {
         });
       });
 
-    console.log(this.state.nickname);
     socket.emit("start join", this.state.nickname);
     socket.emit("allroomjoin", this.state.userid);
     socket.on("clientnum", (numb) => {
@@ -83,7 +77,6 @@ export default class Allmessage extends React.Component {
       this.setState({
         messages: [...this.state.messages, post],
       });
-      console.log(this.state.messages);
     });
     socket.on("successmatching", (matching_info) => {
       this.setState({
@@ -107,7 +100,6 @@ export default class Allmessage extends React.Component {
     this.setState({
       message: e.target.value,
     });
-    console.log(this.state.message);
   };
   onclickSend = (e) => {
     const post = {

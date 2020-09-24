@@ -17,7 +17,7 @@ import Triangle from "./triangle.png";
 import { Button } from "@material-ui/core";
 import { json } from "body-parser";
 
-const socket = io("http://localhost:3001");
+const socket = io();
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -181,8 +181,6 @@ export default class LandingPage extends Component {
 
   check = (re, what, message) => {
     if (re.test(what)) {
-      console.log("3");
-      console.log(what);
       return true;
     }
     this.setState({
@@ -205,10 +203,8 @@ export default class LandingPage extends Component {
         "닉네임은 2~8자의 '영문' '한글' 로만 입력가능합니다."
       )
     ) {
-      console.log("1");
       return false;
     } else {
-      console.log("2");
       const user_id = {
         userid: this.state.userid,
         changeid: this.state.changeid,
@@ -265,7 +261,6 @@ export default class LandingPage extends Component {
   };
   componentWillMount() {
     var user_realid = JSON.parse(localStorage.getItem("user")).user_realid;
-    console.log(user_realid);
 
     const box2 = {
       user_realid: user_realid,
@@ -281,7 +276,6 @@ export default class LandingPage extends Component {
       .then((res) => res.json())
       .then((json) => {
         if (json.benTF === false) {
-          console.log("입장불가능");
           alert("신고가 접수 되어 이용이 불가합니다");
           window.location.replace("/");
         }
@@ -310,7 +304,6 @@ export default class LandingPage extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         this.setState({
           noti: json.message,
         });

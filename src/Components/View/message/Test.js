@@ -13,7 +13,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-const socket = io("http://localhost:3001/");
+const socket = io();
 
 export default class Test extends Component {
   constructor(props) {
@@ -118,8 +118,6 @@ export default class Test extends Component {
           torealid: message.realid,
         });
       }
-      console.log(this.state.realid + "asdasd");
-      console.log(this.state.torealid);
     });
   }
   onchage = (e) => {
@@ -210,7 +208,7 @@ export default class Test extends Component {
       message: this.state.premsg,
       message2: this.state.messages,
     };
-    console.log(post);
+
     fetch("api/singouser", {
       method: "post",
       headers: {

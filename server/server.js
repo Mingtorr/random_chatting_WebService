@@ -56,7 +56,6 @@ io.on("connection", function (socket) {
   });
 
   socket.on("send allmessage", (post) => {
-    console.log("전체방 메시지: " + post);
     //DB에 메시지를 저장한다.
     connection.query(
       "INSERT INTO waglegroup_mes (waglegroup_nickname, waglegroup_message, waglegroup_userid) VALUES (?,?,?)",

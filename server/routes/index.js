@@ -24,9 +24,7 @@ router.post("/message_alldrop", (req, res) => {
   );
 });
 router.post("/notification", (req, res) => {
-  console.log("noti");
   connection.query("select * from noti", [], function (err, rows, field) {
-    console.log(rows[0]);
     if (rows[0] === undefined) {
       const noti = {
         message: "",
@@ -65,8 +63,6 @@ router.post("/callid", (req, res) => {
   );
 });
 router.post("/singouser", (req, res) => {
-  console.log(req.body);
-  console.log("asdasd");
   const realid = req.body.realid;
   const torealid = req.body.torealid;
   const userid = req.body.userid;
@@ -124,7 +120,6 @@ router.post("/torealidcheck", (req, res) => {
     "select DISTINCT message_realid from wagle.wagle_message where (message_userid = ? and  message_touserid =  ?) or (message_userid = ? and  message_touserid = ?)",
     [req.body._id, req.body.touser, req.body.touser, req.body._id],
     function (err, rows, field) {
-      console.log(rows);
       if (rows === undefined) {
       } else {
         res.send(rows);
@@ -767,11 +762,10 @@ router.post("/allmatchGetMessage", (req, res) => {
         console.log("전체방 채팅 가져오기 err");
       } else if (rows[0] != undefined) {
         //보낼 메시지가 있음
-        console.log("rows: " + rows[0]);
+
         res.send(rows);
       } else {
         //보낼 메시지가 없음
-        console.log("보내메시지 없음");
       }
     }
   );
@@ -842,8 +836,6 @@ var mailSender2 = {
 
 router.post("/Ben", (req, res) => {
   let realid = req.body.user_realid;
-
-  console.log(realid + "aaaaaa");
 
   let sql = "SELECT * FROM ben_table WHERE ben_user_realid = (?)";
 

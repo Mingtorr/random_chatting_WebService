@@ -52,7 +52,6 @@ class ID_Search extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
-    console.log(this.state.email);
   };
 
   modalclose = (e) => {

@@ -7,7 +7,7 @@ import MessageroomWhite from "./room_white";
 import Footer from "../../Utils/Footer/Footer";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-const socket = io("http://localhost:3001");
+const socket = io();
 
 export default class Message_collect extends React.Component {
   constructor(props) {
@@ -20,7 +20,6 @@ export default class Message_collect extends React.Component {
 
   componentWillMount() {
     var user_realid = JSON.parse(localStorage.getItem("user")).user_realid;
-    console.log(user_realid);
 
     const box2 = {
       user_realid: user_realid,
@@ -36,7 +35,6 @@ export default class Message_collect extends React.Component {
       .then((res) => res.json())
       .then((json) => {
         if (json.benTF === false) {
-          console.log("입장불가능");
           alert("신고가 접수 되어 이용이 불가합니다");
           window.location.replace("/");
         }
