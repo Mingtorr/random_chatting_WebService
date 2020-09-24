@@ -8,18 +8,27 @@ import Dropmessage from "./drop";
 import ScrollToBottom from "react-scroll-to-bottom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import plane from "./plane.png";
-const socket = io("http://localhost:3001");
+import DialogActions from "@material-ui/core/DialogActions";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+const socket = io("http://localhost:3001/");
 
 export default class Test extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      realid: JSON.parse(localStorage.getItem("user")).user_realid,
+      torealid: "",
       userid: JSON.parse(localStorage.getItem("user")).user_id,
       roomname: "",
       touserid: "",
       message: "",
       messages: [],
       premsg: [],
+      open: false,
+      open2: false,
     };
   }
 
@@ -35,6 +44,28 @@ export default class Test extends Component {
       _id: this.state.userid,
       touser: queryObj.touserid,
     };
+    fetch("api/torealidcheck", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(post),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        json.map((user) => {
+          if (
+            user.message_realid === this.state.realid ||
+            user.message_realid === null
+          ) {
+          } else {
+            this.setState({
+              torealid: user.message_realid,
+            });
+          }
+        });
+      });
     socket.on("dropmessage2", (post2) => {
       const row = {
         userid: post2.userid,
@@ -81,6 +112,14 @@ export default class Test extends Component {
       this.setState({
         messages: [...this.state.messages, message],
       });
+      if (message.realid === this.state.realid || message.realid === null) {
+      } else {
+        this.setState({
+          torealid: message.realid,
+        });
+      }
+      console.log(this.state.realid + "asdasd");
+      console.log(this.state.torealid);
     });
   }
   onchage = (e) => {
@@ -88,7 +127,35 @@ export default class Test extends Component {
       message: e.target.value,
     });
   };
-
+  onchage2 = (e) => {
+    this.setState({
+      badguy_body: e.target.value,
+    });
+  };
+  modalopen1 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open: true,
+    });
+  };
+  modalclose1 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open: false,
+    });
+  };
+  modalopen2 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open2: true,
+    });
+  };
+  modalclose2 = (e) => {
+    e.preventDefault();
+    this.setState({
+      open2: false,
+    });
+  };
   onclick = () => {
     var sysdate = new Date();
     var hour = sysdate.getHours();
@@ -100,6 +167,7 @@ export default class Test extends Component {
       message: "",
     });
     const post_1 = {
+      realid: this.state.realid,
       body: this.state.message,
       userid: this.state.userid,
       touser: this.state.touserid,
@@ -107,6 +175,7 @@ export default class Test extends Component {
       time: messagetime,
     };
     const post_2 = {
+      realid: this.state.realid,
       body: this.state.message,
       userid: this.state.userid,
       touser: this.state.touserid,
@@ -131,6 +200,30 @@ export default class Test extends Component {
   goMcoll = (e) => {
     window.location.replace("/Message_collect");
   };
+  singoclick = (e) => {
+    const post = {
+      userid: this.state.userid,
+      touserid: this.state.touserid,
+      badguy_body: this.state.badguy_body,
+      realid: this.state.realid,
+      torealid: this.state.torealid,
+      message: this.state.premsg,
+      message2: this.state.messages,
+    };
+    console.log(post);
+    fetch("api/singouser", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(post),
+    }).then();
+    this.setState({
+      open2: true,
+      open: false,
+      badguy_body: "",
+    });
+  };
   render() {
     return (
       <div className="Container_test">
@@ -138,6 +231,47 @@ export default class Test extends Component {
           <ArrowBackIcon style={{ fontSize: "50px" }} onClick={this.goMcoll} />
           <span className="Chat_test">채팅방</span>
         </div> */}
+        <Dialog
+          open={this.state.open2}
+          onClose={this.modalclose2}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              신고가 완료되었습니다.
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          open={this.state.open}
+          onClose={this.modalclose1}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle>
+            <div className="singo_title_title">상대방 신고</div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <p>빠르게 즉각적으로 처리해드리겠습니다.</p>
+              <div className="user_singo_div">
+                <div className="user_singo_title">사유</div>
+                <div className="user_singo_textarea">
+                  <textarea
+                    value={this.state.badguy_body}
+                    onChange={this.onchage2}
+                  />
+                </div>
+              </div>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <button className="user_singo_button" onClick={this.singoclick}>
+              신고하기
+            </button>
+          </DialogActions>
+        </Dialog>
         <div className="message_table">
           <div className="Title_Test">
             <ArrowBackIcon
@@ -145,6 +279,9 @@ export default class Test extends Component {
               onClick={this.goMcoll}
             />
             <span className="Chat_test">채팅방</span>
+            <span className="Chat_test2">
+              <button onClick={this.modalopen1}>신고하기</button>
+            </span>
           </div>
           <ScrollToBottom className="scrollbottom">
             {this.state.premsg.map((message) => {

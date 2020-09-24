@@ -64,17 +64,84 @@ router.post("/callid", (req, res) => {
     }
   );
 });
-
+router.post("/singouser", (req, res) => {
+  console.log(req.body);
+  console.log("asdasd");
+  const realid = req.body.realid;
+  const torealid = req.body.torealid;
+  const userid = req.body.userid;
+  const touserid = req.body.touserid;
+  if (req.body != undefined) {
+    const end = req.body.message.length - 1;
+    const index = 0;
+    req.body.message.map((message) => {
+      connection.query(
+        "insert into badguy_message (realid,badguy_realid,userid,touserid,badguy_message) values (?,?,?,?,?)",
+        [
+          realid,
+          torealid,
+          message.message_userid,
+          message.message_touserid,
+          message.message_body,
+        ],
+        function (err, rows, field) {
+          if (err) {
+            console.log(err);
+          }
+        }
+      );
+    });
+    req.body.message2.map((message) => {
+      connection.query(
+        "insert into badguy_message (realid,badguy_realid,userid,touserid,badguy_message) values (?,?,?,?,?)",
+        [realid, torealid, message.userid, message.touser, message.body],
+        function (err, rows, field) {
+          if (err) {
+            console.log(err);
+          }
+        }
+      );
+    });
+    connection.query(
+      "insert into badguy (userrealid,badguy_userrealid,userid,badguy_userid,badguy_info) values(?,?,?,?,?)",
+      [
+        userid,
+        touserid,
+        req.body.realid,
+        req.body.torealid,
+        req.body.badguy_body,
+      ],
+      function (err, rows, field) {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
+  }
+});
+router.post("/torealidcheck", (req, res) => {
+  connection.query(
+    "select DISTINCT message_realid from wagle.wagle_message where (message_userid = ? and  message_touserid =  ?) or (message_userid = ? and  message_touserid = ?)",
+    [req.body._id, req.body.touser, req.body.touser, req.body._id],
+    function (err, rows, field) {
+      console.log(rows);
+      if (rows === undefined) {
+      } else {
+        res.send(rows);
+      }
+    }
+  );
+});
 //메시지 저장
 router.post("/message", (req, res) => {
   const _id = req.body.userid; //보내는 아이디
   const roomname = req.body.roomname;
   const _toid = req.body.touser;
   const body = req.body.body;
-
+  const realid = req.body.realid;
   connection.query(
-    "INSERT INTO wagle_message (message_userid, message_touserid, message_body, message_roomname) VALUES (?, ?, ?, ?)",
-    [_id, _toid, body, roomname],
+    "INSERT INTO wagle_message (message_userid, message_touserid, message_body, message_roomname,message_realid) VALUES (?, ?, ?,?,?)",
+    [_id, _toid, body, roomname, realid],
     function (err, rows, field) {
       if (err) {
       }
