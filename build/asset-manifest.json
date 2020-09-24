@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a95353b4.chunk.css",
+    "main.js": "/static/js/main.f63c549b.chunk.js",
+    "main.js.map": "/static/js/main.f63c549b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.09b85ec0.js",
+    "runtime-main.js.map": "/static/js/runtime-main.09b85ec0.js.map",
+    "static/js/2.747718b1.chunk.js": "/static/js/2.747718b1.chunk.js",
+    "static/js/2.747718b1.chunk.js.map": "/static/js/2.747718b1.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.bf3b696fa496290c0aaa54312a2247aa.js": "/precache-manifest.bf3b696fa496290c0aaa54312a2247aa.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.a95353b4.chunk.css.map": "/static/css/main.a95353b4.chunk.css.map",
+    "static/js/2.747718b1.chunk.js.LICENSE.txt": "/static/js/2.747718b1.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/static/media/TmoneyRoundWindExtraBold.d02708fe.ttf",
+    "static/media/LandingPage.css": "/static/media/backimage.e82f51e8.png",
+    "static/media/event.png": "/static/media/event.359005f2.png",
+    "static/media/heart.png": "/static/media/heart.12cace44.png",
+    "static/media/photos.png": "/static/media/photos.1cd637a6.png",
+    "static/media/plane.png": "/static/media/plane.ca8aaa2b.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.09b85ec0.js",
+    "static/js/2.747718b1.chunk.js",
+    "static/css/main.a95353b4.chunk.css",
+    "static/js/main.f63c549b.chunk.js"
+  ]
+}
