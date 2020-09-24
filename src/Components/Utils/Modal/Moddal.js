@@ -53,9 +53,6 @@ export default class Moddal extends Component {
           <button className="Btn_modal" onClick={this.goSingo}>
             불편사항 신고
           </button>
-          <button className="Btn_modal" onClick={this.goReport}>
-            비매너 신고
-          </button>
           <button className="Btn_modal" onClick={this.logout}>
             로그아웃
           </button>
