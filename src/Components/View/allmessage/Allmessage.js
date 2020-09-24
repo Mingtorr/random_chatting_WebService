@@ -26,6 +26,28 @@ export default class Allmessage extends React.Component {
     };
   }
   componentWillMount() {
+    var user_realid = JSON.parse(localStorage.getItem("user")).user_realid;
+    console.log(user_realid);
+
+    const box2 = {
+      user_realid: user_realid,
+    };
+    // console.log(email);
+    fetch("api/Ben", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(box2),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.benTF === false) {
+          console.log("입장불가능");
+          alert("신고가 접수 되어 이용이 불가합니다");
+          window.location.replace("/");
+        }
+      });
     fetch("api/allmatchGetMessage", {
       method: "post",
       headers: {

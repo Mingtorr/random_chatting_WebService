@@ -264,6 +264,29 @@ export default class LandingPage extends Component {
     }
   };
   componentWillMount() {
+    var user_realid = JSON.parse(localStorage.getItem("user")).user_realid;
+    console.log(user_realid);
+
+    const box2 = {
+      user_realid: user_realid,
+    };
+    // console.log(email);
+    fetch("api/Ben", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(box2),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.benTF === false) {
+          console.log("입장불가능");
+          alert("신고가 접수 되어 이용이 불가합니다");
+          window.location.replace("/");
+        }
+      });
+
     socket.emit("start join", this.state.userid);
     const userid = {
       userid: this.state.userid,
@@ -491,7 +514,7 @@ export default class LandingPage extends Component {
               <br />
               사용방법 <br />
               1. 넌술포차를 간다 !<br />
-              2. 쿠폰을 보여준다 !<br />
+              2. 이 화면을 보여준다 !<br />
               3. 소주한병을 받아서 마신다 ! <br />
               {/* 1. 사장님께 보여주고 소주받기!!" <br />
               2. 사장님께 감사인사 전하기!! <br />

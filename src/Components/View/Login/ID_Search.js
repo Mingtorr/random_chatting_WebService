@@ -77,16 +77,14 @@ class ID_Search extends Component {
             </DialogContentText>
           </DialogContent>
         </Dialog>
+
         <div className="id_search_title">
-          email 입력
+          email
           <input name="email" onChange={this.handleChange}></input>
+          <span className="id_search_ackr">@changwon.ac.kr</span>
         </div>
 
-        <div className="id_search_example">
-          ex) 와글와글@changwon.ac.kr
-          <br />
-          입력: 와글와글
-        </div>
+        <div className="id_search_example">@ 앞에 만 쳐주세요</div>
 
         <div className="id_search_email_button">
           <Button onClick={this.sendEmail} style={{ fontSize: "20px" }}>

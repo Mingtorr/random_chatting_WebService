@@ -840,4 +840,32 @@ var mailSender2 = {
   },
 };
 
+router.post("/Ben", (req, res) => {
+  let realid = req.body.user_realid;
+
+  console.log(realid + "aaaaaa");
+
+  let sql = "SELECT * FROM ben_table WHERE ben_user_realid = (?)";
+
+  connection.query(sql, [realid], function (err, rows, result) {
+    // 괄호 안
+    let ben_TF = {
+      benTF: true,
+    };
+
+    if (err) {
+      console.log(err);
+    } else {
+      if (rows[0] != undefined) {
+        if (rows[0].ben_user_realid === undefined) {
+          res.send(ben_TF);
+        } else {
+          ben_TF.benTF = false;
+          res.send(ben_TF);
+        }
+      }
+    }
+  });
+});
+
 module.exports = router;
