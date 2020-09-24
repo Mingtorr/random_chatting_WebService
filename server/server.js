@@ -40,6 +40,7 @@ io.on("connection", function (socket) {
     );
   });
   socket.on("allroomjoin", (userid) => {
+    // 전체방 접속
     socket.join("allmatchingroom");
     if (io.sockets === undefined) {
     } else {
@@ -55,6 +56,19 @@ io.on("connection", function (socket) {
   });
 
   socket.on("send allmessage", (post) => {
+    console.log("전체방 메시지: " + post);
+    //DB에 메시지를 저장한다.
+    connection.query(
+      "INSERT INTO waglegroup_mes (waglegroup_nickname, waglegroup_message, waglegroup_userid) VALUES (?,?,?)",
+      [post.nickname, post.message, post.userid],
+      function (err, rows, fields) {
+        if (err) {
+          console.log("전체 채팅방 메시지 저장에 에러");
+          console.log(err);
+        }
+      }
+    );
+
     io.to("allmatchingroom").emit("recieve allmessage", post);
   });
   socket.on("disconnectallmessage", (userid) => {

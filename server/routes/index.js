@@ -24,7 +24,7 @@ router.post("/message_alldrop", (req, res) => {
   );
 });
 router.post("/notification", (req, res) => {
-  console.log("tlasdasd");
+  console.log("noti");
   connection.query("select * from noti", [], function (err, rows, field) {
     console.log(rows[0]);
     if (rows[0] === undefined) {
@@ -689,6 +689,25 @@ router.post("/serchID", (req, res) => {
 
     // let information = { id: rows[0].user_realid, pw: rows[0].user_password };
   });
+});
+//전체방에 메시지 보여주기
+router.post("/allmatchGetMessage", (req, res) => {
+  connection.query(
+    "SELECT * FROM (SELECT * FROM waglegroup_mes order by waglegroup_key desc limit 30) waglegroup_mess order by waglegroup_key asc",
+    function (err, rows, field) {
+      if (err) {
+        console.log(err);
+        console.log("전체방 채팅 가져오기 err");
+      } else if (rows[0] != undefined) {
+        //보낼 메시지가 있음
+        console.log("rows: " + rows[0]);
+        res.send(rows);
+      } else {
+        //보낼 메시지가 없음
+        console.log("보내메시지 없음");
+      }
+    }
+  );
 });
 
 var mailSender2 = {

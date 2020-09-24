@@ -11,7 +11,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Photos from "./photos.png";
-const socket = io();
+const socket = io("http://localhost:3001");
 
 export default class Allmessage extends React.Component {
   constructor(props) {
@@ -26,6 +26,29 @@ export default class Allmessage extends React.Component {
     };
   }
   componentWillMount() {
+    fetch("api/allmatchGetMessage", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        json.map((row) => {
+          console.log(row.waglegroup_message);
+          const newrow = {
+            nickname: row.waglegroup_nickname,
+            message: row.waglegroup_message,
+            userid: row.waglegroup_userid,
+          };
+          this.setState({
+            messages: [...this.state.messages, newrow],
+          });
+        });
+      });
+
     console.log(this.state.nickname);
     socket.emit("start join", this.state.nickname);
     socket.emit("allroomjoin", this.state.userid);
@@ -64,17 +87,18 @@ export default class Allmessage extends React.Component {
     });
     console.log(this.state.message);
   };
-  onclick = (e) => {
+  onclickSend = (e) => {
     const post = {
       nickname: this.state.nickname,
       message: this.state.message,
+      userid: this.state.userid,
     };
     socket.emit("send allmessage", post);
     this.setState({
       message: "",
     });
   };
-  onclick2 = (e) => {
+  onclickDiscon = (e) => {
     socket.emit("disconnectallmessage", this.state.userid);
     window.location.replace("/main");
   };
@@ -105,7 +129,7 @@ export default class Allmessage extends React.Component {
             <div className="arrowbackdiv">
               <ArrowBackIcon
                 style={{ fontSize: "50px", float: "left" }}
-                onClick={this.onclick2}
+                onClick={this.onclickDiscon}
               />
             </div>
             <div className="arrowbackdiv2">와글 와글 채팅방</div>
@@ -141,7 +165,7 @@ export default class Allmessage extends React.Component {
                 <img src={plane} width="25px" height="25px" />
               </button>
             ) : (
-              <button onClick={this.onclick} className="Btn_test">
+              <button onClick={this.onclickSend} className="Btn_test">
                 <img src={plane} width="25px" height="25px" />
               </button>
             )}
