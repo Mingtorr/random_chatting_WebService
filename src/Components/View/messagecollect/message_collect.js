@@ -91,7 +91,7 @@ export default class Message_collect extends React.Component {
       <div className="messagerow_main">
         <div className="messagerow_title">
           <ArrowBackIcon style={{ fontSize: "50px" }} onClick={this.goHome} />
-          <pre className="msg_title_title">메시지 보관함</pre>
+          <span className="msg_title_title">메시지 보관함</span>
         </div>
         <div className="messagerow_scroll">
           <ScrollToBottom className="chat_scroll">

@@ -259,6 +259,9 @@
   height: 20vw;
   justify-content: flex-end;
 }
+.MuiButtonBase-root.MuiButton-root.MuiButton-text {
+  cursor: pointer;
+}
 .messageroom_button button {
   background-color: rgb(255, 255, 255);
   border-radius: 12px;
@@ -268,8 +271,10 @@
   border: 0;
   width: 20vw;
   height: 20vw;
+  cursor: pointer;
 }
 .messageroom_button button {
+  cursor: pointer;
   width: 5vw;
   height: 5vw;
   padding: 0;

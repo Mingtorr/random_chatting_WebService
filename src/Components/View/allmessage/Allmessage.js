@@ -12,6 +12,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Photos from "./photos.png";
 const socket = io();
+
 export default class Allmessage extends React.Component {
   constructor(props) {
     super(props);
