@@ -12,8 +12,7 @@
 }
 .message_title {
   display: flex;
-  background-color: #131641;
-  border-bottom: 1px solid white;
+  background-color: #a1bdff;
   flex-direction: column;
   width: 100%;
   height: 10vh;
@@ -22,7 +21,7 @@
 }
 .message_scroll {
   display: flex;
-  background-color: #131641;
+  background-color: #c7d9ff;
   width: 100vw;
   flex-direction: column;
   height: 83vh;
@@ -30,7 +29,7 @@
 }
 .messagerow_scroll {
   display: flex;
-  background-color: #131641;
+  background-color: #c7d9ff;
   width: 100vw;
   flex-direction: column;
   height: 90vh;
@@ -128,8 +127,7 @@
 
 .messagerow_title {
   display: flex;
-  background-color: #131641;
-  border-bottom: 1px solid white;
+  background-color: #a1bdff;
   flex-direction: row;
   width: 100%;
   height: 10vh;
@@ -175,7 +173,7 @@
   flex-direction: row;
   width: 88vw;
   height: 12vh;
-  background-color: #f05052;
+  background-color: #81aefe;
   border-radius: 24px 24px 24px 0;
   margin-top: 2vh;
   justify-content: flex-start;
@@ -204,7 +202,7 @@
   width: 50vw;
   height: 4vh;
   font-family: "TmoneyRoundWindExtraBold";
-  color: #f05052;
+  color: #81aefe;
   font-size: 2.7vh;
   align-items: center;
   white-space: nowrap;
@@ -229,7 +227,7 @@
   height: 5vh;
   font-family: "TmoneyRoundWindExtraBold";
   margin-top: 1vh;
-  color: #f05052;
+  color: #81aefe;
   font-size: 2vh;
   align-items: center;
   white-space: nowrap;
@@ -266,7 +264,7 @@
   background-color: rgb(255, 255, 255);
   border-radius: 12px;
   font-family: "Jalnan";
-  color: #f05052;
+  color: #81aefe;
   font-size: 14px;
   border: 0;
   width: 20vw;
@@ -303,5 +301,8 @@
   justify-content: center;
   align-items: center;
   width: 100vw;
-  background-color: #131641;
+  background-color: #b4cbff;
+}
+.Home_footer {
+  color: #487ed7;
 }

@@ -8,7 +8,7 @@
   width: 100vw;
   height: 50px;
 
-  background-color: #f05052;
+  background-color: #a1bdff;
   justify-content: center;
   align-items: center;
   font-family: "Jalnan";
@@ -61,7 +61,7 @@
 }
 .Allview_name {
   font-family: "TmoneyRoundWindExtraBold";
-  color: white;
+  color: black;
   display: flex;
   word-break: break-all;
 
@@ -84,7 +84,7 @@
   border: 1px solid #888;
   padding: 10px;
   border-radius: 5px;
-  background-color: #f05052;
+  background-color: #78a2ff;
   color: white;
   text-align: left;
   font-family: "TmoneyRoundWindExtraBold";
@@ -100,7 +100,7 @@
   padding: 10px;
   border-radius: 5px;
   background-color: white;
-  color: #f05052;
+  color: #78a2ff;
   text-align: left;
   font-family: "TmoneyRoundWindExtraBold";
   font-size: 13px;

@@ -10,6 +10,7 @@
   text-align: center;
   font-size: 30px;
   margin-top: 50px;
+  font-family: "Jalnan";
 }
 
 .Singo_body {
@@ -50,10 +51,14 @@
 }
 
 .Singo_page button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0%;
   width: 40vw;
-  background-color: #f05052;
+  background-color: #81aefe;
   color: white;
-  height: 100vw;
+  height: 5vh;
   font-size: 18px;
   font-family: "Jalnan";
   border: 0px;
@@ -66,13 +71,13 @@
 }
 
 .Singo_article div span {
-  color: #f05052;
+  color: #81aefe;
   font-family: "Jalnan";
   font-size: 18px;
 }
 
 .second_input div {
-  color: #f05052;
+  color: #81aefe;
   font-family: "TmoneyRoundWindExtraBold";
   font-size: 18px;
   text-align: center;

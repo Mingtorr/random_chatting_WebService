@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.f209d1b2.chunk.css",
-    "main.js": "/static/js/main.85938187.chunk.js",
-    "main.js.map": "/static/js/main.85938187.chunk.js.map",
+    "main.css": "/static/css/main.ec24ff08.chunk.css",
+    "main.js": "/static/js/main.323d822c.chunk.js",
+    "main.js.map": "/static/js/main.323d822c.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.09b85ec0.js",
     "runtime-main.js.map": "/static/js/runtime-main.09b85ec0.js.map",
-    "static/js/2.747718b1.chunk.js": "/static/js/2.747718b1.chunk.js",
-    "static/js/2.747718b1.chunk.js.map": "/static/js/2.747718b1.chunk.js.map",
+    "static/js/2.a49ca819.chunk.js": "/static/js/2.a49ca819.chunk.js",
+    "static/js/2.a49ca819.chunk.js.map": "/static/js/2.a49ca819.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.76a10d287046fef4b5d0ecd2bbd30089.js": "/precache-manifest.76a10d287046fef4b5d0ecd2bbd30089.js",
+    "precache-manifest.06334754b7775f79193f2d6a40cd17a6.js": "/precache-manifest.06334754b7775f79193f2d6a40cd17a6.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.f209d1b2.chunk.css.map": "/static/css/main.f209d1b2.chunk.css.map",
-    "static/js/2.747718b1.chunk.js.LICENSE.txt": "/static/js/2.747718b1.chunk.js.LICENSE.txt",
+    "static/css/main.ec24ff08.chunk.css.map": "/static/css/main.ec24ff08.chunk.css.map",
+    "static/js/2.a49ca819.chunk.js.LICENSE.txt": "/static/js/2.a49ca819.chunk.js.LICENSE.txt",
     "static/media/index.css": "/static/media/TmoneyRoundWindExtraBold.d02708fe.ttf",
-    "static/media/LandingPage.css": "/static/media/backimage.e82f51e8.png",
     "static/media/event.png": "/static/media/event.359005f2.png",
     "static/media/heart.png": "/static/media/heart.12cace44.png",
     "static/media/photos.png": "/static/media/photos.1cd637a6.png",
-    "static/media/plane.png": "/static/media/plane.ca8aaa2b.png"
+    "static/media/plane.png": "/static/media/plane.ca8aaa2b.png",
+    "static/media/LandingPage.css": "/static/media/wagle.28b9c884.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.09b85ec0.js",
-    "static/js/2.747718b1.chunk.js",
-    "static/css/main.f209d1b2.chunk.css",
-    "static/js/main.85938187.chunk.js"
+    "static/js/2.a49ca819.chunk.js",
+    "static/css/main.ec24ff08.chunk.css",
+    "static/js/main.323d822c.chunk.js"
   ]
 }

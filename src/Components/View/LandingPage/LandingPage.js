@@ -384,9 +384,9 @@ export default class LandingPage extends Component {
         {/* 제목 */}
         <div className="notification_div">{this.state.noti}</div>
         <div className="Title_landing">
-          <span className="Title1_landing">창원대 과팅앱</span>
+          <span className="Title1_landing">창원대 매칭앱</span>
           <span className="Title2_landing">와글와글</span>
-          <span className="Title3_landing">우리... 할래요 ?</span>
+          <span className="Title3_landing">우리 친구할래요 ?</span>
         </div>
 
         <div className="Title_landing">
@@ -495,7 +495,7 @@ export default class LandingPage extends Component {
         >
           <DialogTitle>
             <img src={Soju} width="30px" height="30px" />
-            서버 오픈 기념 이벤트
+            넌술포차 이벤트
             <img src={Soju} width="30px" height="30px" />
           </DialogTitle>
           <DialogContent>
@@ -580,8 +580,7 @@ export default class LandingPage extends Component {
           </DialogContent>
         </Dialog>
         <div className="event_url" onClick={this.modalopenEvent}>
-          <img src={Event} />
-          <p>이벤트</p>
+          <span>Event</span>
         </div>
       </div>
     );

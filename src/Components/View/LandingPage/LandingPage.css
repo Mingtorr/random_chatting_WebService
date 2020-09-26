@@ -6,8 +6,10 @@
   width: 100vw;
   height: 100vh;
   /* background-image: url(../../../assets/Images/background.jpg); */
-  background-image: url(./backimage.png);
+  background-image: url(./wagle.jpg);
+  background-size: cover; /* <------ */
   background-repeat: no-repeat;
+  background-position: center center;
 }
 .change_nickname {
   display: inline-block;
@@ -29,12 +31,24 @@
 .change_nickname_button {
   float: right;
 }
-
+.event_url {
+  /* display: flex; */
+  /* border: 1px solid black; */
+  position: absolute;
+  top: 8vh;
+  left: 16px;
+  /* justify-content: center; */
+  width: auto;
+  /* height: 60px; */
+  /* background-color: #bad6d7; */
+  background-repeat: no-repeat;
+}
 .nickname_change_btn {
   font-size: 16px;
   font-family: "Jalnan";
   color: white;
-  background-color: green;
+  background-color: #b4cbff;
+  box-shadow: 3px 4px 3px 1px #8f9db9;
   border: 0;
   border-radius: 60px;
   padding: 15px;
@@ -73,31 +87,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
-}
-.event_url {
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  justify-content: center;
-  width: 100vw;
-  height: 60px;
-  background-color: #bad6d7;
-  background-repeat: no-repeat;
-}
-.event_url p {
-  color: #f05052;
-  font-size: 30px;
-  font-family: "Jalnan";
   margin-top: 15px;
-  margin-left: 20px;
 }
 .Title1_landing {
   color: #f05052;
   font-size: 15;
   font-family: "Jalnan";
 }
-
+.event_url span {
+  display: block;
+  color: #825fff;
+  font-size: 18px;
+  font-family: "Jalnan";
+  /* margin-top: 15px; */
+  /* margin-left: 20px; */
+}
 .Title2_landing {
   color: #f05052;
   font-size: 40px;
@@ -134,7 +138,7 @@
   font-size: 25px;
   font-family: "Jalnan";
   color: white;
-  background-color: #131641;
+  background-color: #c7d9ff;
   border: 0px;
 }
 
@@ -162,7 +166,7 @@
 }
 
 .Btn_landing {
-  background-color: #131641;
+  background-color: #c7d9ff;
   border: 0px;
 }
 

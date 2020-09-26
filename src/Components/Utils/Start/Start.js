@@ -20,7 +20,7 @@ export default class Start extends Component {
       open: false,
       open2: false,
       progress: (
-        <button className="Font_start" onClick={this.onMatching}>
+        <button className="Font2_start" onClick={this.onMatching}>
           {" "}
           매칭 시작!{" "}
         </button>
@@ -123,7 +123,7 @@ export default class Start extends Component {
   stopMathing = () => {
     this.setState({
       progress: (
-        <button className="Font_start" onClick={this.onMatching}>
+        <button className="Font2_start" onClick={this.onMatching}>
           {" "}
           매칭 시작!{" "}
         </button>
