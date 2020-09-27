@@ -8,7 +8,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import Soju from "../LandingPage/soju.png";
-const socket = io();
+const socket = io("http://localhost:3001");
 
 export default class Messageroom_click extends React.Component {
   constructor(props) {
