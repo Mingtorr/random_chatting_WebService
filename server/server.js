@@ -87,6 +87,10 @@ io.on("connection", function (socket) {
   });
   socket.on("matchingtouser", (matching_info) => {
     const lastmessage = "매칭이 성공적으로 되었습니다.";
+    console.log("서버 매칭 소켓");
+    console.log(matching_info);
+    // 매칭
+    console.log(matching_info.realid + "리얼아이디");
     connection.query(
       "INSERT INTO wagle_room (room_userid,room_touserid,room_lastmessage, room_roomname) values (?,?,?,?)",
       [
@@ -96,15 +100,53 @@ io.on("connection", function (socket) {
         matching_info.roomname,
       ],
       function (err, rows, field) {
-        const username = matching_info.touserid + "start";
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("1");
+          connection.query(
+            "SELECT * FROM user_info WHERE user_id =(?)",
+            [matching_info.touserid],
+            function (err, rows, fields) {
+              if (err) {
+                console.log("2");
+                console.log("상태방 매칭 카운터 찾는데 에러" + err);
+              } else {
+                console.log("3");
+                let room_count = rows[0].room_count;
+                room_count++;
+                connection.query(
+                  "UPDATE user_info SET room_count = ? WHERE user_id =(?)",
+                  [room_count, matching_info.touserid],
+                  function (err, rows, fields) {
+                    if (err) {
+                      console.log("4");
+                      console.log("소켓 카운터 증가 에러: " + err);
+                    } else {
+                      console.log("5");
+                      const username = matching_info.touserid + "start";
 
-        io.to(username).emit("successmatching", matching_info);
+                      io.to(username).emit("successmatching", matching_info); // 먼저 등록한 사람한테 소켓 emit
 
-        io.to(matching_info.touserid + "start").emit("newmarking", username);
-        io.to(matching_info.userid + "start").emit("newmarking", username);
+                      io.to(matching_info.touserid + "start").emit(
+                        "newmarking",
+                        username
+                      );
+                      io.to(matching_info.userid + "start").emit(
+                        "newmarking",
+                        username
+                      );
+                    }
+                  } // 닉네임으로 카운터 변경
+                );
+              }
+            }
+          );
+        }
       }
     );
   });
+
   socket.on("start join", (userid) => {
     console.log("스타트 룸 방 참가" + userid);
     socket.join(userid + "start");

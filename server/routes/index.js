@@ -151,6 +151,7 @@ router.post("/droproom", (req, res) => {
     [req.body.userid],
     function (err, rows, field) {
       if (rows[0].room_drop === null) {
+        //내가 나감
         connection.query(
           "DELETE FROM wagle_room WHERE room_userid=? and room_touserid=?",
           [req.body.userid, req.body.touserid],
@@ -159,12 +160,35 @@ router.post("/droproom", (req, res) => {
               'update wagle_room set room_drop=?, room_lastmessage = "상대방이 나갔습니다." ,room_lastuserid=? where room_userid = ? and room_touserid = ?',
               [1, req.body.userid, req.body.touserid, req.body.userid],
               function (err, rows, field) {
-                res.send();
+                connection.query(
+                  "SELECT room_count FROM user_info WHERE user_id = ?", //닉내임으로 카운터 숫자 찾기
+                  [req.body.userid],
+                  function (err, rows, field) {
+                    if (err) {
+                      console.log("닉내임찾는데 err" + err);
+                    } else {
+                      let room_count = rows[0].room_count;
+                      room_count--;
+                      connection.query(
+                        "UPDATE user_info SET room_count = ? WHERE user_id = ?",
+                        [room_count, req.body.userid],
+                        function (err, rows, fields) {
+                          if (err) {
+                            console.log("룸카운트 감소err" + err);
+                          } else {
+                            res.send();
+                          }
+                        }
+                      );
+                    }
+                  }
+                );
               }
             );
           }
         );
       } else {
+        //상대방이 나간방 삭제
         connection.query(
           "DELETE FROM wagle_room WHERE room_userid=? and room_touserid=?",
           [req.body.userid, req.body.touserid],
@@ -178,7 +202,29 @@ router.post("/droproom", (req, res) => {
                 req.body.userid,
               ],
               function (err, rows, field) {
-                res.send();
+                connection.query(
+                  "SELECT room_count FROM user_info WHERE user_id = ?", //닉내임으로 카운터 숫자 찾기
+                  [req.body.userid],
+                  function (err, rows, field) {
+                    if (err) {
+                      console.log("닉내임찾는데 err" + err);
+                    } else {
+                      let room_count = rows[0].room_count;
+                      room_count--;
+                      connection.query(
+                        "UPDATE user_info SET room_count = ? WHERE user_id = ?",
+                        [room_count, req.body.userid],
+                        function (err, rows, fields) {
+                          if (err) {
+                            console.log("룸카운트 감소err" + err);
+                          } else {
+                            res.send();
+                          }
+                        }
+                      );
+                    }
+                  }
+                );
               }
             );
           }
@@ -258,7 +304,7 @@ router.post("/onmatching", (req, res) => {
     [req.body.userid],
     function (err, rows, fields) {
       if (rows[0] === undefined) {
-        res.send(false); //중복 없음 사용가능
+        res.send(false); //중복 없음 사용가능 수정 원영 = false 넣어야함
       } else {
         res.send(true); // 중복 있음 사용안됨
       }
@@ -334,7 +380,6 @@ router.post("/CheckMatching", (req, res) => {
       if (rows[0] === undefined) {
         //매칭할 여자가 없을때 남자는 값을 넣는다.
         //테이블 없음
-
         connection.query(
           "INSERT INTO matching_table_m (matching_userid) values (?)",
           [req.body.userid],
@@ -347,36 +392,62 @@ router.post("/CheckMatching", (req, res) => {
           }
         );
       } else {
-        //매칭할 여자가 있을Eo
+        //매칭할 여자가 있을Eo -
+        // 수정 원영////////////
         const userm = req.body.userid;
         const userw = rows[0].matching_userid;
         const lastmessage = "매칭이 성공적으로 되었습니다.";
-        connection.query(
-          "INSERT INTO wagle_room (room_userid,room_touserid,room_lastmessage,room_roomname) values (?,?,?,?)",
-          [userm, userw, lastmessage, userm + userw],
-          function (err, rows, field) {
-            connection.query(
-              "delete from matching_table_w where matching_userid = ?",
-              [userw],
-              function (err, rows, field) {
-                if (err) {
-                }
 
-                const match_info = {
-                  userid: userm,
-                  touserid: userw,
-                  roomname: userm + userw,
-                };
-                res.send(match_info);
-              }
-            );
+        connection.query(
+          "SELECT * FROM user_info WHERE user_realid = ?",
+          [req.body.realid],
+          function (err, rows, fields) {
+            let room_count = rows[0].room_count;
+            console.log("남자 카운트: " + room_count);
+            if (err) {
+              console.log(err);
+            } else {
+              // 매칭가능
+              room_count++;
+              connection.query(
+                "UPDATE user_info SET room_count = ? WHERE user_realid =(?)",
+                [room_count, req.body.realid],
+                function (err, rows, fields) {
+                  if (err) {
+                    console.log("룸카운트할때 에러:" + err);
+                  } else {
+                    connection.query(
+                      "INSERT INTO wagle_room (room_userid,room_touserid,room_lastmessage,room_roomname) values (?,?,?,?)",
+                      [userm, userw, lastmessage, userm + userw],
+                      function (err, rows, field) {
+                        connection.query(
+                          "delete from matching_table_w where matching_userid = ?",
+                          [userw],
+                          function (err, rows, field) {
+                            if (err) {
+                            }
+
+                            const match_info = {
+                              userid: userm,
+                              touserid: userw,
+                              roomname: userm + userw,
+                            };
+                            res.send(match_info);
+                          }
+                        );
+                      }
+                    );
+                  }
+                }
+              );
+              /////
+            }
           }
         );
       }
     });
   } else {
     //여자일떄
-
     connection.query("SELECT * FROM matching_table_m", [], function (
       err,
       rows,
@@ -402,25 +473,51 @@ router.post("/CheckMatching", (req, res) => {
         const userm = rows[0].matching_userid;
         const userw = req.body.userid;
         const lastmessage = "매칭이 성공적으로 되었습니다.";
-        connection.query(
-          "INSERT INTO wagle_room (room_userid,room_touserid,room_lastmessage,room_roomname) values (?,?,?,?)",
-          [userw, userm, lastmessage, userm + userw],
-          function (err, rows, field) {
-            connection.query(
-              "delete from matching_table_m where matching_userid = ?",
-              [userm],
-              function (err, rows, field) {
-                if (err) {
-                }
+        //수정 원영
 
-                const match_info = {
-                  userid: userw,
-                  touserid: userm,
-                  roomname: userm + userw,
-                };
-                res.send(match_info);
-              }
-            );
+        connection.query(
+          "SELECT * FROM user_info WHERE user_realid = ?",
+          [req.body.realid],
+          function (err, rows, fields) {
+            let room_count = rows[0].room_count;
+            console.log("여자 카운트: " + room_count);
+            if (err) {
+              console.log(err);
+            } else {
+              // 매칭가능
+              room_count++;
+              connection.query(
+                "UPDATE user_info SET room_count = ? WHERE user_realid =(?)",
+                [room_count, req.body.realid],
+                function (err, rows, fields) {
+                  if (err) {
+                    console.log("룸카운트할때 에러:" + err);
+                  } else {
+                    connection.query(
+                      "INSERT INTO wagle_room (room_userid,room_touserid,room_lastmessage,room_roomname) values (?,?,?,?)",
+                      [userw, userm, lastmessage, userm + userw],
+                      function (err, rows, field) {
+                        connection.query(
+                          "delete from matching_table_m where matching_userid = ?",
+                          [userm],
+                          function (err, rows, field) {
+                            if (err) {
+                            }
+                            const match_info = {
+                              userid: userw,
+                              touserid: userm,
+                              roomname: userm + userw,
+                            };
+                            res.send(match_info);
+                          }
+                        );
+                      }
+                    );
+                  }
+                }
+              );
+              /////
+            }
           }
         );
       }

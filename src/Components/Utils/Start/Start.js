@@ -16,7 +16,7 @@ export default class Start extends Component {
     this.state = {
       _id: JSON.parse(localStorage.getItem("user")).user_id,
       sex: JSON.parse(localStorage.getItem("user")).user_sex,
-      nick: JSON.parse(localStorage.getItem("user")).user_nickname,
+      realid: JSON.parse(localStorage.getItem("user")).user_realid,
       open: false,
       open2: false,
       progress: (
@@ -29,11 +29,14 @@ export default class Start extends Component {
   }
 
   componentWillMount() {
+    console.log(this.state.realid);
     const user = {
       userid: this.state._id,
       sex: this.state.sex,
+      realid: this.state.realid,
     };
     fetch("api/onmatching", {
+      //카운터를 확인해야함
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -86,11 +89,14 @@ export default class Start extends Component {
       });
 
     socket.on("successmatching", (matching_info) => {
+      // 여기에 카운트하는 기능 추가??
+
       this.props.nickname_switch_false();
       this.setState({
         progress: <button className="Font_start">메시지함을 확인하세요</button>,
         open: true,
       });
+      console.log("매칭 성공정보: " + matching_info);
     });
     socket.emit("start join", this.state._id);
   }
@@ -178,6 +184,7 @@ export default class Start extends Component {
     const userid = {
       userid: this.state._id,
       sex: this.state.sex,
+      realid: this.state.realid,
     };
     fetch("api/CheckMatching", {
       method: "post",
@@ -189,7 +196,10 @@ export default class Start extends Component {
       .then((res) => res.json())
       .then((json) => {
         if (json.touserid === undefined) {
+          //상대유저 아이디 없으면 계속 찾기
         } else {
+          // 상대방 있으면 매칭성공
+          json.realid = userid.realid;
           this.props.nickname_switch_false();
           socket.emit("matchingtouser", json);
           this.setState({
