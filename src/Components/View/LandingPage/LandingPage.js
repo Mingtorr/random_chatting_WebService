@@ -295,6 +295,7 @@ export default class LandingPage extends Component {
     const box = {
       userid: this.state.userid,
     };
+
     fetch("api/notification", {
       method: "post",
       headers: {
@@ -414,7 +415,7 @@ export default class LandingPage extends Component {
             nickname_switch_false={this.nickname_switch_false}
           />
         </div>
-        {this.state.change_nickname_switch ? (
+        {this.state.change_nickname_switch ? ( //true면 닉변가능 cnt 1이상이면 false
           <div className="Title_landing">
             <button
               className="nickname_change_btn"

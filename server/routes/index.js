@@ -8,6 +8,7 @@ const io = require("socket.io")(http);
 const nodemailer = require("nodemailer");
 const { light } = require("@material-ui/core/styles/createPalette");
 const { futimes } = require("fs");
+const { BottomNavigation } = require("@material-ui/core");
 //mysql연결
 var connection = mysql.createConnection({
   host: "localhost",
@@ -300,16 +301,32 @@ router.post("/Signup", (req, res) => {
 });
 router.post("/onmatching", (req, res) => {
   connection.query(
-    "SELECT * FROM wagle_room WHERE room_userid =(?)",
-    [req.body.userid],
+    "SELECT * FROM user_info WHERE user_realid = ?",
+    [req.body.realid],
     function (err, rows, fields) {
-      if (rows[0] === undefined) {
-        res.send(false); //중복 없음 사용가능 수정 원영 = false 넣어야함
+      if (err) {
+        console.log("room_count err" + err);
       } else {
-        res.send(true); // 중복 있음 사용안됨
+        console.log("룸카운터: " + rows[0].room_count);
+        let room_count = {
+          room_count: rows[0].room_count,
+        };
+        res.send(room_count);
       }
     }
   );
+
+  // connection.query(
+  //   "SELECT * FROM wagle_room WHERE room_userid =(?)",
+  //   [req.body.userid],
+  //   function (err, rows, fields) {
+  //     if (rows[0] === undefined) {
+  //       res.send(false); //중복 없음 사용가능 수정 원영 = false 넣어야함
+  //     } else {
+  //       res.send(true); // 중복 있음 사용안됨
+  //     }
+  //   }
+  // );
 });
 //닉네임 중복검사 하는거
 router.post("/checkRealid", (req, res) => {
@@ -345,6 +362,7 @@ router.post("/CheckId", (req, res) => {
 router.post("/CheckStart", (req, res) => {
   if (req.body.sex === "M") {
     connection.query(
+      //매칭테이블에 유저가 있는지 확인
       "SELECT * FROM matching_table_m WHERE matching_userid = ?",
       [req.body.userid],
       function (err, rows, field) {
@@ -378,6 +396,7 @@ router.post("/CheckMatching", (req, res) => {
       fields
     ) {
       if (rows[0] === undefined) {
+        //작성자
         //매칭할 여자가 없을때 남자는 값을 넣는다.
         //테이블 없음
         connection.query(
@@ -387,11 +406,11 @@ router.post("/CheckMatching", (req, res) => {
             const touserid = {
               touserid: undefined,
             };
-
             res.send(touserid); //생각
           }
         );
       } else {
+        // 신청자
         //매칭할 여자가 있을Eo -
         // 수정 원영////////////
         const userm = req.body.userid;
@@ -426,11 +445,11 @@ router.post("/CheckMatching", (req, res) => {
                           function (err, rows, field) {
                             if (err) {
                             }
-
                             const match_info = {
-                              userid: userm,
-                              touserid: userw,
+                              userid: userm, //신청자
+                              touserid: userw, //작성자
                               roomname: userm + userw,
+                              room_count: room_count, //신청자 방 숫자
                             };
                             res.send(match_info);
                           }
@@ -440,7 +459,6 @@ router.post("/CheckMatching", (req, res) => {
                   }
                 }
               );
-              /////
             }
           }
         );
@@ -507,6 +525,7 @@ router.post("/CheckMatching", (req, res) => {
                               userid: userw,
                               touserid: userm,
                               roomname: userm + userw,
+                              room_count: room_count, //여자의 방숫자
                             };
                             res.send(match_info);
                           }
@@ -549,6 +568,7 @@ router.post("/login", (req, res) => {
               box.user_email = rows[0].user_email;
               box.user_realid = rows[0].user_realid;
               box.user_sex = rows[0].user_sex;
+              box.room_count = rows[0].room_count;
               box.boolean = true;
               res.send(box);
             }

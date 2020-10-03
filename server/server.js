@@ -85,7 +85,9 @@ io.on("connection", function (socket) {
       }
     }
   });
+
   socket.on("matchingtouser", (matching_info) => {
+    //////////////////원영 수정////////////////////////
     const lastmessage = "매칭이 성공적으로 되었습니다.";
     console.log("서버 매칭 소켓");
     console.log(matching_info);
@@ -146,6 +148,7 @@ io.on("connection", function (socket) {
       }
     );
   });
+  //////////////////////////////////////////////////////
 
   socket.on("start join", (userid) => {
     console.log("스타트 룸 방 참가" + userid);
