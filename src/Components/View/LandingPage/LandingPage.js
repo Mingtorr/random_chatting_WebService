@@ -29,6 +29,7 @@ export default class LandingPage extends Component {
     }
 
     this.state = {
+      arrow_text: "1 : 1 과팅",
       count: 1,
       toggle: false,
       admin: false,
@@ -91,12 +92,14 @@ export default class LandingPage extends Component {
     this.setState({
       count: 1,
       toggle: false,
+      arrow_text: "1 : 1 과팅",
     });
   };
   onClick2 = (e) => {
     this.setState({
-      count: 1,
-      toggle: true,
+      count: 2,
+      toggle: false,
+      arrow_text: "동성 친구",
     });
   };
   onClick3 = (e) => {
@@ -389,10 +392,10 @@ export default class LandingPage extends Component {
           <span className="Title2_landing">와글와글</span>
           <span className="Title3_landing">우리 친구할래요 ?</span>
         </div>
-
+        {/* 휘제변경 */}
         <div className="Title_landing">
           <button className="Toggle_landing" onClick={this.handleToggle}>
-            {this.state.count} : {this.state.count} 과팅 ▼
+            {this.state.arrow_text} ▼
           </button>
 
           {this.state.toggle === false ? (
@@ -403,7 +406,7 @@ export default class LandingPage extends Component {
                 1 : 1 과팅
               </button>
               <button onClick={this.onClick2} className="Toggle2_landing">
-                다중매칭은 준비중입니다.
+                동성 친구
               </button>
             </div>
           )}

@@ -316,18 +316,6 @@ router.post("/onmatching", (req, res) => {
       }
     }
   );
-
-  // connection.query(
-  //   "SELECT * FROM wagle_room WHERE room_userid =(?)",
-  //   [req.body.userid],
-  //   function (err, rows, fields) {
-  //     if (rows[0] === undefined) {
-  //       res.send(false); //중복 없음 사용가능 수정 원영 = false 넣어야함
-  //     } else {
-  //       res.send(true); // 중복 있음 사용안됨
-  //     }
-  //   }
-  // );
 });
 //닉네임 중복검사 하는거
 router.post("/checkRealid", (req, res) => {
@@ -388,7 +376,7 @@ router.post("/CheckStart", (req, res) => {
     );
   }
 });
-////////////////////////////////원영 추가/////////////////////////////////////////
+/////////////원영 추가: 이성매칭중인 사람 거르는 함수////////////////////////////
 function room_check(user_id, user_sex, callback) {
   connection.query(
     "SELECT * FROM wagle_room where room_userid = ?",
@@ -414,14 +402,12 @@ function room_check(user_id, user_sex, callback) {
           ) {
             //매칭테이블 튜플 배열로
             rows.map((x) => matchArr.push(x.matching_userid));
-            console.log(matchArr);
 
             let matchAble = matchArr.filter(function (b) {
               if (talking.indexOf(b) === -1) {
                 tempArr.push(b);
               }
             });
-            console.log("남: 1차 필터 결과", returnArr);
 
             connection.query(
               //나간유저 다시 잡히기 방지
@@ -435,11 +421,9 @@ function room_check(user_id, user_sex, callback) {
                     returnArr.push(b);
                   }
                 });
-                console.log("남:최종 필터 결과", tempArr);
                 callback(returnArr[0]);
               }
             );
-            // const map2 = rows.map((x) => console.log("매칭테이블" + x.user_id));
           });
         } else {
           //여자면 남자테이블 검색
@@ -449,15 +433,12 @@ function room_check(user_id, user_sex, callback) {
             fields
           ) {
             rows.map((x) => matchArr.push(x.matching_userid));
-            console.log(matchArr);
 
             let matchAble = matchArr.filter(function (b) {
               if (talking.indexOf(b) === -1) {
                 tempArr.push(b);
               }
             });
-
-            console.log("여:1차 필터 결과", tempArr);
 
             connection.query(
               //나간유저 다시 잡히기 방지
@@ -471,33 +452,108 @@ function room_check(user_id, user_sex, callback) {
                     returnArr.push(b);
                   }
                 });
-                console.log("여:최종 필터 결과", returnArr);
                 callback(returnArr[0]);
               }
             );
-
-            //매칭테이블 튜플 배열로
-
-            // const map2 = rows.map((x) => console.log("매칭테이블" + x.user_id));
           });
         }
-
-        // resultA = rows.room_touserid.filter(function (a) {
-        //   return a;
-        // // });
-        // console.log(resultA);
       }
     }
   );
 }
+/////////////원영추가: 동성매칭중인 사람 거르는 함수/////////////////////
+function room_check_same(user_id, user_sex, callback) {
+  connection.query(
+    "SELECT * FROM wagle_room where room_userid = ?",
+    [user_id],
+    function (err, rows, fields) {
+      if (err) {
+        console.log(err);
+      } else {
+        let matchArr = new Array(); //매칭테이블 인원 배열
+        let talking = new Array(); //대화중인 인원 배열
+        let dropArr = new Array(); //이미 나간 방 인원 배열
+        let tempArr = new Array(); //임시저장 인원
+        let returnArr = new Array(); // 최종적으로 나랑매칭 될 인원
+        //대화중인 사람 배열로
+        rows.map((x) => talking.push(x.room_touserid));
+
+        if (user_sex === "M") {
+          //남자면 여자테이블 검색
+          connection.query("SELECT * FROM matching_table_m_same", [], function (
+            err,
+            rows,
+            fields
+          ) {
+            //매칭테이블 튜플 배열로
+            rows.map((x) => matchArr.push(x.matching_userid));
+
+            let matchAble = matchArr.filter(function (b) {
+              if (talking.indexOf(b) === -1) {
+                tempArr.push(b);
+              }
+            });
+
+            connection.query(
+              //나간유저 다시 잡히기 방지
+              "SELECT * FROM wagle_room where room_drop = 1 and room_lastuserid = ?",
+              [user_id],
+              function (err, rows, feilds) {
+                rows.map((x) => dropArr.push(x.room_userid));
+
+                let matchAble = tempArr.filter(function (b) {
+                  if (dropArr.indexOf(b) === -1) {
+                    returnArr.push(b);
+                  }
+                });
+                callback(returnArr[0]);
+              }
+            );
+          });
+        } else {
+          //여자면 남자테이블 검색
+          connection.query("SELECT * FROM matching_table_w_same", [], function (
+            err,
+            rows,
+            fields
+          ) {
+            rows.map((x) => matchArr.push(x.matching_userid));
+
+            let matchAble = matchArr.filter(function (b) {
+              if (talking.indexOf(b) === -1) {
+                tempArr.push(b);
+              }
+            });
+
+            connection.query(
+              //나간유저 다시 잡히기 방지
+              "SELECT * FROM wagle_room where room_drop = 1 and room_lastuserid = ?",
+              [user_id],
+              function (err, rows, feilds) {
+                rows.map((x) => dropArr.push(x.room_userid));
+
+                let matchAble = tempArr.filter(function (b) {
+                  if (dropArr.indexOf(b) === -1) {
+                    returnArr.push(b);
+                  }
+                });
+                callback(returnArr[0]);
+              }
+            );
+          });
+        }
+      }
+    }
+  );
+}
+
 /////////////////////새로추가//////////////////////////////
 router.post("/CheckMatching", (req, res) => {
   // let matchTouserid = room_check(req.body.userid, req.body.sex);
 
   room_check(req.body.userid, req.body.sex, function (touserid) {
     const matchTouserid = touserid;
-    console.log("투유저" + touserid);
-    console.log("매치가능한 아이디 조사: " + matchTouserid);
+
     if (req.body.sex === "M") {
       if (matchTouserid === undefined) {
         //undefined이면 매칭 테이블에 작성해야함
@@ -522,9 +578,7 @@ router.post("/CheckMatching", (req, res) => {
           [req.body.realid],
           function (err, rows, fields) {
             let room_count = rows[0].room_count;
-            console.log("남자 카운트: " + room_count);
             if (err) {
-              console.log(err);
             } else {
               // 매칭가능
               room_count++;
@@ -587,7 +641,6 @@ router.post("/CheckMatching", (req, res) => {
           [req.body.realid],
           function (err, rows, fields) {
             let room_count = rows[0].room_count;
-            console.log("여자 카운트: " + room_count);
             if (err) {
               console.log(err);
             } else {
@@ -631,37 +684,28 @@ router.post("/CheckMatching", (req, res) => {
     }
   });
 });
+////////////////동성친구 매칭 추가///////////////////////
+router.post("/CheckMatchingSame", (req, res) => {
+  room_check_same(req.body.userid, req.body.sex, function (touserid) {
+    const matchTouserid = touserid;
 
-// 매칭테이블 확인
-/////////////////////원영 수정//////////////////
-router.post("/CheckMatching2", (req, res) => {
-  if (req.body.sex === "M") {
-    connection.query("SELECT * FROM matching_table_w", [], function (
-      err,
-      rows,
-      fields
-    ) {
-      if (rows[0] === undefined) {
-        room_check(req.body.userid, req.body.sex);
-        //작성자
-        //매칭할 여자가 없을때 남자는 값을 넣는다.
-        //테이블 없음
+    if (req.body.sex === "M") {
+      if (matchTouserid === undefined) {
+        //undefined이면 매칭 테이블에 작성해야함
         connection.query(
-          "INSERT INTO matching_table_m (matching_userid) values (?)",
+          "INSERT INTO matching_table_m_same (matching_userid) values (?)",
           [req.body.userid],
           function (err, rows, field) {
             const touserid = {
               touserid: undefined,
             };
+
             res.send(touserid); //생각
           }
         );
       } else {
-        // 신청자
-        // 매칭할 여자가 있을Eo -
-        //////////////// 수정 원영////////////
         const userm = req.body.userid;
-        const userw = rows[0].matching_userid;
+        const userw = matchTouserid;
         const lastmessage = "매칭이 성공적으로 되었습니다.";
 
         connection.query(
@@ -687,7 +731,7 @@ router.post("/CheckMatching2", (req, res) => {
                       [userm, userw, lastmessage, userm + userw],
                       function (err, rows, field) {
                         connection.query(
-                          "delete from matching_table_w where matching_userid = ?",
+                          "delete from matching_table_m_same where matching_userid = ?",
                           [userw],
                           function (err, rows, field) {
                             if (err) {
@@ -710,21 +754,12 @@ router.post("/CheckMatching2", (req, res) => {
           }
         );
       }
-    });
-  } else {
-    //여자일떄
-    connection.query("SELECT * FROM matching_table_m", [], function (
-      err,
-      rows,
-      fields
-    ) {
-      if (rows[0] === undefined) {
-        //매칭할 남자가 없음 여자 값 넣음
-        //테이블 없음
-
-        room_check(req.body.userid, req.body.sex);
+    } else {
+      //여자 동성
+      if (matchTouserid === undefined) {
+        //undefined이면 매칭 테이블에 작성해야함
         connection.query(
-          "INSERT INTO matching_table_w (matching_userid) values (?)",
+          "INSERT INTO matching_table_w_same (matching_userid) values (?)",
           [req.body.userid],
           function (err, rows, field) {
             const touserid = {
@@ -735,18 +770,15 @@ router.post("/CheckMatching2", (req, res) => {
           }
         );
       } else {
-        //매칭할 남자가 있을Eo
-        const userm = rows[0].matching_userid;
+        const userm = matchTouserid;
         const userw = req.body.userid;
         const lastmessage = "매칭이 성공적으로 되었습니다.";
-        //수정 원영
 
         connection.query(
           "SELECT * FROM user_info WHERE user_realid = ?",
           [req.body.realid],
           function (err, rows, fields) {
             let room_count = rows[0].room_count;
-            console.log("여자 카운트: " + room_count);
             if (err) {
               console.log(err);
             } else {
@@ -757,14 +789,13 @@ router.post("/CheckMatching2", (req, res) => {
                 [room_count, req.body.realid],
                 function (err, rows, fields) {
                   if (err) {
-                    console.log("룸카운트할때 에러:" + err);
                   } else {
                     connection.query(
                       "INSERT INTO wagle_room (room_userid,room_touserid,room_lastmessage,room_roomname) values (?,?,?,?)",
                       [userw, userm, lastmessage, userm + userw],
                       function (err, rows, field) {
                         connection.query(
-                          "delete from matching_table_m where matching_userid = ?",
+                          "delete from matching_table_w_same where matching_userid = ?",
                           [userm],
                           function (err, rows, field) {
                             if (err) {
@@ -787,10 +818,11 @@ router.post("/CheckMatching2", (req, res) => {
           }
         );
       }
-    });
-  }
+    }
+  });
 });
-///////////////////////////////////////////////////////////
+////////////////동성친구 매칭 추가///////////////////////
+
 //로그인 하는 부분
 router.post("/login", (req, res) => {
   const name = req.body.name;
@@ -857,29 +889,6 @@ router.post("/updateuserid", (req, res) => {
   );
 });
 
-//닉네임 업데이트하기
-// router.post("/Update_nick", (req, res) => {
-//   const nick = req.body.nick;
-//   const preNick = req.body.preNick;
-//   connection.query(
-//     "SELECT user_nickname FROM user_info WHERE user_nickname = (?)",
-//     [nick],
-//     function (err, rows, fields) {
-//       //중복된 닉네임이 없음 닉네임 변경 진행
-//       if (rows[0] === undefined && !err) {
-//         connection.query(
-//           "UPDATE user_info SET user_nickname =(?) WHERE user_nickname =(?)",
-//           [nick, preNick]
-//         );
-
-//         res.send(true);
-//       } else {
-//         res.send(false);
-//       }
-//     }
-//   );
-// });
-
 router.post("/Update_password", (req, res) => {
   const pass = req.body.pass;
   const user_id = req.body._id;
@@ -927,6 +936,38 @@ router.post("/StopMatch", (req, res) => {
   }
 });
 
+//////////////동성매칭 취소///////////
+router.post("/StopMatchSame", (req, res) => {
+  const _id = req.body._id;
+  const sex = req.body.sex;
+
+  if (sex === "M") {
+    connection.query(
+      "DELETE FROM matching_table_m_same WHERE matching_userid = ?",
+      [_id],
+      function (err, rows, fields) {
+        if (err) {
+          res.send(false);
+        } else {
+          res.send(true);
+        }
+      }
+    );
+  } else {
+    connection.query(
+      "DELETE FROM matching_table_w_same WHERE matching_userid = ?",
+      [_id],
+      function (err, rows, fields) {
+        if (err) {
+          res.send(false);
+        } else {
+          res.send(true);
+        }
+      }
+    );
+  }
+});
+
 //badman
 router.post("/Badman", (req, res) => {
   const _id = req.body.userid;
@@ -945,10 +986,6 @@ router.post("/Badman", (req, res) => {
       }
     }
   );
-});
-
-router.post("/test", (req, res) => {
-  console.log("이메일 보내기 접속 확인");
 });
 
 router.post("/Sendmail", (req, res) => {
@@ -1112,9 +1149,6 @@ router.post("/serchID", (req, res) => {
       tf.boolean = false;
       res.send(tf);
     }
-    // console.log(rows[0]);
-
-    // let information = { id: rows[0].user_realid, pw: rows[0].user_password };
   });
 });
 //전체방에 메시지 보여주기
@@ -1190,7 +1224,6 @@ var mailSender2 = {
     // 메일 발송
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        // console.log("아이디 찾기 메일 에러");
         console.log(error);
       } else {
         console.log("Email sent: " + info.response);

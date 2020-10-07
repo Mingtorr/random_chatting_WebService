@@ -19,13 +19,14 @@ export default class Start extends Component {
       realid: JSON.parse(localStorage.getItem("user")).user_realid,
       open: false,
       open2: false,
-      room_count: JSON.parse(localStorage.getItem("user")).room_count, //원영 수정
+      room_count: JSON.parse(localStorage.getItem("user")).room_count, //추가원영 수정
       progress: (
         <button className="Font2_start" onClick={this.onMatching}>
           {" "}
           매칭 시작!{" "}
         </button>
       ),
+      max_room: 8, //최대 메시지함 갯수 8개
     };
   }
 
@@ -47,48 +48,25 @@ export default class Start extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log("room_count: ", json);
         this.setState({
           room_count: json.room_count,
         });
+        //////////////////원영 수정//////////////////////
         if (this.state.room_count > 0) {
           //0보다 크면 닉변 제한
           this.props.nickname_switch_false();
         }
 
-        if (this.state.sex === "M") {
-          //남자일때 제한
-          if (this.state.room_count < 3) {
-            //최대 3개까지 매칭가능
-          } else {
-            this.setState({
-              progress: (
-                <button className="Font_start">메시지함을 확인하세요</button>
-              ),
-            });
-          }
+        if (this.state.room_count < this.state.max_room) {
+          //최대 메시지함 갯수
         } else {
-          //여자일때 제한
-          if (this.state.room_count < 5) {
-            //최대 5개까지 매칭가능
-          } else {
-            this.setState({
-              progress: (
-                <button className="Font_start">메시지함을 확인하세요</button>
-              ),
-            });
-          }
+          this.setState({
+            progress: (
+              <button className="Font_start">메시지함을 확인하세요</button>
+            ),
+          });
         }
-        ////////////////////////////////////////////
-        // if (json === true) {
-        //   this.props.nickname_switch_false();
-        //   this.setState({
-        //     progress: (
-        //       <button className="Font_start">메시지함을 확인하세요</button>
-        //     ),
-        //   });
-        // } else {
-        // }
+        ////////////////////////////////////
       });
 
     fetch("api/CheckStart", {
@@ -133,56 +111,27 @@ export default class Start extends Component {
       this.setState({
         room_count: temp_cnt,
       });
-      if (this.state.sex === "M") {
-        //남자일때 제한
-        if (this.state.room_count < 3) {
-          //최대 3개까지 매칭가능
-          this.setState({
-            progress: (
-              <button className="Font2_start" onClick={this.onMatching}>
-                {" "}
-                매칭 시작!{" "}
-              </button>
-            ),
-            open: true,
-          });
-        } else {
-          this.setState({
-            progress: (
-              <button className="Font_start">메시지함을 확인하세요</button>
-            ),
-            open: true,
-          });
-        }
+      //////////////////////원영 수정/////////////////
+      if (this.state.room_count < this.state.max_room) {
+        ///최대 메시지함 갯수
+        this.setState({
+          progress: (
+            <button className="Font2_start" onClick={this.onMatching}>
+              {" "}
+              매칭 시작!{" "}
+            </button>
+          ),
+          open: true,
+        });
       } else {
-        //여자일때 제한
-        if (this.state.room_count < 5) {
-          //최대 5개까지 매칭가능
-          this.setState({
-            progress: (
-              <button className="Font2_start" onClick={this.onMatching}>
-                {" "}
-                매칭 시작!{" "}
-              </button>
-            ),
-            open: true,
-          });
-        } else {
-          this.setState({
-            progress: (
-              <button className="Font_start">메시지함을 확인하세요</button>
-            ),
-            open: true,
-          });
-        }
+        this.setState({
+          progress: (
+            <button className="Font_start">메시지함을 확인하세요</button>
+          ),
+          open: true,
+        });
       }
-      //////////////////////////////////////////
-
-      // this.setState({
-      //   progress: <button className="Font_start">메시지함을 확인하세요</button>,
-      //   open: true,
-      // });
-      console.log("매칭 성공정보: " + matching_info);
+      //////////////////////////
     });
     socket.emit("start join", this.state._id);
   }
@@ -234,19 +183,36 @@ export default class Start extends Component {
       _id: this.state._id,
       sex: this.state.sex,
     };
-    fetch("api/StopMatch", {
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(post),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json === false) {
-        } else {
-        }
-      });
+
+    if (this.props.count === 1) {
+      fetch("api/StopMatch", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(post),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json === false) {
+          } else {
+          }
+        });
+    } else {
+      fetch("api/StopMatchSame", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(post),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json === false) {
+          } else {
+          }
+        });
+    }
   };
 
   onMatching = () => {
@@ -276,32 +242,33 @@ export default class Start extends Component {
       sex: this.state.sex,
       realid: this.state.realid,
     };
-    fetch("api/CheckMatching", {
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(userid),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.touserid === undefined) {
-          //작성자
-          //매칭테이블에 상대유저 아이디 없으면 계속 찾기
-        } else {
-          //신청자
-          //매칭테이블에 상대방 있으면 매칭성공
-          ///////////////////////////////원영수정////////////////////
-          this.setState({
-            room_count: json.room_count,
-          });
-          json.realid = userid.realid;
-          this.props.nickname_switch_false();
-          socket.emit("matchingtouser", json);
-          if (this.state.sex === "M") {
-            //남자일때 제한
-            if (json.room_count < 3) {
-              //최대 3개까지 매칭가능
+
+    if (this.props.count === 1) {
+      //이성친구
+      fetch("api/CheckMatching", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(userid),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.touserid === undefined) {
+            //작성자
+            //매칭테이블에 상대유저 아이디 없으면 계속 찾기
+          } else {
+            //신청자
+            //매칭테이블에 상대방 있으면 매칭성공
+            ///////////////////////////////원영수정////////////////////
+            this.setState({
+              room_count: json.room_count,
+            });
+            json.realid = userid.realid;
+            this.props.nickname_switch_false();
+            socket.emit("matchingtouser", json);
+
+            if (json.room_count < this.state.max_room) {
               this.setState({
                 progress: (
                   <button className="Font2_start" onClick={this.onMatching}>
@@ -319,10 +286,76 @@ export default class Start extends Component {
                 open: true,
               });
             }
+            // if (this.state.sex === "M") {
+            //   //남자일때 제한
+            //   if (json.room_count < 3) {
+            //     //최대 3개까지 매칭가능
+            //     this.setState({
+            //       progress: (
+            //         <button className="Font2_start" onClick={this.onMatching}>
+            //           {" "}
+            //           매칭 시작!{" "}
+            //         </button>
+            //       ),
+            //       open: true,
+            //     });
+            //   } else {
+            //     this.setState({
+            //       progress: (
+            //         <button className="Font_start">
+            //           메시지함을 확인하세요
+            //         </button>
+            //       ),
+            //       open: true,
+            //     });
+            //   }
+            // } else {
+            //   //여자일때 제한
+            //   if (json.room_count < 5) {
+            //     //최대 5개까지 매칭가능
+            //     this.setState({
+            //       progress: (
+            //         <button className="Font2_start" onClick={this.onMatching}>
+            //           {" "}
+            //           매칭 시작!{" "}
+            //         </button>
+            //       ),
+            //       open: true,
+            //     });
+            //   } else {
+            //     this.setState({
+            //       progress: (
+            //         <button className="Font_start">
+            //           메시지함을 확인하세요
+            //         </button>
+            //       ),
+            //       open: true,
+            //     });
+            //   }
+            // }
+          }
+        });
+    } else if (this.props.count === 2) {
+      //동성친구
+      fetch("api/CheckMatchingSame", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(userid),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.touserid === undefined) {
           } else {
-            //여자일때 제한
-            if (json.room_count < 5) {
-              //최대 5개까지 매칭가능
+            this.setState({
+              room_count: json.room_count,
+            });
+            json.realid = userid.realid;
+            this.props.nickname_switch_false();
+            socket.emit("matchingtouser", json);
+
+            if (json.room_count < this.state.max_room) {
               this.setState({
                 progress: (
                   <button className="Font2_start" onClick={this.onMatching}>
@@ -341,20 +374,48 @@ export default class Start extends Component {
               });
             }
           }
-          ///////////////////////////////////////////
-          // this.setState({
-          //   open: true,
-          //   progress: (
-          //     <button className="Font_start">메시지함을 확인하세요</button>
-          //   ),
-          // });
-        }
-      });
+        });
+    }
   };
   componentDidMount() {}
 
   render() {
     return this.props.count === 1 ? (
+      <div className="matching_dialog">
+        <Dialog
+          open={this.state.open}
+          onClose={this.modalclose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title2">
+            <img id="photos" src={Photos} width="30vw" height="30vw" />
+            {"매칭 완료!"}
+            <div className="photos"></div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              매칭이 완료 되었습니다.
+              <br /> 오른쪽 상단의 메시지함으로 들어가세요.
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          open={this.state.open2}
+          onClose={this.modalclose2}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              매칭이 취소 되었습니다.
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+
+        <div className="start_progress">{this.state.progress}</div>
+      </div>
+    ) : this.props.count == 2 ? (
       <div className="matching_dialog">
         <Dialog
           open={this.state.open}
